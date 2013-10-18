@@ -1,0 +1,117 @@
+html, body{
+    padding-top:0px;
+    padding-left:0px;
+    font-family:Verdana;
+    font-size:12px;
+    background:white;
+    height:100%;
+    
+    
+}
+span {
+	font-family:Verdana;
+	font-size:11px;
+	font-weight:normal;
+}
+.DATA-TABLE-form-data {
+	position:relative;
+	width:100%;
+	border:1px solid #9cb3cb;
+	margin-bottom:10px;
+	background:#f0f4f8;
+}
+
+.DATA-TABLE-form-data th img {
+	vertical-align:middle;
+}
+
+.DATA-TABLE-form-data ul {
+	font-size:12px;
+}
+
+.DATA-TABLE-form-data ol {
+	font-size:12px;
+}
+
+.DATA-TABLE-form-data li {
+	margin:4px;
+	margin-bottom:6px;
+}
+
+.DATA-TABLE-form-data th {
+	padding:5px;
+	padding-left:8px;
+	color:#010161;
+	background:#c2d0df;
+	text-align:left;
+	vertical-align:middle;
+	font-size:13px;
+}
+
+.DATA-TABLE-form-data td {
+	color:black;
+	padding:8px;
+	padding-bottom:0px;
+	vertical-align:top;
+}
+a.edit-button {
+	font-size:11px;
+	color:black;
+	background:#efefef;
+	font-weight:bold;
+	padding:2px 7px;
+	margin-right:3px;
+	white-space:nowrap;
+	border:1px solid black;
+	cursor:pointer;
+	text-decoration:none;
+}
+
+a.edit-button:visited {
+	color:#000;
+}
+
+a.edit-button-disabled:hover {
+	color:#a3a3a3;
+	cursor:default;
+}
+a.edit-button-disabled:visited {
+	color:#a3a3a3;
+	cursor:default;
+}
+
+a.edit-button-disabled {
+	font-size:11px;
+	color:#a3a3a3;
+	background:#efefef;
+	font-weight:bold;
+	padding:2px 7px;
+	margin-right:3px;
+	white-space:nowrap;
+	border:1px solid #a3a3a3;
+	cursor:text;
+	text-decoration:none;
+}
+.DATA-TABLE-form-container {
+	font-family:Verdana,Sans-serif;
+	font-size:11px;
+	margin-bottom:10px;
+}
+
+.DATA-TABLE-form-container td {
+	padding:0px;
+	padding-right:6px;
+	padding-bottom:10px;
+	white-space:nowrap !important;
+	vertical-align:middle;
+}
+
+.DATA-TABLE-form-container strong {
+	color:#010161;
+}
+.DATA-TABLE-form-container input {
+	vertical-align:middle;
+	height:20px;
+	font-size:12px;
+	padding-top:0px;
+}

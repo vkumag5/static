@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+  
+	<groupId>com.pearson.qglobal.platform</groupId>
+	<artifactId>qglobal-static-content</artifactId>
+	<version>18.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	
+    <name>qglobal-static-content</name>
+
+	<ciManagement>            
+		<system>Jenkins</system>		
+		<url>http://releng.ic.ncs.com/jenkins/job/QGlobal%20Platform%20-%20qglobal-static-content</url>	             
+	</ciManagement>	
+	<scm>
+		<connection>scm:git:ssh://git@devops-tools.pearson.com/qglobal/qglobal-static-content.git</connection>	
+		<developerConnection>scm:git:ssh://git@devops-tools.pearson.com/qglobal/qglobal-static-content.git</developerConnection>
+		<url>https://devops-tools.pearson.com/stash/projects/QGLOBAL/repos/qglobal-static-content.git/</url>	
+		<tag>HEAD</tag>
+	</scm>  
+
+	<modules>
+		<module>qglobal-static</module>
+		<module>qglobal-static-dd</module>
+	</modules>
+
+	<build>	
+		<pluginManagement>	
+			<plugins>		
+				<plugin>					
+					<groupId>org.apache.maven.plugins</groupId>					
+					<artifactId>maven-release-plugin</artifactId>		
+					<version>2.4</version>	
+					<configuration>
+						<preparationGoals>clean install</preparationGoals>
+					</configuration>
+				</plugin>
+			</plugins>		
+		</pluginManagement>	
+	</build>	
+
+	<distributionManagement>
+	<!-- use the following if you're not using a snapshot version. -->
+	   <repository>	   
+		<id>repo1.ic.ncs.com</id>
+		<name>Pearson Repository</name>	
+		<url>http://repo1.ic.ncs.com/nexus/content/repositories/pearson-repo </url>	
+	   </repository>
+	<!-- use the following if you ARE using a snapshot version. -->
+
+	   <snapshotRepository>	    
+		<id>PearsonSnapshot</id>	 
+		<name>PearsonSnapshot</name>
+		<url>http://repo1.ic.ncs.com/nexus/content/repositories/PearsonSnapshot </url>	
+	   </snapshotRepository>
+	</distributionManagement>
+
+</project>
