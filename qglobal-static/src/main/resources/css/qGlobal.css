@@ -4387,9 +4387,32 @@ col_addGrp_4 {
 	padding:0px 10px 0px 10px;
 	text-align: left;
 	min-height: 15px;
-	display: block;
 	float: left;
 	color: #443E3E !important;
+}
+
+.histUserOptionValue label {
+	font-size: 12px;
+	font-family: verdana;
+	padding:0px 10px 0px 5px;
+}
+
+.histUserOptionValueRadioAlign {
+	padding:0px 10px 0px 10px;
+	text-align: left;
+	min-height: 15px;
+	display: inline;
+	float: left;
+	color: #443E3E !important;
+}
+
+.histUserOptionValueRadioAlign label {
+	font-size: 12px;
+	font-family: verdana;
+	display: block;
+	width: 60px;
+	float: right;
+	padding:0px 0px 0px 5px;
 }
 
 .historyInputDojo.dijitTextBox,                      

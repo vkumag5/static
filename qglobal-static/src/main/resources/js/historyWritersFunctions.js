@@ -54,7 +54,6 @@ var otherRowNameForMeds = "other";
 var dropDownNoSelectionValue = "org.jboss.seam.ui.NoSelectionConverter.noSelectionValue";
 
 function manageLoopedChkBoxRelatedOtherField(node, focus, relatedOtherField, otherChkBoxId, relatedOtherLblWrp) { //determines whether related other field should be enabled
-	//console.log("...................................... relatedOtherField .. otherChkBoxId .. relatedOtherLblWrp : " + relatedOtherField + " ... " + otherChkBoxId + " ... " + relatedOtherLblWrp);
 	var nodeSelected = false;
 	if (othersCheckboxArray.indexOf(node.id) > -1) {
 		if (node.checked) {
@@ -170,36 +169,25 @@ function manageChkBoxRelatedOtherField(node, focus, relatedOtherField, relatedOt
 	}	
 	
 	if (nodeSelected) {
-//		console.log("manageChkBoxRelatedOtherField ..................... nodeSelected");
-//		dijit.byId(relatedOtherField).required = true;
 		if (dijit.byId(relatedOtherField)) {
-//			console.log("manageChkBoxRelatedOtherField ..................... relatedOtherField : " + relatedOtherField);
-			//dojo.removeClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(relatedOtherField).attr("required", true);		
 		}
-//		console.log("manageChkBoxRelatedOtherField .................. relatedOtherLbl : " + relatedOtherLbl);
 		if (relatedOtherLbl) {
 			dojo.removeClass(dojo.byId(relatedOtherLbl), "hide");
-//			console.log("manageChkBoxRelatedOtherField ..................removed hide class from relatedOtherLbl : " + relatedOtherLbl);
 		}
-		//dojo.byId(relatedOtherField).disabled = false;
 		if (focus) {
 			dojo.byId(relatedOtherField).focus();
 		}
 	}
 	else {
-//		console.log("manageChkBoxRelatedOtherField ..................... node not Selected");
 		dojo.byId(relatedOtherField).value = "";
-//		dijit.byId(relatedOtherField).required = false;
 		if (dijit.byId(relatedOtherField)) {
 			dijit.byId(relatedOtherField).attr("required", false);
 			dijit.byId(relatedOtherField).reset();
-			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 		}
 		if (relatedOtherLbl) {
 			dojo.addClass(dojo.byId(relatedOtherLbl), "hide");
 		}
-//		dojo.byId(relatedOtherField).disabled = true;
 	}
 }
 
@@ -270,16 +258,13 @@ function initializeLoopRadioSelections(node, relatedOtherField, relatedOtherWrpL
 }
 
 function checkIfEducationCompletionRequired(node, completeChkBoxId) {
-//	console.log("checkIfEducationCompletionRequired ...............................");
 	var nameAttribute = "select[name=" + dojo.attr(node, 'name') + "]";
 	var length = dojo.query(nameAttribute)[0].options.length;
 	var options = dojo.query(nameAttribute)[0];
 	for (var i = 0; i  < length; i++) {
 		if (options[i].selected) {
 			if (secondaryEducationValues.indexOf(options[i].text) > -1) {
-//				console.log("checkIfEducationCompletionRequired ....................... found in secondaryEducationValues");
 				dojo.byId(completeChkBoxId).disabled = false;
-				//dojo.byId(completeChkBoxId).focus();
 			}
 			else {
 				dojo.byId(completeChkBoxId).disabled = true;
@@ -299,6 +284,7 @@ function checkIfPositionTitleRequired(node, positionTextId, rltPosLblWrp) {
 			if (jobsWithPositionTitle.indexOf(options[i].text) > -1) {
 				if (dijit.byId(positionTextId)) {
 					dijit.byId(positionTextId).attr("required", true);		
+					dojo.byId(positionTextId).focus();
 				}
 				if (rltPosLblWrp) {
 					dojo.removeClass(dojo.byId(rltPosLblWrp), "hide");
@@ -326,15 +312,10 @@ function setCorrespondingHealthCheckBox(node, checkBoxId, noMedCndId, unknownMed
 		dojo.byId(noMedCndId).disabled = true;
 		dojo.byId(unknownMedCndId).disabled = true;
 		if (medCndOthersCheckboxArray.indexOf(otherId) > -1) {
-//			console.log("............................................ relatedNodeId : " + relatedNodeId);
-//			console.log("............................................ relatedNodeId.checked : " + dojo.byId(relatedNodeId).checked);
 			if (!dojo.byId(relatedNodeId).checked) {
-//				console.log("............................................ relatedNodeId not checked");
 				if (dijit.byId(otherTextId)) {
 					dijit.byId(otherTextId).attr("required", true);		
 				}
-//				dojo.removeClass(dojo.byId(otherWrpId), "hide");
-//				console.log("............................................ setting focus to otherTextId : " + otherTextId);
 				dijit.byId(otherTextId).focus();
 			}
 		}	
@@ -347,23 +328,25 @@ function setCorrespondingHealthCheckBox(node, checkBoxId, noMedCndId, unknownMed
 			dojo.byId(unknownMedCndId).disabled = false;
 		}
 		if (medCndOthersCheckboxArray.indexOf(otherId) > -1) {
-//			console.log("............................................ relatedNodeId : " + relatedNodeId);
-//			console.log("............................................ relatedNodeId.checked : " + dojo.byId(relatedNodeId).checked);
 			if (!dojo.byId(relatedNodeId).checked) {
-//				console.log("............................................ relatedNodeId not checked");
 				if (dijit.byId(otherTextId)) {
 					dijit.byId(otherTextId).attr("required", false);
 					dijit.byId(otherTextId).reset();
 				}
-//				dojo.addClass(dojo.byId(otherWrpId), "hide");
-				console.log("............................................ clearing otherTextId : " + otherTextId.value);
-//				dojo.byId(otherTextId).value = '';
 			}
 		}	
 	}
 }
 
 function collectPersonalStrengthSelections(node, maxAllowed) {
+	
+	var otherNodeSelected = false;
+	if (othersCheckboxArray.indexOf(node.id) > -1) {
+		if (node.checked) {
+			otherNodeSelected = true;
+		}
+	}
+	
 	var searchResult = objectFindByKey(personalStrengthSelections, 'ID', node.id);
 	var nodeId = node.id;
 	var mutalFieldId=nodeId.replace("StrengthPersonal","WeaknessPersonal");
@@ -374,7 +357,7 @@ function collectPersonalStrengthSelections(node, maxAllowed) {
 			if (personalStrengthSelections.length >= maxAllowed) {
 				disableCheckboxSelections("StrengthPersonal", personalStrengthSelections);
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed  && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=true;
 			}
 		}
@@ -385,7 +368,7 @@ function collectPersonalStrengthSelections(node, maxAllowed) {
 			if (personalStrengthSelections.length < maxAllowed) {
 				enableCheckboxSelections("StrengthPersonal", personalStrengthSelections, "WeaknessPersonal");
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed  && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=false;
 			}
 		}
@@ -393,6 +376,14 @@ function collectPersonalStrengthSelections(node, maxAllowed) {
 }
 
 function collectPersonalWeaknessesSelections(node, maxAllowed) {
+	
+	var otherNodeSelected = false;
+	if (othersCheckboxArray.indexOf(node.id) > -1) {
+		if (node.checked) {
+			otherNodeSelected = true;
+		}
+	}
+	
 	var searchResult = objectFindByKey(personalWeaknessesSelections, 'ID', node.id);
 	var nodeId = node.id;
 	var mutalFieldId=nodeId.replace("WeaknessPersonal","StrengthPersonal");
@@ -403,7 +394,7 @@ function collectPersonalWeaknessesSelections(node, maxAllowed) {
 			if (personalWeaknessesSelections.length >= maxAllowed) {
 				disableCheckboxSelections("WeaknessPersonal", personalWeaknessesSelections);
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=true;
 			}
 		}
@@ -414,7 +405,7 @@ function collectPersonalWeaknessesSelections(node, maxAllowed) {
 			if (personalWeaknessesSelections.length < maxAllowed) {
 				enableCheckboxSelections("WeaknessPersonal", personalWeaknessesSelections, "StrengthPersonal");
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=false;
 			}
 		}
@@ -422,6 +413,12 @@ function collectPersonalWeaknessesSelections(node, maxAllowed) {
 }
 
 function collectPeersStrengthSelections(node, maxAllowed) {
+	var otherNodeSelected = false;
+	if (othersCheckboxArray.indexOf(node.id) > -1) {
+		if (node.checked) {
+			otherNodeSelected = true;
+		}
+	}
 	var searchResult = objectFindByKey(peersStrengthSelections, 'ID', node.id);
 	var nodeId = node.id;
 	var mutalFieldId=nodeId.replace("StrengthCompPeers","WeaknessCompPeers");
@@ -432,7 +429,7 @@ function collectPeersStrengthSelections(node, maxAllowed) {
 			if (peersStrengthSelections.length >= maxAllowed) {
 				disableCheckboxSelections("StrengthCompPeers", peersStrengthSelections);
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=true;
 			}
 		}
@@ -443,7 +440,7 @@ function collectPeersStrengthSelections(node, maxAllowed) {
 			if (peersStrengthSelections.length < maxAllowed) {
 				enableCheckboxSelections("StrengthCompPeers", peersStrengthSelections, "WeaknessCompPeers");
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=false;
 			}
 		}
@@ -451,6 +448,12 @@ function collectPeersStrengthSelections(node, maxAllowed) {
 }
 
 function collectPeersWeaknessesSelections(node, maxAllowed) {
+	var otherNodeSelected = false;
+	if (othersCheckboxArray.indexOf(node.id) > -1) {
+		if (node.checked) {
+			otherNodeSelected = true;
+		}
+	}
 	var searchResult = objectFindByKey(peersWeaknessSelections, 'ID', node.id);
 	var nodeId = node.id;
 	var mutalFieldId=nodeId.replace("WeaknessCompPeers","StrengthCompPeers");
@@ -461,7 +464,7 @@ function collectPeersWeaknessesSelections(node, maxAllowed) {
 			if (peersWeaknessSelections.length >= maxAllowed) {
 				disableCheckboxSelections("WeaknessCompPeers", peersWeaknessSelections);
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=true;
 			}
 		}
@@ -472,7 +475,7 @@ function collectPeersWeaknessesSelections(node, maxAllowed) {
 			if (peersWeaknessSelections.length < maxAllowed) {
 				enableCheckboxSelections("WeaknessCompPeers", peersWeaknessSelections, "StrengthCompPeers");
 			}
-			if (mutalArrayLength < maxAllowed) {
+			if (mutalArrayLength < maxAllowed && !otherNodeSelected) {
 				dojo.byId(mutalFieldId).disabled=false;
 			}
 		}
@@ -510,9 +513,13 @@ function disableCheckboxSelections(selectionList, selectionArray) {
 function enableCheckboxSelections(selectionListId, selectionArray, mutualListId) {
 	dojo.query('[id^="' + selectionListId + '"]').forEach(function(node){
 		var nodeId = node.id;
-		var mutalFieldId=nodeId.replace(selectionListId,mutualListId);
-		if (!dojo.byId(mutalFieldId).checked) {
+		if (othersCheckboxArray.indexOf(nodeId) > -1) {
 	    	node.disabled = false;
+		} else {
+			var mutalFieldId=nodeId.replace(selectionListId,mutualListId);
+			if (!dojo.byId(mutalFieldId).checked) {
+		    	node.disabled = false;
+			}
 		}
 	});
 }
@@ -540,7 +547,7 @@ function convertRadioSelectionIdToSlangValue(radioId) {
 
 //the onchange event for all form elements, this adds the IDs of changed values to the array
 function addToFormValues(node, slangVariable) { //this array contains the IDs of every element that has been changed on a page and nothing else. 
-	console.log("addToFormValue ... : " + slangVariable);
+	//console.log("addToFormValue ... : " + slangVariable);
 	var formValsLocal = formValues; 
 	try {
 		var nodeId = node.getAttribute("id");
@@ -549,7 +556,6 @@ function addToFormValues(node, slangVariable) { //this array contains the IDs of
 	}
 
 	if (nodeId) {  
-		console.log("addToFormValue ... nodeId & node.value : " + nodeId + " ... " + node.value);
 		var nodeValue;
 		var nodeAttr;
 		var existsInFormValues = false;
@@ -561,7 +567,6 @@ function addToFormValues(node, slangVariable) { //this array contains the IDs of
 			}
 		} 
 		if (existsInFormValues == false) { //if the element doesn't already exist
-			console.log("addToFormValue ... does not exist in forms array");
 			var nodeName = node.tagName; //the tag name for the current node, i.e. 'input' or 'select'
 			if (!nodeName) { // nodeName is undefined, so it must be a dijit
 				nodeName = node.domNode.tagName;
@@ -575,7 +580,6 @@ function addToFormValues(node, slangVariable) { //this array contains the IDs of
 		}
 		else {
 			//the item already exists in the FormValues array
-			console.log("addToFormValue ... updating array with new value : " + formValsLocal[FVIndex].ATTR);
 			nodeAttr = formValsLocal[FVIndex].ATTR; 
 		}
 		if (nodeAttr == "checkbox") {
@@ -591,7 +595,7 @@ function addToFormValues(node, slangVariable) { //this array contains the IDs of
 		}
 		if (existsInFormValues == false) {
 			formValues.push({ID: nodeId, ATTR: nodeAttr, VALUE: nodeValue, SLANG: slangVariable}); //add it to the array that says it needs to be updated
-			console.log("formValues.push : " +nodeId + " .. " + nodeAttr + " .. " + nodeValue + " .. " + slangVariable);
+			//console.log("formValues.push : " +nodeId + " .. " + nodeAttr + " .. " + nodeValue + " .. " + slangVariable);
 		}
 		else {
 			var oldValue = formValsLocal[FVIndex].VALUE; 
@@ -612,17 +616,14 @@ function updateHistoryWritersJSONString() { //fires upon save
 	console.log("updateHistoryWritersJSONString ........................... saving entered data");
 	var formJsonData = null;
 	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
-//		console.log("updateHistoryWritersJSONString ........................... edit mode");
 		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
 	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
-//		console.log("updateHistoryWritersJSONString ........................... add mode");
 		formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
 	}
 	if (formJsonData != null) {
-		console.log("updateHistoryWritersJSONString ........................... updating JSON string!");
 		JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be manipulated here 
 		var formValsLocal = formValues; 
-		for (i = 0; i < formValsLocal.length; i++) { //for each element of the formValues array [the IDs of elements that will be updated]
+		for (var i = 0; i < formValsLocal.length; i++) { //for each element of the formValues array [the IDs of elements that will be updated]
 			var nodeId = formValsLocal[i].ID; 
 			var nodeAttr = formValsLocal[i].ATTR; 
 			var nodeVal = formValsLocal[i].VALUE;
@@ -647,6 +648,9 @@ function updateHistoryWritersJSONString() { //fires upon save
 					}
 					else {
 						JsonData[nodeSlang] = nodeVal; 
+						if (nodeId != nodeSlang && nodeId in JsonData) {
+							JsonData[nodeId] = nodeVal; 
+						}
 					}
 				}
 			} 
@@ -675,76 +679,64 @@ function updateHistoryWritersJSONString() { //fires upon save
 		var revisedJson = dojo.toJson(JsonData);
 		dojo.attr(formJsonData, "value", revisedJson);
 		formValues = [];
-		//console.log("AFTER: " + dojo.fromJson(dojo.byId("editAssessmentForm:manualEntryJsonFormData").value));
+		
+		//update JSON string with tab id's
+		checkForTabElementsEntered("referralHistPanel");
+		checkForTabElementsEntered("personalHistInfo");
+		checkForTabElementsEntered("languageSocialHistInfo");
+		checkForTabElementsEntered("educationHistInfo");
+		checkForTabElementsEntered("healthHistInfo");
+		checkForTabElementsEntered("employmentHistInfo");
 	}
-//	console.log("updateHistoryWritersJSONString ........................... update complete");
 }
 
 function initializeSchoolStrengthsComparisonData(schoolData) {
-//	var schoolNode = dojo.byId("schoolSelection");
-//	if (schoolNode.checked) {
-		var slang = schoolData.split(",");
-		var length = slang.length;
-		for (var i = 0; i  < length; i++) {
-			collectPersonalStrengthSelections(dojo.byId(slang[i]), 3);
-		}
-//	}	
+	var slang = schoolData.split(",");
+	var length = slang.length;
+	for (var i = 0; i  < length; i++) {
+		collectPersonalStrengthSelections(dojo.byId(slang[i]), 3);
+	}
 }
 
 function initializeSchoolWeaknessesComparisonData(schoolData) {
-//	var schoolNode = dojo.byId("schoolSelection");
-//	if (schoolNode.checked) {
-		var slang = schoolData.split(",");
-		var length = slang.length;
-		for (var i = 0; i  < length; i++) {
-			collectPersonalWeaknessesSelections(dojo.byId(slang[i]), 3);
-		}
-//	}
+	var slang = schoolData.split(",");
+	var length = slang.length;
+	for (var i = 0; i  < length; i++) {
+		collectPersonalWeaknessesSelections(dojo.byId(slang[i]), 3);
+	}
 }
 
 function initializePeersStrengthsComparisonData(schoolData) {
-//	var schoolNode = dojo.byId("schoolSelection");
-//	if (schoolNode.checked) {
-		var slang = schoolData.split(",");
-		var length = slang.length;
-		for (var i = 0; i  < length; i++) {
-			collectPeersStrengthSelections(dojo.byId(slang[i]), 3);
-		}
-//	}
+	var slang = schoolData.split(",");
+	var length = slang.length;
+	for (var i = 0; i  < length; i++) {
+		collectPeersStrengthSelections(dojo.byId(slang[i]), 3);
+	}
 }
 
 function initializePeersWeaknessesComparisonData(schoolData) {
-//	var schoolNode = dojo.byId("schoolSelection");
-//	if (schoolNode.checked) {
-		var slang = schoolData.split(",");
-		var length = slang.length;
-		for (var i = 0; i  < length; i++) {
-			collectPeersWeaknessesSelections(dojo.byId(slang[i]), 3);
-		}
-//	}
+	var slang = schoolData.split(",");
+	var length = slang.length;
+	for (var i = 0; i  < length; i++) {
+		collectPeersWeaknessesSelections(dojo.byId(slang[i]), 3);
+	}
 }
 
 function initializeCollectLearningDisordersData(schoolData) {
-//	var schoolNode = dojo.byId("schoolSelection");
-//	if (schoolNode.checked) {
-		var slang = schoolData.split(",");
-		var length = slang.length;
-		for (var i = 0; i  < length; i++) {
-			collectLearningDisordersSelections(dojo.byId(slang[i]), 3);
-		}
-//	}
+	var slang = schoolData.split(",");
+	var length = slang.length;
+	for (var i = 0; i  < length; i++) {
+		collectLearningDisordersSelections(dojo.byId(slang[i]), 3);
+	}
 }
 
 function initializeLanguageMilestones(languageData) {
-//	var langSoc = dojo.byId("langSocSelection");
-//	if (langSoc.checked) {
-		var slang = languageData.split(",");
-		var length = slang.length;
-		for (var i = 0; i  < length; i++) {
-			relatedRadioOption = slang[i] + "_option";
-			manageRelatedRadioOptions(dojo.byId(slang[i]), relatedRadioOption);
-		}
-//	}
+	var slang = languageData.split(",");
+	var length = slang.length;
+	for (var i = 0; i  < length; i++) {
+		relatedRadioOption = slang[i] + "_option";
+		manageRelatedRadioOptions(dojo.byId(slang[i]), relatedRadioOption);
+	}
 }
 
 function fnConvertHistoryJsonToForm(dataElementId, htmlFormId) {
@@ -916,7 +908,6 @@ function initializeMedicalConditions(medCondNoneNode, medCondUnknownNode) { //in
 }
 
 function initializeMedicalConditionsDataRows(node, prvDiagId, curDiagId, prvTrtId, curTrtId, medCondNoneId, medCondUnknownId) {
-	//console.log("initializeMedicalConditionsDataRows ..................... : .. " + prvDiagId + " .. " + curTrtId + " .. " + prvTrtId + " .. " + curTrtId + " .. " + medCondNoneId + " .. " + medCondUnknownId);
 	var rowIdArray = node.getAttribute("id");
 	prvDiagIdFound = rowIdArray.indexOf(prvDiagId) != -1;
 	curDiagIdFound = rowIdArray.indexOf(curDiagId) != -1;
@@ -1038,11 +1029,14 @@ function reloadActiveTabs() {
 
 	dojo.parser.parse("languageSocialHistInfo");
 	fnConvertHistoryJsonToTab(formJsonData, "languageSocialHistInfo");
-	initializeLoopRadioSelections(dojo.byId("TestBehav_LengthEnglishExposure"), "strTestBehav_LengthEnglishExposure_Other", "strTestBehav_LengthEnglishExposure_OtherWrp", false);
-	initializeLoopRadioSelections(dojo.byId("TestBehav_LengthEnglishSpoken"), "strTestBehav_LengthEnglishSpoken_Other", "strTestBehav_LengthEnglishSpoken_OtherWrp", false);
+	initializeLoopRadioSelections(dojo.byId("LengthEnglishExposure"), "strLengthEnglishExposure", "strLengthEnglishExposure_OtherWrp", false);
+	initializeLoopRadioSelections(dojo.byId("LengthEnglishSpoken"), "strLengthEnglishSpoken_Other", "strLengthEnglishSpoken_OtherWrp", false);
 //	initializeLoopRadioSelections(dojo.byId("MilestonesAccord"), "strMilestonesAccord_Other", "strMilestonesAccord_OtherWrp");
 //	manageLoopRadioSelections(dojo.byId("Milestones_Other"), false, "strMilestones_Other", true, "strMilestones_Other_Wrp");
-	initializeMilestonesToUnknown();
+	initializeDefaultRadioSelectionValues('LengthEnglishExposure');
+	initializeDefaultRadioSelectionValues('LengthEnglishSpoken');
+	initializeDefaultRadioSelectionValues('ObservedEnglish');
+	initializeDefaultRadioSelectionValues('Milestones_');
 	initializeLoopRadioSelections(dojo.byId("Milestones_Other"), "strMilestones_Other", "strMilestones_Other_Wrp", true);
 	manageChkBoxRelatedOtherField(dojo.byId("MilestonesAccord"), false, 'strMilestonesAccord_Other', 'strMilestonesAccord_OtherWrp');
 	manageLoopedChkBoxRelatedOtherField(dojo.byId("Birth_Other"), false, 'strPregBirth_Other', 'Birth_Other', 'strPregBirth_OtherWrp');
@@ -1066,6 +1060,8 @@ function reloadActiveTabs() {
 	
 	manageLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), false, "strAchieveTestRecent_Other", true, "strAchieveTestRecent_Other_Wrp");
 	manageLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), false, "strAchieveTestPast_Other", true, "strAchieveTestPast_Other_Wrp");
+	initializeDefaultRadioSelectionValues('AchieveTestRecent');
+	initializeDefaultRadioSelectionValues('AchieveTestPast');
 	
 	manageChkBoxRelatedOtherField(dojo.byId("FreqSchoolChange"), false, "FreqSchoolChange_Other", "schChngOthLblWrp");
 	manageChkBoxRelatedAcrdToOtherField(dojo.byId("EducAccord"), false, "EducAccord_Other", "schAcrdToOthLbl", "EducAccord_Other_Wrp");
@@ -1090,7 +1086,12 @@ function reloadActiveTabs() {
 	manageChkBoxMultiRelatedOtherField(dojo.byId("Motor_OtherFM"), false);
 	manageChkBoxMultiRelatedOtherField(dojo.byId("Motor_OtherGM"), false);
 	initializeMedicalConditions(dojo.byId("MedCondition_None"), dojo.byId("MedCondition_Unknown"));
-
+	initSensoryConditions(dojo.byId('Sensory_None'), 'Sensory_', 'strSensory_Other', 'strSensory_OtherWrp');
+	initMotorConditions(dojo.byId('Motor_None'), 'Motor_', 'strMotor_OtherGM', 'strMotor_OtherGMWrp', 'strMotor_OtherFM', 'strMotor_OtherFMWrp');
+	if(dojo.byId('CurrentMedication') != null){
+		setCount('CurrentMedication','medCount',255);
+	}
+	
 	dojo.parser.parse("employmentHistInfo");
 	fnConvertHistoryJsonToTab(formJsonData, "employmentHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("CurrentEmployStatus"), false, "CurrentEmployStatus_Other", "empCurStsOthLblWrp");
@@ -1107,7 +1108,6 @@ function fnConvertHistoryJsonToTab(dataElementId, tabId) {
 			formJson = defaultJson; 	
 		}
 
-		console.log("formJson ............... : " + formJson);
 		queryString = '[id^="' + tabId + '"]';
 		
 		var nodeList = dojo.query(queryString).query("*");
@@ -1122,15 +1122,12 @@ function fnConvertHistoryJsonToTab(dataElementId, tabId) {
 			
 			if(elName!='') {
 
-//				console.log("elName ............... : " + elName);
- 
 				var element = nodeList[i];
 
 				var jsonValue = serverJson[elName];
 
 				if(jsonValue == undefined || jsonValue == null) {
 				} else {
-//					console.log("filtered elName ............... : " + elName);
 					if (element.type == 'radio') {
 						if (element.value == jsonValue) {
 							element.checked = true;
@@ -1144,14 +1141,11 @@ function fnConvertHistoryJsonToTab(dataElementId, tabId) {
 					} else {
 						var widget = dijit.byId(elName);
 						if (widget && widget.declaredClass == 'dijit.form.Select') {
-//							console.log("widget elName ............... : " + elName);
 							widget.attr("value", jsonValue);
 						} else {
-//							console.log("elName value ............... : " + elName + " . set to . " + jsonValue);
 							element.value = jsonValue;
 						}
 					}
-					
 				}
 			}
 		}
@@ -1164,9 +1158,6 @@ function fnConvertHistoryJsonToTab(dataElementId, tabId) {
 }
 
 function removeTabElementsFromFormValues(node, tabId) { //this array contains the IDs of every element that has been changed on a page and nothing else. 
-	
-//	console.log("removeTabElementsFromFormValues ... : " + tabId);
-	
 	if (node.checked) {
 		console.log("removeTabElementsFromFormValues .... node is still checked, no data to remove.");
 	} else {
@@ -1185,8 +1176,6 @@ function removeTabElementsFromFormValues(node, tabId) { //this array contains th
 			
 			var nodeList = dojo.query(queryString).query("*");
 
-//			console.log("removeTabElementsFromFormValues .... node is unchecked : " + nodeList.length);
-
 			for (var i = 0; i<nodeList.length; i++) {
 
 				var element = nodeList[i];
@@ -1197,8 +1186,6 @@ function removeTabElementsFromFormValues(node, tabId) { //this array contains th
 					var nodeId = element.domNode.getAttribute("id"); //if it's a Dijit
 				}
 
-//				console.log("removeTabElementsFromFormValues ... nodeId : " + nodeId);
-				
 				if (nodeId) {  
 					if (nodeId in JsonData) { //if the JSON string exists, remove it
 						console.log("removeTabElementsFromFormValues ... found node in JSON string ");
@@ -1217,11 +1204,9 @@ function removeTabElementsFromFormValues(node, tabId) { //this array contains th
 function errorsExistsOnTabs() {
 	
 	var referralTabErrors = isTabInvalid("referralHistPanel", "ref_lbl");
-	console.log("...................................................... referralTabErrors : " + referralTabErrors);
 	var personTabErrors = isTabInvalid("personalHistInfo", "personalTab_lbl");
 	var langTabErrors = isTabInvalid("languageSocialHistInfo", "langSocialTab_lbl");
 	var eduTabErrors = isTabInvalid("educationHistInfo", "edTab_lbl");
-//	var schoolTabErrors = isTabInvalid("schoolHistInfo", "schoolTab_lbl");
 	var healthTabErrors = isTabInvalid("healthHistInfo", "healthTab_lbl");
 	var empTabErrors = isTabInvalid("employmentHistInfo", "emplTab_lbl"); 
 	
@@ -1242,9 +1227,16 @@ function isTabInvalid(tabId, tabLabel) {
 			if(elName!='') {
 				var widget = dijit.byId(elName);
 				if (widget && !widget.validate()) {
+					dijit.byId(elName).focus();
 					errorsExist = true;
-					break;
+//					break;
 				} 
+			}
+		}
+		
+		if (tabId === 'healthHistInfo') {
+			if (!checkForSubmit()) {
+				errorsExist = true;
 			}
 		}
 		
@@ -1737,6 +1729,26 @@ function manageLoopRadioSelectionsForMilestones(node, focus, relatedOtherField, 
 	
 }
 
+function initializeDefaultRadioSelectionValues(radioStartsWithName) {
+	var milestonesRadioIdArray = new Array(); //array to store selected personal strengths.
+	queryString = '[id^=' + radioStartsWithName + ']';
+	var nodeList = dojo.query(queryString).query("*");
+
+	for (var i = 0; i<nodeList.length; i++) {
+
+		var element = nodeList[i];
+
+		if (element.type == 'radio') {
+			var convertedId = convertRadioSelectionIdToSlangValue(element.id);
+			var searchResult = objectFindByKey(milestonesRadioIdArray, 'ID', convertedId);
+			if (searchResult == null) {
+				milestonesRadioIdArray.push({ID: convertedId});
+				initializeRadioSelections(element);
+			}			
+		}
+	}
+}
+
 function initializeMilestonesToUnknown() {
 	var milestonesRadioIdArray = new Array(); //array to store selected personal strengths.
 	queryString = '[id^="Milestones_"]';
@@ -1751,13 +1763,13 @@ function initializeMilestonesToUnknown() {
 			var searchResult = objectFindByKey(milestonesRadioIdArray, 'ID', convertedId);
 			if (searchResult == null) {
 				milestonesRadioIdArray.push({ID: convertedId});
-				initializeMilestonesRadioSelections(element);
+				initializeRadioSelections(element);
 			}			
 		}
 	}
 }
 
-function initializeMilestonesRadioSelections(node) {
+function initializeRadioSelections(node) {
 	var nodeName = dojo.attr(node, 'name');
 	if (nodeName != null) {
 		var nameAttribute = "[name=" + nodeName + "]";
@@ -1777,4 +1789,212 @@ function initializeMilestonesRadioSelections(node) {
 			}
 		});
 	}
+}
+
+function noSensoryConditionsChecked(node, cndName, othTxtFld, othTxtWrpFld) { //determines whether sensory or motor conditions are enabled or disabled
+	cndQueryString = '[name^="' + cndName + '"]';
+	var selectedNodeId = dojo.attr(node, 'id');
+	if (node.checked) {
+		dojo.query(cndQueryString).forEach(function(node) {
+			nodeId = dojo.attr(node, 'id');
+			if (nodeId != selectedNodeId) {
+				node.disabled = true;
+				if (node.checked) {
+					node.checked = false;
+				}
+			}
+		});
+		if (dijit.byId(othTxtFld)) {
+			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
+			dijit.byId(othTxtFld).value = '';
+			dijit.byId(othTxtFld).attr("required", false);	
+			dijit.byId(othTxtFld).reset();
+		}
+		if (othTxtWrpFld) {
+			dojo.addClass(dojo.byId(othTxtWrpFld), "hide");
+		}
+		
+	} else {
+		dojo.query(cndQueryString).forEach(function(node) {
+			node.disabled = false;
+		});
+	}
+}
+
+function noMotorConditionsChecked(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, fineOthTxtFld, fineOthTxtWrpFld) { //determines whether sensory or motor conditions are enabled or disabled
+	cndQueryString = '[name^="' + cndName + '"]';
+	var selectedNodeId = dojo.attr(node, 'id');
+	if (node.checked) {
+		dojo.query(cndQueryString).forEach(function(node) {
+			nodeId = dojo.attr(node, 'id');
+			if (nodeId != selectedNodeId) {
+				node.disabled = true;
+				if (node.checked) {
+					node.checked = false;
+				}
+			}
+		});
+		if (dijit.byId(grossOthTxtFld)) {
+			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
+			dijit.byId(grossOthTxtFld).value = '';
+			dijit.byId(grossOthTxtFld).attr("required", false);	
+			dijit.byId(grossOthTxtFld).reset();
+		}
+		if (grossOthTxtWrpFld) {
+			dojo.addClass(dojo.byId(grossOthTxtWrpFld), "hide");
+		}
+		if (dijit.byId(fineOthTxtFld)) {
+			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
+			dijit.byId(fineOthTxtFld).value = '';
+			dijit.byId(fineOthTxtFld).attr("required", false);	
+			dijit.byId(fineOthTxtFld).reset();
+		}
+		if (fineOthTxtWrpFld) {
+			dojo.addClass(dojo.byId(fineOthTxtWrpFld), "hide");
+		}
+	} else {
+		dojo.query(cndQueryString).forEach(function(node) {
+			node.disabled = false;
+		});
+	}
+}
+
+function toggleSensoryMotorConditionsNoneCheckBox(node, cndNoneId, cndTxt) { 
+	if (node.checked) {
+		dojo.byId(cndNoneId).disabled = true;
+		dojo.byId(cndNoneId).checked = false;
+	} else {
+		if (!sensoryMotorConditionsChecked(cndTxt)) {
+			dojo.byId(cndNoneId).disabled = false;
+			dojo.byId(cndNoneId).checked = false;
+		}
+	}	
+}
+
+function sensoryMotorConditionsChecked(sensoryMotorCnd) { //determines whether medical conditions are checked
+	senMtrCndQueryString = '[name^="' + sensoryMotorCnd + '"]';
+	sensoryMotorChkd = false;
+	dojo.query(senMtrCndQueryString).forEach(function(node) {
+		if (node.checked) {
+			sensoryMotorChkd = true;
+		}
+	});
+	
+	if (sensoryMotorChkd) {
+		return true;
+	}
+	
+	return false;
+}
+
+function initSensoryConditions(node, cndName, othTxtFld, othTxtWrpFld) { //determines whether sensory or motor conditions are enabled or disabled
+	cndQueryString = '[name^="' + cndName + '"]';
+	var selectedNodeId = dojo.attr(node, 'id');
+	if (node.checked) {
+		dojo.query(cndQueryString).forEach(function(node) {
+			nodeId = dojo.attr(node, 'id');
+			if (nodeId != selectedNodeId) {
+				node.disabled = true;
+				if (node.checked) {
+					node.checked = false;
+				}
+			}
+		});
+		if (dijit.byId(othTxtFld)) {
+			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
+			dijit.byId(othTxtFld).value = '';
+			dijit.byId(othTxtFld).attr("required", false);	
+			dijit.byId(othTxtFld).reset();
+		}
+		if (othTxtWrpFld) {
+			dojo.addClass(dojo.byId(othTxtWrpFld), "hide");
+		}
+		
+	} else {
+		dojo.query(cndQueryString).forEach(function(node) {
+			toggleSensoryMotorConditionsNoneCheckBox(node, 'Sensory_None', 'Sensory_');			
+		});
+	}
+}
+
+function initMotorConditions(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, fineOthTxtFld, fineOthTxtWrpFld) { //determines whether sensory or motor conditions are enabled or disabled
+	cndQueryString = '[name^="' + cndName + '"]';
+	var selectedNodeId = dojo.attr(node, 'id');
+	if (node.checked) {
+		dojo.query(cndQueryString).forEach(function(node) {
+			nodeId = dojo.attr(node, 'id');
+			if (nodeId != selectedNodeId) {
+				node.disabled = true;
+				if (node.checked) {
+					node.checked = false;
+				}
+			}
+		});
+		if (dijit.byId(grossOthTxtFld)) {
+			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
+			dijit.byId(grossOthTxtFld).value = '';
+			dijit.byId(grossOthTxtFld).attr("required", false);	
+			dijit.byId(grossOthTxtFld).reset();
+		}
+		if (grossOthTxtWrpFld) {
+			dojo.addClass(dojo.byId(grossOthTxtWrpFld), "hide");
+		}
+		if (dijit.byId(fineOthTxtFld)) {
+			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
+			dijit.byId(fineOthTxtFld).value = '';
+			dijit.byId(fineOthTxtFld).attr("required", false);	
+			dijit.byId(fineOthTxtFld).reset();
+		}
+		if (fineOthTxtWrpFld) {
+			dojo.addClass(dojo.byId(fineOthTxtWrpFld), "hide");
+		}
+	} else {
+		dojo.query(cndQueryString).forEach(function(node) {
+			toggleSensoryMotorConditionsNoneCheckBox(node, 'Motor_None', 'Motor_');			
+		});
+	}
+}
+
+
+function checkForTabElementsEntered(tabId) { //if elements exist, add marker to JSON string.  This will be used by report options logic. 
+	var formJsonData = null;
+	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
+	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
+	}
+	if (formJsonData != null) {
+
+		JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be manipulated here 
+
+		if (tabId in JsonData) { //clear out tabid before checking
+			delete JsonData[tabId];
+		}
+		
+		queryString = '[id^="' + tabId + '"]';
+		
+		var nodeList = dojo.query(queryString).query("*");
+
+		for (var i = 0; i<nodeList.length; i++) {
+
+			var element = nodeList[i];
+			
+			try {
+				var nodeId = element.getAttribute("id");
+			} catch(e) {
+				var nodeId = element.domNode.getAttribute("id"); //if it's a Dijit
+			}
+
+			if (nodeId) {  
+				if (nodeId in JsonData) { //if the JSON string exists, add tab id and break out of loop.
+					console.log("checkForTabElementsEntered ... found node in JSON string ");
+					JsonData[tabId] = '1'; 
+					break;
+				} 
+			}
+		}
+		
+		var revisedJson = dojo.toJson(JsonData);
+		dojo.attr(formJsonData, "value", revisedJson);
+	}		
 }
