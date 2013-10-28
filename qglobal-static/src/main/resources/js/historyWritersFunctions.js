@@ -1058,10 +1058,12 @@ function reloadActiveTabs() {
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolAttendPast"), false, "SchoolAttendPast_Other", "schPrvAtndOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolDiffPast"), false, "SchoolDiffPast_Other", "schPrvDifOthLblWrp");
 	
-	manageLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), false, "strAchieveTestRecent_Other", true, "strAchieveTestRecent_Other_Wrp");
-	manageLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), false, "strAchieveTestPast_Other", true, "strAchieveTestPast_Other_Wrp");
+//	manageNotSpecifiedLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), false, "strAchieveTestRecent_Other", true);
+//	manageNotSpecifiedLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), false, "strAchieveTestPast_Other", true);
 	initializeDefaultRadioSelectionValues('AchieveTestRecent');
 	initializeDefaultRadioSelectionValues('AchieveTestPast');
+	initializeLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), "strAchieveTestRecent_Other", "strAchieveTestRecent_Other_Wrp", true);
+	initializeLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), "strAchieveTestPast_Other", "strAchieveTestPast_Other_Wrp", true);
 	
 	manageChkBoxRelatedOtherField(dojo.byId("FreqSchoolChange"), false, "FreqSchoolChange_Other", "schChngOthLblWrp");
 	manageChkBoxRelatedAcrdToOtherField(dojo.byId("EducAccord"), false, "EducAccord_Other", "schAcrdToOthLbl", "EducAccord_Other_Wrp");
