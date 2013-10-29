@@ -76,13 +76,17 @@ input {
 	vertical-align: middle;
 }
 select {
-	margin: 0px 5px 0px 0px;
-	width: 170px;
-	font-family: verdana;
-	font-size: 12px;
-	border: 1px solid #D8D8D8;
-	text-align: left;	
-	padding: 2px;
+	
+	  border: 1px solid #D8D8D8;
+          font-family: verdana;
+          font-size: 12px;
+          margin: 20px 297px 0 0;
+          padding-bottom: 2px;
+          padding-right: 0;
+          padding-top: 2px;
+          text-align: left;
+          width: 171px;
+
 }
 
 select.container  {
@@ -3110,6 +3114,158 @@ a.no-filter-title-link:hover {
 }
 #newTemplateForm td label{
 	font-size:11px;}
+	
+	#popUpMessage
+
+{
+ font-size: 14px;
+}
+
+div .basic-buttonForPopUp .button .saveleft {
+	display: block;
+	display:inline\0/;
+	float:left;
+	height:28px;	
+	border: 0px;
+	/*margin:4px 3px 0px 5px;*/
+	font-family: verdana;
+	font-size:12px;
+	font-weight:bold;
+	cursor : pointer;
+	line-height: 16pt;	
+	padding : 2px 5px 5px 10px;
+        margin-top: 143px;
+        
+	/* theme properties */
+	color:#437001;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/buttons/command-button-left.png) no-repeat 
+
+scroll 0 0;
+	/* theme properties ends*/
+}
+
+div .basic-buttonForPopUp .button .saveright {
+	float:left;
+	
+	width:10px;
+	height:28px;
+	border: 0px;
+	/*margin:4px 3px 0px 5px;*/
+	font-family: verdana;
+	font-size:12px;
+	font-weight:bold;
+	color:#1f6b8b;
+	line-height: 16pt;
+         margin-top: 143px;
+         
+	
+	/* theme properties */
+	-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(../images/buttons/command-button-right.png) no-repeat scroll 0 
+
+0;
+/* theme properties ends*/
+}
+
+div .basic-buttonForPopUp .button .right {
+	float:left;
+	
+	width:10px;
+	height:28px;
+	border: 0px;
+	/*margin:4px 3px 0px 5px;*/
+	font-family: verdana;
+	font-size:12px;
+	font-weight:bold;
+	line-height: 16pt;
+         margin-top: 143px;
+	
+		/* theme properties */
+		color:#437001;
+		-moz-background-clip:border;
+		-moz-background-inline-policy:continuous;
+		-moz-background-origin:padding;
+		background:transparent url(../images/buttons/command-button-right.png) 
+
+no-repeat scroll 0 0;
+		/* theme properties ends*/
+}
+div .basic-buttonForPopUp .button .left {
+	display: block;
+	float:left;	
+	height:28px;
+	border: 0px;
+	/*margin:4px 3px 0px 5px;*/
+	font-family: verdana;
+	font-size:12px;
+	font-weight:bold;
+	line-height: 16pt;	
+	cursor : pointer;
+	padding : 2px 5px 5px 10px;
+        margin-top: 143px;
+         margin-left: 9px;
+		
+	/* theme properties */
+	color:#437001;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/buttons/command-button-left.png) no-repeat 
+
+scroll 0 0;
+	/* theme properties ends*/
+}
+div .basic-buttonForPopUp{
+ margin-top:-122px;
+}
+#asset{
+       margin-right: 278px;
+    margin-top: 18px;
+     font-weight: bolder;
+      color: buttontext;
+}
+#purchased{
+              padding-right: 66px;
+              font-weight: bolder;
+
+}
+#allocated{
+         
+              padding-right: 40px;
+             font-weight: bolder;
+}
+#available{
+                font-weight: bolder;
+}
+#purchasedDown{
+                float: none;
+     padding-right: 65px;
+     font-weight: 400;
+      text-align: center;
+}
+
+#allocatedDown{
+    font-weight: 400;
+    text-align: center;
+      padding-right: 36px;
+}
+
+#availableDown{
+     
+    font-weight: 400;
+          text-align: center;
+}
+#pur{
+         margin-left: 352px;
+           margin-top: -35px;
+}
+
+
 
 
 /********************************************** Data Grid styles ends *********************************/

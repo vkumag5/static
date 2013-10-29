@@ -1870,3 +1870,24 @@ button, input[type="reset"], input[type="button"], input[type="submit"]  {
     font-size: 12px;
     font-weight: bold;
 }
+
+.assetMessage{
+  background-color: #F7D358;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    font-weight: normal;
+    height: 22px;
+    margin-left: 465px;
+    margin-right: 0;
+    text-align: end;
+}
+
+.assetMessageFont{
+  position: relative;
+    top: 5px;
+}
+#checkBoxAssetMessages{
+
+float: none;
+    margin-top: 7px;
+}
