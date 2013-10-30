@@ -21,7 +21,7 @@
 
 	<modules>
 		<module>qglobal-static</module>
-		<module>qglobal-static-dd</module>
+	<!--	<module>qglobal-static-dd</module> -->
 	</modules>
 
 	<build>	
