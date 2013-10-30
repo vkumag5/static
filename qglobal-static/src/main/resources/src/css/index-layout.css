@@ -1,0 +1,509 @@
+* {
+	margin:0px;
+	padding:0px;
+}
+html, body {
+	font-family:Verdana;
+	height:100%;
+	overflow:inherit;	
+}
+body {
+	background-color:#3B8686;
+	text-align:center;
+}
+
+/* OUTER WRAPPER */
+#outer {
+	
+	/* theme based properties */
+	background-color:#3B8686;
+	background-image:url(../images/layout/top_strip.png);
+	background-repeat:repeat-x;
+	padding-bottom:10px;
+	/* theme based properties end */
+
+	display:table;
+	height:auto;
+	margin:0 auto -115px;
+	min-height:100%;
+	text-align:center;	
+	width : 100%;
+}
+/* MAIN WRAPPER */
+#main {
+	display:block;
+	text-align:left;
+	width:990px;
+	margin : 0px auto;
+}
+
+/* HEADER */
+#header {
+	position:relative;
+	width:100%;
+	height:600px;
+}
+#header-logo {
+
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent no-repeat scroll 0 0;
+	float:left;
+	height:194px;
+	margin:38px 0 -38px 36px;
+	width:280px;
+/*   url(../images/layout/logo01.png) */
+}
+#header-logo h4 {
+	height:40px;
+	padding-top:38px;
+	margin-left:8px;
+	margin-bottom:-25px;
+	font-family:Verdana;
+	font-style:italic;
+	font-size:12px;
+	font-weight:bold;
+	color:#959595;
+	cursor:pointer;	
+}
+#header-nav {
+	float:right;
+	padding:13px 12px 0px 12px;
+	font-size:12px;
+}
+#welcome {
+	margin:35px 0px 0px 0px;
+	width:190px;
+	font-family:Verdana;
+	font-size:22px;
+	font-weight:bold;
+	color:#b9b9b9;
+}
+#welcome span {
+	font-family:Verdana;
+	font-size:22px;
+	font-weight:bold;
+	color:#000;
+}
+#signin {
+	float:left;
+	margin:30px 0px 0px -15px;
+	width:370px;
+	height:60px;
+}
+#signin h4 {
+	margin:0px;
+	padding:0px 0px 0px 5px;
+	font-family:Verdana;
+	font-size:16px;
+	color: #000000;
+	line-height:24px;
+	font-weight: bold;
+}
+#signin-inputs {
+	float:left;
+	margin:0px 0px 0px 0px;
+}
+#signin-inputs input {
+	
+	margin:0px;
+	border:0px;
+	padding:6px 0px 0px 8px;
+	width:127px;
+	height:30px;
+	font-family:Verdana;
+	font-size:12px;
+	color:#959595;	
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/forms/signin.png) no-repeat scroll 0 0;
+
+}
+#signin #go {
+	float:left;
+	background:url(../images/buttons/go.png) no-repeat;
+	width:36px;
+	height:28px;
+	cursor:pointer;
+}
+#signup {
+	position:absolute;
+	top:40px;
+	left:608px;
+	background:url(../images/buttons/signup.png) no-repeat;
+	margin:65px 0px 0px 180px;
+	width:150px;
+	height:65px;
+	z-index:200;
+	cursor:pointer;
+}
+#index-content-box {
+	position:absolute;
+	top:145px;
+	left:280px;
+	--background:url(../images/layout/index-content-box.png) no-repeat;
+	background:#FFF;
+	width:706px;
+	height:469px;
+}
+#index-content-box #descriptions {
+	position:relative;
+}
+
+#index-content-box #descriptions H2{
+	color:#FFF;
+	font-size:20px;
+	margin:0 0 -30px 30px;
+	padding-top:5px;
+}
+
+#ribbon-what {
+	background:url(../images/layout/ribbon-what.png) no-repeat;
+	margin:20px 0px 0px -9px;
+	*margin-left:0px;
+	*position: relative;
+	*left: -9px;
+}
+
+#ribbon-signin {
+	background:url(../images/layout/ribbon-signin.png) no-repeat;
+	margin:20px 0px 0px -9px;
+}
+
+
+#index-content-box #descriptions #ribbon-signin H2{
+	color:#FFF;
+	font-size:16px;
+	margin:0 0 -30px 30px;
+	padding-top:5px;
+}
+
+#ribbon-what p {
+	padding:50px;
+	font-family:Verdana;
+	font-size:14px;
+	color:#666;
+}
+
+#ribbon-why {
+	background:url(../images/layout/ribbon-why.png) no-repeat;
+	margin:0px 0px 0px -9px;
+	*margin-left:0px;
+	*position: relative;
+	*left: -9px;
+}
+#ribbon-why p {
+	padding:50px;
+	font-family:Verdana;
+	font-size:14px;
+	color:#666;
+}
+#ribbon-assessments {
+	background:url(../images/layout/ribbon-assessments.png) no-repeat;
+	margin:0px 0px 0px -9px;
+	*margin-left:0px;
+	*position: relative;
+	*left: -9px;
+}
+#ribbon-assessments p {
+	padding:50px;
+	font-family:Verdana;
+	font-size:14px;
+	color:#666;
+}
+
+#signinFields
+{
+	margin-top:50px;
+	margin-left:32px;
+}
+
+.tour-forum {
+	
+	margin:10px 0px;
+	width:183px;
+	height:78px;
+	cursor:pointer;	
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/buttons/tour-forum.png) no-repeat scroll 0 0;
+	
+}
+.tour-forum h3 {
+	padding:16px 0px 0px 20px;
+	font-family:Verdana;
+	font-size:20px;
+	font-weight:bold;
+	color:#4ca0c2;
+	
+	
+}
+.tour-forum span {
+	padding:16px 0px 0px 20px;
+	font-family:Verdana;
+	font-size:14px;
+	font-weight:bold;
+	color:#969696;
+}
+/* END HEADER */
+
+
+
+/* FOOTER */
+#footer {
+	display:table;
+	position : relative;
+	margin:-5px auto;
+	padding:0px 0px 10px 0px;
+	width:100%;	
+	height:70px;
+}
+/* FOOTER */
+
+ /* theme properties */
+#indexFooter .footer_left {
+
+background-image:url(../images/layout/footer_left_index.png);
+background-color : #3B8686;
+}
+
+#indexFooter .footer_center {
+background-image:url(../images/layout/footer_strip_index.png);
+background-color : #3B8686;
+}
+
+
+/* theme properties ends*/
+
+.footer_left {
+/* theme properties */
+background-image:url(../images/layout/footer_left.png);
+background-color : #3B8686;
+/* theme properties ends*/
+
+background-repeat:no-repeat;
+float:left;
+height:75px;
+width:7px;
+}
+
+.footer_center {
+	/* theme properties */
+background-image:url(../images/layout/footer_strip.png);
+background-color : #3B8686;
+/* theme properties ends*/
+
+background-repeat:repeat-x;
+float:left;
+height:75px;
+width:976px;
+
+}
+
+.footer_right {
+/* theme properties */
+background-image:url(../images/layout/footer_right_index.png);
+background-color : #3B8686;
+/* theme properties ends*/
+
+/* background-image:url(../images/layout/footer_right_index.png); << default when no theme >>*/ 
+background-repeat:no-repeat;
+float:left;
+height:75px;
+width:7px;
+}
+
+.pearson {
+	/* theme properties */
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(../images/layout/pearson.png) no-repeat scroll 0 0;
+/* theme properties ends*/
+
+float:left;
+height:35px;
+margin:30px 0 0 9px;
+width:69px;
+}
+
+a.footer-link:link {
+	/* theme properties */
+color:#FFFFFF;
+/* theme properties ends*/
+
+font-family:Verdana;
+font-size:10px;
+text-decoration:underline;
+}
+
+.footer-link:visited, .footer-link:hover, .footer-link:active {
+	/* theme properties */
+color:#FFFFFF;
+/* theme properties ends*/
+
+font-family:Verdana;
+font-size:10px;
+text-decoration:underline;
+}
+
+.footer-nav {
+	float:left;
+	font-family:Verdana;
+	padding:25px 12px 0 10px;
+	width:400px;
+}
+
+.footer-nav span {
+	/* theme properties */
+color:#FFFFFF;
+/* theme properties ends*/
+
+font-family:Verdana;
+font-size:9px;
+font-weight:normal;
+padding:0;
+}
+
+
+.footer-links {
+	line-height:1.0;
+	text-align: left;
+}
+.footer-span {
+	
+		/* theme properties */
+color:#FFFFFF;
+/* theme properties ends*/
+
+	line-height:1.0;
+	font-size: 10px;
+}
+
+
+/*
+a.footer-link:link {
+	font-family:Verdana;
+	font-size:9px;
+	text-decoration:none;
+	color:#1E6D8E;
+}
+a.footer-link:active, a.footer-link:visited {
+	font-family:Verdana;
+	font-size:9px;
+	text-decoration:none;
+	color:#1e6d8e;
+}
+a.footer-link:hover {
+	font-family:Verdana !important;
+	font-size:9px;
+	text-decoration:underline;
+	color:#1c8ab8;
+}
+
+#footer #pearson {
+	float:right;
+	margin:20px 30px 0px 0px;
+	width:97px;
+	height:28px;	
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/layout/pearson.png) no-repeat scroll 0 0;
+
+}*/
+/* END FOOTER */
+
+/************************************ Added By Abhisek ********************************************/
+.footer-wrap{
+	margin-left: 35px;
+	width: 950px;
+}
+.footer-wrap .footer{
+	margin-top:15px;
+}
+.footer-wrap .footer .footer_center{
+	width: 935px;
+}
+.footer-wrap .footer-span{
+	line-height: 1.5em;
+}
+
+.button-wrap{
+	margin:2px 0px 0px -5px;
+	float:left;
+}
+.hide{
+	display: none;
+}
+#signin-inputs div.inputWrap {
+	margin:0px 10px 0px 0px;
+	border:0px;
+	width:127px;
+	height:30px;
+	font-family:Verdana;
+	font-size:12px;
+	color:#959595;	
+	background:transparent url(../images/forms/signin.png) no-repeat scroll 0 0;
+	float:left;
+}
+#signin-inputs div.inputWrap input{
+	background:transparent none repeat scroll 0 0;
+	border:0 none;
+	margin:0;
+	padding:7px 6px 0px;
+	width:127px;
+	*width:115px;
+}
+.forgotPasswordLink{
+	*margin-top:-2px;
+}
+.clear-both{
+	clear:both;
+}
+div .button-wrap .button .left,div .button-wrap .button .saveleft{
+	height:26px !important;
+}
+.alertMessageBox{
+	background:#FEE8EA none repeat scroll 0 0;
+	display:block;
+	margin-bottom:0px;
+	padding:0px;
+	width:100%;
+}
+.signinDiv{
+	width:500px !important;
+}
+.borderNone{
+	border:0px none;
+}
+
+.clearfix {
+	display: inline-block;
+}
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+	}
+ 
+
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+.width97p{
+	width : 90% !important;
+}
+.success-msg-on-login {
+	color: #A9FFC4 !important;
+	}
