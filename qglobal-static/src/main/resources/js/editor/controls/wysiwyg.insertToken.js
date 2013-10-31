@@ -41,7 +41,7 @@
 		var adialog, dialog, tokenValue, formTokenHtml, dialogReplacements, key, translation, regexp;
 		
 		dialogReplacements = {
-			legend: "Select Token"
+			legend: token_value
 		};
 		
 		var list = getTokenList();
