@@ -601,17 +601,17 @@ function setSelectedRadio() {
 						pageNumber = 0;
 						isprocess ='true';
 					}else if(pgButton == 'next_pager' || pgButton == 'next_t_' + divId + '_toppager'){
-						pageNumber = jq$('#' + divId).getGridParam('page')-1;
+						pageNumber = Math.round(jq$('#' + divId).getGridParam('page'))-1;
 						isprocess ='true';
 					} else if(pgButton == 'prev_pager' || pgButton == 'prev_t_' + divId + '_toppager'){
-						pageNumber =jq$('#' + divId).getGridParam('page') -1;
+						pageNumber =Math.round(jq$('#' + divId).getGridParam('page')) -1;
 						isprocess ='true';
 					} else if(pgButton == 'last_pager' || pgButton ==  'last_t_' + divId + '_toppager'){
 						isprocess ='true';
 						isLastPage = 'true';
 					} else if(pgButton == 'user'){
 						var lastpgNumber = Number(lastPageNo) + Number(1);
-						var pgNumber = jq$('#' + divId).getGridParam('page');
+						var pgNumber = Math.round(jq$('#' + divId).getGridParam('page'));
 						if(pgNumber > 0 && pgNumber <= lastpgNumber){
 							pageNumber = pgNumber - 1;
 							isprocess ='true';
