@@ -581,17 +581,17 @@ function showSelectedCheckbox() {
 						pageNumber = 0;
 						isprocess ='true';
 					}else if(pgButton == 'next_pager' || pgButton == 'next_t_list_toppager'){
-						pageNumber = jq$('#list').getGridParam('page')-1;
+						pageNumber = Math.round(jq$('#list').getGridParam('page'))-1;
 						isprocess ='true';
 					} else if(pgButton == 'prev_pager' || pgButton == 'prev_t_list_toppager'){
-						pageNumber =jq$('#list').getGridParam('page') -1;
+						pageNumber =Math.round(jq$('#list').getGridParam('page')) -1;
 						isprocess ='true';
 					} else if(pgButton == 'last_pager' || pgButton ==  'last_t_list_toppager'){
 						isprocess ='true';
 						isLastPage = 'true';
 					} else if(pgButton == 'user'){
 						var lastpgNumber = Number(lastPageNo) + Number(1);
-						var pgNumber = jq$('#list').getGridParam('page');
+						var pgNumber = Math.round(jq$('#list').getGridParam('page'));
 						if(pgNumber > 0 && pgNumber <= lastpgNumber){
 							pageNumber = pgNumber - 1;
 							isprocess ='true';
