@@ -4449,3 +4449,11 @@ col_addGrp_4 {
 .mergeExamineeColumnHeader{
 text-align:center!important;
 }
+
+.histExampleSentence {
+	float: left;
+	font-size: 12px;
+	margin: 5px 0;
+	padding:0px 0px 5px 10px;
+	font-family: verdana;
+}

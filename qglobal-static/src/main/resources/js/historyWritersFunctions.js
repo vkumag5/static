@@ -238,7 +238,8 @@ function manageLoopRadioSelections(node, focus, relatedOtherField, isOther, rela
 	
 }
 
-function initializeLoopRadioSelections(node, relatedOtherField, relatedOtherWrpLbl, zeroBased) {
+function initializeLoopRadioSelections(node, relatedOtherField, relatedOtherWrpLbl, otherValue, matchesBoolean) {
+	console.log("initializeLoopRadioSelections .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
 	var nodeName = dojo.attr(node, 'name');
 	if (nodeName != null) {
 		var nameAttribute = "[name=" + nodeName + "]";
@@ -247,9 +248,11 @@ function initializeLoopRadioSelections(node, relatedOtherField, relatedOtherWrpL
 	}
 	dojo.query(nameAttribute).filter(function(radio){
 		if (radio.checked) {
-			if (zeroBased) {
-				manageChkBoxRelatedOtherFieldZeroBased(radio, false, relatedOtherField, relatedOtherWrpLbl);
+			if (otherValue || otherValue == 0) {
+				console.log("other value specified .......................... otherValue, matchesBoolean, radio.value : " + otherValue + " .... " + matchesBoolean + " ... " + radio.value);
+				manageChkBoxRelatedOtherFieldValueBased(radio, false, relatedOtherField, relatedOtherWrpLbl, otherValue, matchesBoolean);
 			} else {
+				console.log("NO other value specified ..........................");
 				manageChkBoxRelatedOtherField(radio, false, relatedOtherField, relatedOtherWrpLbl);			
 			}
 		} 
@@ -1029,15 +1032,15 @@ function reloadActiveTabs() {
 
 	dojo.parser.parse("languageSocialHistInfo");
 	fnConvertHistoryJsonToTab(formJsonData, "languageSocialHistInfo");
-	initializeLoopRadioSelections(dojo.byId("LengthEnglishExposure"), "strLengthEnglishExposure", "strLengthEnglishExposure_OtherWrp", false);
-	initializeLoopRadioSelections(dojo.byId("LengthEnglishSpoken"), "strLengthEnglishSpoken_Other", "strLengthEnglishSpoken_OtherWrp", false);
 //	initializeLoopRadioSelections(dojo.byId("MilestonesAccord"), "strMilestonesAccord_Other", "strMilestonesAccord_OtherWrp");
 //	manageLoopRadioSelections(dojo.byId("Milestones_Other"), false, "strMilestones_Other", true, "strMilestones_Other_Wrp");
 	initializeDefaultRadioSelectionValues('LengthEnglishExposure');
 	initializeDefaultRadioSelectionValues('LengthEnglishSpoken');
 	initializeDefaultRadioSelectionValues('ObservedEnglish');
 	initializeDefaultRadioSelectionValues('Milestones_');
-	initializeLoopRadioSelections(dojo.byId("Milestones_Other"), "strMilestones_Other", "strMilestones_Other_Wrp", true);
+	initializeLoopRadioSelections(dojo.byId("LengthEnglishExposure"), "strLengthEnglishExposure", "strLengthEnglishExposure_OtherWrp");
+	initializeLoopRadioSelections(dojo.byId("LengthEnglishSpoken"), "strLengthEnglishSpoken_Other", "strLengthEnglishSpoken_OtherWrp");
+	initializeLoopRadioSelections(dojo.byId("Milestones_Other"), "strMilestones_Other", "strMilestones_Other_Wrp", 0, false);
 	manageChkBoxRelatedOtherField(dojo.byId("MilestonesAccord"), false, 'strMilestonesAccord_Other', 'strMilestonesAccord_OtherWrp');
 	manageLoopedChkBoxRelatedOtherField(dojo.byId("Birth_Other"), false, 'strPregBirth_Other', 'Birth_Other', 'strPregBirth_OtherWrp');
 
@@ -1062,8 +1065,8 @@ function reloadActiveTabs() {
 //	manageNotSpecifiedLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), false, "strAchieveTestPast_Other", true);
 	initializeDefaultRadioSelectionValues('AchieveTestRecent');
 	initializeDefaultRadioSelectionValues('AchieveTestPast');
-	initializeLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), "strAchieveTestRecent_Other", "strAchieveTestRecent_Other_Wrp", true);
-	initializeLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), "strAchieveTestPast_Other", "strAchieveTestPast_Other_Wrp", true);
+	initializeLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), "strAchieveTestRecent_Other", "strAchieveTestRecent_Other_Wrp", 0, false);
+	initializeLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), "strAchieveTestPast_Other", "strAchieveTestPast_Other_Wrp", 0, false);
 	
 	manageChkBoxRelatedOtherField(dojo.byId("FreqSchoolChange"), false, "FreqSchoolChange_Other", "schChngOthLblWrp");
 	manageChkBoxRelatedAcrdToOtherField(dojo.byId("EducAccord"), false, "EducAccord_Other", "schAcrdToOthLbl", "EducAccord_Other_Wrp");
@@ -1656,14 +1659,25 @@ function manageChkBoxRelatedAcrdToOtherField(node, focus, relatedOtherField, rel
 	}
 }
 
-function manageChkBoxRelatedOtherFieldZeroBased(node, focus, relatedOtherField, relatedOtherLbl) { //determines whether related other field should be enabled
+function manageChkBoxRelatedOtherFieldValueBased(node, focus, relatedOtherField, relatedOtherLbl, otherValue, matchesBoolean) { //determines whether related other field should be enabled
+	console.log("manageChkBoxRelatedOtherFieldValueBased .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
 
 	var nodeSelected = false;
-	if (node.value != 0) {
-		nodeSelected = true;
-	}	
+	if (matchesBoolean) {
+		console.log("matchesBoolean .......................... is true");
+		if (node.value == otherValue) {
+			nodeSelected = true;
+		}	
+	} else {
+		console.log("matchesBoolean .......................... is false");
+		if (node.value != otherValue) {
+			nodeSelected = true;
+		}	
+	}
 	
 	if (nodeSelected) {
+		console.log("nodeSelected .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
+		
 		if (dijit.byId(relatedOtherField)) {
 			dijit.byId(relatedOtherField).attr("required", true);		
 		}
@@ -1675,6 +1689,7 @@ function manageChkBoxRelatedOtherFieldZeroBased(node, focus, relatedOtherField, 
 		}
 	}
 	else {
+		console.log("NOT nodeSelected .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
 		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
 			dijit.byId(relatedOtherField).attr("required", false);
@@ -1999,4 +2014,17 @@ function checkForTabElementsEntered(tabId) { //if elements exist, add marker to 
 		var revisedJson = dojo.toJson(JsonData);
 		dojo.attr(formJsonData, "value", revisedJson);
 	}		
+}
+
+function showHideExampleSentences(showHideDiv, switchImgTag) {
+    var ele = document.getElementById(showHideDiv);
+    var imageEle = document.getElementById(switchImgTag);
+    if(ele.style.display == "block") {
+    	ele.style.display = "none";
+    	imageEle.innerHTML = '<img src="/qg/static/images/plus.gif">';
+    }
+    else {
+    	ele.style.display = "block";
+    	imageEle.innerHTML = '<img src="/qg/static/images/minus.gif">';
+    }
 }
