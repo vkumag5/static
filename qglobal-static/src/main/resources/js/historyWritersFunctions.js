@@ -1,3 +1,12 @@
+/*
+ * This JavaScript file is intended to be used with the History tabs only.  
+ * Where possible the functions are generic and are used throughout the history tabs.  However there are some functions that are very specific
+ * to required functionality and do contain hard coded ID names, etc.  Care should be taken when making changes to this file due to the dependencies 
+ * required in the history XHTML files.
+ *  
+ * Refer to the Writers PDD - History Norms specification spread sheet for details on SLANG variable ID's, etc.
+ */
+
 var formValues = []; //array to store every changed value, most often a select, text, or check box.
 var refFormValues = []; //array to store every changed value, most often a select, text, or check box.
 
@@ -63,10 +72,8 @@ function manageLoopedChkBoxRelatedOtherField(node, focus, relatedOtherField, oth
 	if (nodeSelected) {
 		
 		if (dijit.byId(relatedOtherField)) {
-			//dojo.removeClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(relatedOtherField).attr("required", true);		
 		}
-//		dojo.byId(relatedOtherField).disabled = false;
 		if (relatedOtherLblWrp) {
 			dojo.removeClass(dojo.byId(relatedOtherLblWrp), "hide");
 		}
@@ -75,15 +82,10 @@ function manageLoopedChkBoxRelatedOtherField(node, focus, relatedOtherField, oth
 		}
 	}
 	else {
-//		if (!dojo.byId(otherChkBoxId).checked) {
-//			dojo.byId(relatedOtherField).disabled = true;
-//			dojo.byId(relatedOtherField).value = "";
-//		}
 		if (!dojo.byId(otherChkBoxId).checked) {
 			dojo.byId(relatedOtherField).value = "";
 
 			if (dijit.byId(relatedOtherField)) {
-				//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 				dijit.byId(relatedOtherField).attr("required", false);	
 				dijit.byId(relatedOtherField).reset();
 			}
@@ -131,12 +133,9 @@ function manageChkBoxMultiRelatedOtherField(node, focus) {
 	    	relatedOtherLblWrp = relatedOtherField + "Wrp";
 	    	relatedOtherlBLWrpNode = dojo.byId(relatedOtherLblWrp);
 			if (node.checked) {
-				//dojo.byId(relatedOtherField).disabled = false;
 				if (dijit.byId(relatedOtherField)) {
-					//dojo.removeClass(dijit.byId(relatedOtherField), "hide");
 					dijit.byId(relatedOtherField).attr("required", true);		
 				}
-//				dojo.byId(relatedOtherField).disabled = false;
 				if (relatedOtherlBLWrpNode) {
 					dojo.removeClass(relatedOtherlBLWrpNode, "hide");
 				}
@@ -146,15 +145,12 @@ function manageChkBoxMultiRelatedOtherField(node, focus) {
 			} else {
 				dojo.byId(relatedOtherField).value = "";
 				if (dijit.byId(relatedOtherField)) {
-					//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 					dijit.byId(relatedOtherField).attr("required", false);
 					dijit.byId(relatedOtherField).reset();
 				}
 				if (relatedOtherlBLWrpNode) {
 					dojo.addClass(relatedOtherlBLWrpNode, "hide");
 				}
-//				dojo.byId(relatedOtherField).disabled = true;
-//				dojo.byId(relatedOtherField).value = "";
 			}
 	        break;
 	    }
@@ -205,25 +201,19 @@ function manageLoopRadioSelections(node, focus, relatedOtherField, isOther, rela
 			dojo.addClass(dojo.byId(relatedOtherFldWrp), "hide");
 		}
 		if (dijit.byId(relatedOtherField)) {
-			//dojo.addClass(dojo.byId(relatedOtherField), "hide");
 			dijit.byId(relatedOtherField).attr("required", false);
-			//dijit.byId(relatedOtherField).reset();
 		}
-		//dojo.byId(relatedOtherField).disabled = true;
 		var foundCheckedValue = false;
-		//dojo.byId(relatedOtherField).value = "";
 
 		dojo.query(nameAttribute).filter(function(radio){
 			if (radio.checked) {
 				//selection was made on 'other' field
 				if (dijit.byId(relatedOtherField)) {
-					//dojo.removeClass(dojo.byId(relatedOtherField), "hide");
 					dijit.byId(relatedOtherField).attr("required", true);		
 				}
 				if (relatedOtherFldWrp) {
 					dojo.removeClass(dojo.byId(relatedOtherFldWrp), "hide");
 				}
-				//dojo.byId(relatedOtherField).disabled = false;
 				foundCheckedValue = true;
 				if (focus) {
 					dojo.byId(relatedOtherField).focus();
@@ -239,7 +229,6 @@ function manageLoopRadioSelections(node, focus, relatedOtherField, isOther, rela
 }
 
 function initializeLoopRadioSelections(node, relatedOtherField, relatedOtherWrpLbl, otherValue, matchesBoolean) {
-	console.log("initializeLoopRadioSelections .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
 	var nodeName = dojo.attr(node, 'name');
 	if (nodeName != null) {
 		var nameAttribute = "[name=" + nodeName + "]";
@@ -249,15 +238,12 @@ function initializeLoopRadioSelections(node, relatedOtherField, relatedOtherWrpL
 	dojo.query(nameAttribute).filter(function(radio){
 		if (radio.checked) {
 			if (otherValue || otherValue == 0) {
-				console.log("other value specified .......................... otherValue, matchesBoolean, radio.value : " + otherValue + " .... " + matchesBoolean + " ... " + radio.value);
 				manageChkBoxRelatedOtherFieldValueBased(radio, false, relatedOtherField, relatedOtherWrpLbl, otherValue, matchesBoolean);
 			} else {
-				console.log("NO other value specified ..........................");
 				manageChkBoxRelatedOtherField(radio, false, relatedOtherField, relatedOtherWrpLbl);			
 			}
 		} 
 	});
-	
 }
 
 function checkIfEducationCompletionRequired(node, completeChkBoxId) {
@@ -548,6 +534,8 @@ function convertRadioSelectionIdToSlangValue(radioId) {
 	return slang[0];
 }
 
+// This approach to capturing inputs was needed originally because of an earlier requirement to have the
+// history tabs dynamically selected.  The requirement went away so this is probably overly complicated now - but it will work as is.
 //the onchange event for all form elements, this adds the IDs of changed values to the array
 function addToFormValues(node, slangVariable) { //this array contains the IDs of every element that has been changed on a page and nothing else. 
 	//console.log("addToFormValue ... : " + slangVariable);
@@ -611,12 +599,12 @@ function addToFormValues(node, slangVariable) { //this array contains the IDs of
 
 function initializeHistoryWritersJSONString() {
 	dojo.byId("addExaminee:historyWritersJsonFormData").value = "{ }";
-//	dojo.byId("addExaminee:historyWritersJsonFormData").value = "";
-//	dojo.byId("addExaminee:referralJsonFormData").value = "";
 }
 
+//This approach to capturing inputs was needed originally because of an earlier requirement to have the
+//history tabs dynamically selected.  The requirement went away so this is probably overly complicated now - but it will work as is.
 function updateHistoryWritersJSONString() { //fires upon save 
-	console.log("updateHistoryWritersJSONString ........................... saving entered data");
+//	console.log("updateHistoryWritersJSONString ........................... saving entered data");
 	var formJsonData = null;
 	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
 		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
@@ -932,7 +920,6 @@ function initializeMedicalConditionsDataRows(node, prvDiagId, curDiagId, prvTrtI
 			dojo.byId(constructMedicalConditionsRowId(node, curTrtId)).disabled = true;
 			dojo.byId(constructMedicalConditionsRowId(node, curTrtId)).checked = false;
 		}
-		
 	}
 }
 
@@ -989,14 +976,10 @@ function medicalConditionsChecked(medCnd, psyCnd, neuroCnd, otherCnd) { //determ
 }
 
 function constructMedicalConditionsRowId(node, newChkBoxId) { //construct id of related check box on the same row.
-
 	var rowIdArray = node.getAttribute("id").split(":");
-	
 	var rowId = rowIdArray[0];
 	var rowNo = rowIdArray[1];
-	
 	return rowId + ':' + rowNo + ':' + newChkBoxId;
-	
 }
 
 function retrieveMedicalConditionSlang(slangVariable, slangPosition) { //construct id of related check box on the same row.
@@ -1008,6 +991,7 @@ function initializeTabs() {
 	reloadActiveTabs();
 }	
 
+// Unfortunately a lot of hard coding of ID's.  This is needed to initialize all the fields.
 function reloadActiveTabs() {
 	
 	var formJsonData = null;
@@ -1020,9 +1004,6 @@ function reloadActiveTabs() {
 	dojo.parser.parse("referralHistInfo");
 	fnConvertHistoryJsonToTab(formJsonData, "referralHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("RefRel"), false, 'strRefRel_Other', 'strRefRelOthLblWrp');
-	//enableOptOutSelection(dojo.byId("noReferral"), 'refPnlGrd');
-	//addToRefFormValues(dojo.byId("noReferral"), "noReferral"); //place no referral selection into JSON string
-	//checkIfRefButtonsShouldBeEnabled('addNew');
 	initializeReferralReasonsOtherFlds();
 	
 	dojo.parser.parse("personalHistInfo");
@@ -1032,8 +1013,6 @@ function reloadActiveTabs() {
 
 	dojo.parser.parse("languageSocialHistInfo");
 	fnConvertHistoryJsonToTab(formJsonData, "languageSocialHistInfo");
-//	initializeLoopRadioSelections(dojo.byId("MilestonesAccord"), "strMilestonesAccord_Other", "strMilestonesAccord_OtherWrp");
-//	manageLoopRadioSelections(dojo.byId("Milestones_Other"), false, "strMilestones_Other", true, "strMilestones_Other_Wrp");
 	initializeDefaultRadioSelectionValues('LengthEnglishExposure');
 	initializeDefaultRadioSelectionValues('LengthEnglishSpoken');
 	initializeDefaultRadioSelectionValues('ObservedEnglish');
@@ -1054,15 +1033,11 @@ function reloadActiveTabs() {
 	checkIfEducationCompletionRequired(dojo.byId("EducMother"), 'EducProgCompMother');
 	checkIfEducationCompletionRequired(dojo.byId("EducFather"), 'EducProgCompFather');
 
-//	dojo.parser.parse("schoolHistInfo");
-//	fnConvertHistoryJsonToTab(formJsonData, "schoolHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolAttendCurrent"), false, "SchoolAttendCurrent_Other", "schCurAtndOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolDiffCurrent"), false, "SchoolDiffCurrent_Other", "schDifOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolAttendPast"), false, "SchoolAttendPast_Other", "schPrvAtndOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolDiffPast"), false, "SchoolDiffPast_Other", "schPrvDifOthLblWrp");
 	
-//	manageNotSpecifiedLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), false, "strAchieveTestRecent_Other", true);
-//	manageNotSpecifiedLoopRadioSelections(dojo.byId("AchieveTestPast_Other"), false, "strAchieveTestPast_Other", true);
 	initializeDefaultRadioSelectionValues('AchieveTestRecent');
 	initializeDefaultRadioSelectionValues('AchieveTestPast');
 	initializeLoopRadioSelections(dojo.byId("AchieveTestRecent_Other"), "strAchieveTestRecent_Other", "strAchieveTestRecent_Other_Wrp", 0, false);
@@ -1105,6 +1080,8 @@ function reloadActiveTabs() {
 	checkIfPositionTitleRequired(dojo.byId("PreviousEmployStatus"), 'PreviousJobTitle', 'PreviousJobTitleWrp');
 }
 
+//This approach to capturing inputs was needed originally because of an earlier requirement to have the
+//history tabs dynamically selected.  The requirement went away so this is probably overly complicated now - but it will work as is.
 function fnConvertHistoryJsonToTab(dataElementId, tabId) {
 	try {
 		
@@ -1234,7 +1211,6 @@ function isTabInvalid(tabId, tabLabel) {
 				if (widget && !widget.validate()) {
 					dijit.byId(elName).focus();
 					errorsExist = true;
-//					break;
 				} 
 			}
 		}
@@ -1246,9 +1222,9 @@ function isTabInvalid(tabId, tabLabel) {
 		}
 		
 		if (errorsExist) {
-			dojo.style(tabLabel, "color", "rgb(160,0,0)"); //#SMW 10/8
+			dojo.style(tabLabel, "color", "rgb(160,0,0)"); 
 		} else {
-			dojo.style(tabLabel, "color", "black"); //#SMW 10/8
+			dojo.style(tabLabel, "color", "black"); 
 		}
 		
 		return errorsExist;
@@ -1283,312 +1259,6 @@ function checkParentNode(node, parentNodeId, childList) { //determines whether r
 	}
 }
 
-
-//the onchange event for all referral form elements, this adds the IDs of changed values to the array
-/*
-function addToRefFormValues(node, slangVariable) { //this array contains the IDs of every element that has been changed on a page and nothing else. 
-	console.log("addToRefFormValue ... : " + slangVariable);
-	var formValsLocal = refFormValues; 
-	try {
-		var nodeId = node.getAttribute("id");
-	} catch(e) {
-		node = dijit.byId(slangVariable);
-		console.log("addToRefFormValue ... node is a dijit : " + node.domNode.getAttribute("name"));
-		var nodeId = node.domNode.getAttribute("id");
-//		var nodeId = node.domNode.getAttribute("id"); //if it's a Dijit
-	}
-
-	if (nodeId) {  
-		console.log("addToRefFormValue ... nodeId & node.value : " + nodeId + " ... " + node.value);
-		var nodeValue;
-		var nodeAttr;
-		var existsInFormValues = false;
-		var length = formValsLocal.length;
-		for (var i = 0; i < length; i++) { 
-			if (formValsLocal[i].ID == nodeId) { 
-				existsInFormValues = true;
-				var FVIndex = i;
-			}
-		} 
-		if (existsInFormValues == false) { //if the element doesn't already exist
-			console.log("addToRefFormValue ... does not exist in forms array");
-			var nodeName = node.tagName; //the tag name for the current node, i.e. 'input' or 'select'
-			if (!nodeName) { // nodeName is undefined, so it must be a dijit
-				nodeName = node.domNode.tagName;
-			}
-			if (nodeName == 'SELECT') {
-				nodeAttr = "selectBox";
-			}
-			else {
-				nodeAttr = dojo.attr(node, "type");
-			}
-		}
-		else {
-			//the item already exists in the FormValues array
-			console.log("addToRefFormValue ... updating array with new value : " + formValsLocal[FVIndex].ATTR);
-			nodeAttr = formValsLocal[FVIndex].ATTR; 
-		}
-		if (nodeAttr == "checkbox") {
-			if (node.checked) {
-				nodeValue = "checked";
-			}
-			else {
-				nodeValue = "unchecked";
-			}
-		}
-		else {
-			nodeValue = node.value;
-		}
-		if (existsInFormValues == false) {
-			refFormValues.push({ID: nodeId, ATTR: nodeAttr, VALUE: nodeValue, SLANG: slangVariable}); //add it to the array that says it needs to be updated
-			console.log("refFormValues.push : " +nodeId + " .. " + nodeAttr + " .. " + nodeValue + " .. " + slangVariable);
-		}
-		else {
-			var oldValue = formValsLocal[FVIndex].VALUE; 
-			if (nodeValue != oldValue){
-				refFormValues[FVIndex].VALUE = nodeValue;
-			}
-		}
-	}
-}
-*/
-/*
-function updateRefJSONString() { //fires upon save 
-	console.log("updateRefJSONString ........................... saving entered data");
-	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:referralJsonFormData")) {
-//		console.log("updateHistoryWritersJSONString ........................... edit mode");
-		formJsonData = dojo.byId("editExamineeForm:referralJsonFormData");
-	} else if (dojo.byId("addExaminee:referralJsonFormData")) {
-//		console.log("updateHistoryWritersJSONString ........................... add mode");
-		formJsonData = dojo.byId("addExaminee:referralJsonFormData");
-	}
-	
-	try {
-	
-	if (formJsonData != null) {
-		console.log("updateRefJSONString ........................... updating JSON string! : " + formJsonData.value);
-		JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be manipulated here 
-		console.log("updateRefJSONString ........................... beginning loop to add values! : " + refFormValues.value);
-		var formValsLocal = refFormValues; 
-		for (i = 0; i < formValsLocal.length; i++) { //for each element of the formValues array [the IDs of elements that will be updated]
-			var nodeId = formValsLocal[i].ID; 
-			var nodeAttr = formValsLocal[i].ATTR; 
-			var nodeVal = formValsLocal[i].VALUE;
-			var nodeSlang = formValsLocal[i].SLANG;
-			console.log("updateRefJSONString ........................... nodeId, nodeAttr, nodeVal, nodeSlang: " + nodeId + " ... " + nodeAttr + " ... " + nodeVal + " ... " + nodeSlang);
-			if (nodeSlang in JsonData) { //if the JSON string already includes this element
-				console.log("updateRefJSONString ........................... nodeSlang in JsonData");
-				if (nodeAttr == "checkbox"){ 
-					if (nodeVal == "unchecked") { 
-						if (nodeId != nodeSlang) {
-							delete JsonData[nodeId]; 
-						}
-						delete JsonData[nodeSlang]; 
-					}
-				}
-				else { //formValues is not a checkbox
-					if (nodeVal == "" || nodeVal == null || nodeVal == dropDownNoSelectionValue) {  
-						delete JsonData[nodeSlang]; //remove from the JSON
-						//remove related date field if it exist
-						var richDateId = nodeSlang + "InputDate";
-						if (richDateId in JsonData) {
-							delete JsonData[richDateId];
-						}
-					}
-					else {
-						JsonData[nodeSlang] = nodeVal; 
-					}
-				}
-			} 
-			else {  //if a JSON object is not defined for this current id
-				console.log("updateRefJSONString ........................... nodeSlang NOT in JsonData");
-				if (nodeAttr == "checkbox") { 
-					if (nodeVal == "checked") {
-						if (nodeId != nodeSlang) {
-							JsonData[nodeId] = nodeVal; 
-						}
-						JsonData[nodeSlang] = "1"; 
-					}
-				}
-				else {
-					if (!(nodeVal == "" || nodeVal == null || nodeVal == dropDownNoSelectionValue)) { 
-						if (nodeId != nodeSlang) {
-							JsonData[nodeId] = nodeVal; 
-						}
-						JsonData[nodeSlang] = nodeVal; 
-					}
-				}
-			}
-		}
-		var revisedJson = dojo.toJson(JsonData);
-		console.log("updateRefJSONString ........................... setting hidden referral field : " + revisedJson);
-		dojo.attr(formJsonData, "value", revisedJson);
-		refFormValues = [];
-//		console.log("AFTER: " + dojo.fromJson(dojo.byId("editAssessmentForm:manualEntryJsonFormData").value));
-		console.log("updateRefJSONString ........................... update complete");
-	}
-	} catch (e) {
-		// eat the exception. This is will be thrown when there is no JSON data.
-		// alert(e);
-		console.log('Error trying to save selected values to Referral JSON string - '+e.message);
-	}
-	
-}
-*/
-/*
-function retrieveReferralJsonData() { 
-	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:referralJsonFormData")) {
-		formJsonData = dojo.byId("editExamineeForm:referralJsonFormData").value;
-	} else if (dojo.byId("addExaminee:referralJsonFormData")) {
-		formJsonData = dojo.byId("addExaminee:referralJsonFormData").value;
-	}
-	return formJsonData;
-	
-}
-*/
-/*
-function resetReferralJsonData() { 
-
-	if (dojo.byId("editExamineeForm:referralJsonFormData")) {
-		dojo.byId("editExamineeForm:referralJsonFormData").value = "{ }";
-		formJsonData = "editExamineeForm:referralJsonFormData";
-	} else if (dojo.byId("addExaminee:referralJsonFormData")) {
-		dojo.byId("addExaminee:referralJsonFormData").value = "{ }";
-		formJsonData = "addExaminee:referralJsonFormData";
-	}
-	
-	dojo.parser.parse("referralHistPanel");
-	resetTabValues("referralHistPanel");
-	fnConvertHistoryJsonToTab(formJsonData, "referralHistInfo");
-	manageChkBoxRelatedOtherField(dojo.byId("RefRel"), false, 'strRefRel_Other', 'strRefRelOthLblWrp');
-	initializeReferralReasonsOtherFlds();
-	//resetTabValues("referralHistPanel");
-}
-*/
-/*
-function resetTabValues(tabId) {
-	try {
-		queryString = '[id^="' + tabId + '"]';
-		
-		var nodeList = dojo.query(queryString).query("*");
-		
-		for (var i = 0; i<nodeList.length; i++) {
-			var elName = '';
-			try {
-				elName = nodeList[i].attributes['name'].nodeValue;
-			} catch (e) {}
-			
-			if(elName!='') {
-				var element = nodeList[i];
-				if (element.type == 'radio') {
-					element.checked = false;
-				} else if (element.type == 'checkbox') {
-					element.checked = false;
-				} else if (element.type == 'select-one') {
-					element.value = dropDownNoSelectionValue;
-				} else {
-					var widget = dijit.byId(elName);
-					if (widget && widget.declaredClass == 'dijit.form.Select') {
-						widget.attr("value", '');
-					} else {
-						element.value = '';
-					}
-				}
-			}
-		}
-
-	} catch (e) {
-		// eat the exception. This is will be thrown when there is no JSON data.
-		// alert(e);
-		console.log('Error while converting JSON to Form - '+e.message);
-	}
-}
-*/
-/*
-function reloadReferralTabs() {
-	console.log("reloadReferralTabs .......................................  ");
-	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:referralJsonFormData")) {
-		formJsonData = "editExamineeForm:referralJsonFormData";
-	} else if (dojo.byId("addExaminee:referralJsonFormData")) {
-		formJsonData = "addExaminee:referralJsonFormData";
-	}
-	dojo.parser.parse("referralHistPanel");
-	resetTabValues("referralHistPanel");
-	fnConvertHistoryJsonToTab(formJsonData, "referralHistInfo");
-	manageChkBoxRelatedOtherField(dojo.byId("RefRel"), false, 'strRefRel_Other', 'strRefRelOthLblWrp');
-	initializeReferralReasonsOtherFlds();
-	console.log("reloadReferralTabs ....................................completed  ");
-
-}
-*/
-/*
-function enableOptOutSelection(optOutNode, pnlToHideId) {
-	
-	if (optOutNode.checked) {
-		dojo.addClass(dojo.byId(pnlToHideId), "hidden"); //hide all raw scores sections
-		
-	} else {
-		dojo.removeClass(dojo.byId(pnlToHideId), "hidden"); //hide all raw scores sections
-	}
-	
-}
-*/
-/*
-function isReferralJsonDataEntered() {
-	console.log("isReferralJsonDataEntered() .............................");
-	var formJsonData = null;
-	var totRecs = null;
-	if (dojo.byId("editExamineeForm:referralJsonFormData")) {
-		formJsonData = dojo.byId("editExamineeForm:referralJsonFormData");
-		var totRecs = dojo.byId('editExamineeForm:referralNoOfRecs');
-	} else if (dojo.byId("addExaminee:referralJsonFormData")) {
-		formJsonData = dojo.byId("addExaminee:referralJsonFormData");
-		var totRecs = dojo.byId('addExaminee:referralNoOfRecs');
-	}
-	
-	JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be tested here 
-
-	console.log("isReferralJsonDataEntered() .......................entering loop to check for data : " + formJsonData.value);
-	for(var i in JsonData) { 
-		console.log("isReferralJsonDataEntered() ....................... found data");
-		return true;
-	}
-	
-	console.log("isReferralJsonDataEntered() .......................totRecs : " + totRecs.value);
-
-	if (totRecs && !(totRecs.value.indexOf('0') > -1)) {
-		return true;
-	}
-	
-	return false;
-}
-*/
-/*
-function checkIfRefButtonsShouldBeEnabled(buttonId) {
-	console.log("checkIfRefButtonsShouldBeEnabled(buttonId) ...................................");
-	updateRefJSONString();
-	var btn = dojo.byId(buttonId);
-	if (btn) {
-		console.log("checkIfRefButtonsShouldBeEnabled(buttonId) ..............................btn does exist");
-		var dataEntered = false;
-		for(var i in JsonData) { 
-			dataEntered = true;
-			break;
-		}
-		if (dataEntered) {
-			console.log("checkIfRefButtonsShouldBeEnabled(buttonId) ..............................btn will be enabled : " + refFormValues[0]);
-			btn.disabled = false;
-		} else {
-			console.log("checkIfRefButtonsShouldBeEnabled(buttonId) ..............................btn will be disabled");
-			btn.disabled = true;
-		}
-	}
-}
-*/
-
 function manageRefReasonsChkBoxRelatedOtherField(node, nodeName, focus, relatedOtherField, relatedOtherFieldWrp) { //determines whether related other field should be enabled
 	var nodeSelected = false;
 	if (node.checked && (nodeName == "Other" || nodeName == "other" )) {
@@ -1598,7 +1268,6 @@ function manageRefReasonsChkBoxRelatedOtherField(node, nodeName, focus, relatedO
 		if (dijit.byId(relatedOtherField)) {
 			dojo.removeClass(dojo.byId(relatedOtherFieldWrp), "hide");
 			dijit.byId(relatedOtherField).attr("required", true);
-//			dijit.byId(relatedOtherField).attr("disabled", false);
 		}
 		if (focus) {
 			dojo.byId(relatedOtherField).focus();
@@ -1610,7 +1279,6 @@ function manageRefReasonsChkBoxRelatedOtherField(node, nodeName, focus, relatedO
 			dojo.addClass(dojo.byId(relatedOtherFieldWrp), "hide");
 			dijit.byId(relatedOtherField).attr("required", false);
 			dijit.byId(relatedOtherField).reset();
-//			dijit.byId(relatedOtherField).attr("disabled", true);
 		}
 	}
 }
@@ -1660,24 +1328,18 @@ function manageChkBoxRelatedAcrdToOtherField(node, focus, relatedOtherField, rel
 }
 
 function manageChkBoxRelatedOtherFieldValueBased(node, focus, relatedOtherField, relatedOtherLbl, otherValue, matchesBoolean) { //determines whether related other field should be enabled
-	console.log("manageChkBoxRelatedOtherFieldValueBased .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
-
 	var nodeSelected = false;
 	if (matchesBoolean) {
-		console.log("matchesBoolean .......................... is true");
 		if (node.value == otherValue) {
 			nodeSelected = true;
 		}	
 	} else {
-		console.log("matchesBoolean .......................... is false");
 		if (node.value != otherValue) {
 			nodeSelected = true;
 		}	
 	}
 	
 	if (nodeSelected) {
-		console.log("nodeSelected .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
-		
 		if (dijit.byId(relatedOtherField)) {
 			dijit.byId(relatedOtherField).attr("required", true);		
 		}
@@ -1689,7 +1351,6 @@ function manageChkBoxRelatedOtherFieldValueBased(node, focus, relatedOtherField,
 		}
 	}
 	else {
-		console.log("NOT nodeSelected .......................... otherValue, matchesBoolean : " + otherValue + " .... " + matchesBoolean);
 		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
 			dijit.byId(relatedOtherField).attr("required", false);
@@ -1710,21 +1371,17 @@ function manageLoopRadioSelectionsForMilestones(node, focus, relatedOtherField, 
 			var nameAttribute = "[name=" + dojo.attr(node, 'id') + "]";
 		}
 
-		//dojo.byId(relatedOtherField).disabled = true;
 		var foundCheckedValue = false;
-		//dojo.byId(relatedOtherField).value = "";
 
 		dojo.query(nameAttribute).filter(function(radio){
 			if (radio.checked && radio.value != 0) {
 				//selection was made on 'other' field
 				if (dijit.byId(relatedOtherField)) {
-					//dojo.removeClass(dojo.byId(relatedOtherField), "hide");
 					dijit.byId(relatedOtherField).attr("required", true);		
 				}
 				if (relatedOtherFldWrp) {
 					dojo.removeClass(dojo.byId(relatedOtherFldWrp), "hide");
 				}
-				//dojo.byId(relatedOtherField).disabled = false;
 				foundCheckedValue = true;
 				if (focus) {
 					dojo.byId(relatedOtherField).focus();
@@ -1736,7 +1393,6 @@ function manageLoopRadioSelectionsForMilestones(node, focus, relatedOtherField, 
 				dojo.addClass(dojo.byId(relatedOtherFldWrp), "hide");
 			}
 			if (dijit.byId(relatedOtherField)) {
-				//dojo.addClass(dojo.byId(relatedOtherField), "hide");
 				dijit.byId(relatedOtherField).attr("required", false);
 				dijit.byId(relatedOtherField).reset();
 			}
@@ -1822,7 +1478,6 @@ function noSensoryConditionsChecked(node, cndName, othTxtFld, othTxtWrpFld) { //
 			}
 		});
 		if (dijit.byId(othTxtFld)) {
-			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(othTxtFld).value = '';
 			dijit.byId(othTxtFld).attr("required", false);	
 			dijit.byId(othTxtFld).reset();
@@ -1852,7 +1507,6 @@ function noMotorConditionsChecked(node, cndName, grossOthTxtFld, grossOthTxtWrpF
 			}
 		});
 		if (dijit.byId(grossOthTxtFld)) {
-			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(grossOthTxtFld).value = '';
 			dijit.byId(grossOthTxtFld).attr("required", false);	
 			dijit.byId(grossOthTxtFld).reset();
@@ -1861,7 +1515,6 @@ function noMotorConditionsChecked(node, cndName, grossOthTxtFld, grossOthTxtWrpF
 			dojo.addClass(dojo.byId(grossOthTxtWrpFld), "hide");
 		}
 		if (dijit.byId(fineOthTxtFld)) {
-			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(fineOthTxtFld).value = '';
 			dijit.byId(fineOthTxtFld).attr("required", false);	
 			dijit.byId(fineOthTxtFld).reset();
@@ -1918,7 +1571,6 @@ function initSensoryConditions(node, cndName, othTxtFld, othTxtWrpFld) { //deter
 			}
 		});
 		if (dijit.byId(othTxtFld)) {
-			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(othTxtFld).value = '';
 			dijit.byId(othTxtFld).attr("required", false);	
 			dijit.byId(othTxtFld).reset();
@@ -1948,7 +1600,6 @@ function initMotorConditions(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, f
 			}
 		});
 		if (dijit.byId(grossOthTxtFld)) {
-			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(grossOthTxtFld).value = '';
 			dijit.byId(grossOthTxtFld).attr("required", false);	
 			dijit.byId(grossOthTxtFld).reset();
@@ -1957,7 +1608,6 @@ function initMotorConditions(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, f
 			dojo.addClass(dojo.byId(grossOthTxtWrpFld), "hide");
 		}
 		if (dijit.byId(fineOthTxtFld)) {
-			//dojo.addClass(dijit.byId(relatedOtherField), "hide");
 			dijit.byId(fineOthTxtFld).value = '';
 			dijit.byId(fineOthTxtFld).attr("required", false);	
 			dijit.byId(fineOthTxtFld).reset();
@@ -1971,7 +1621,6 @@ function initMotorConditions(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, f
 		});
 	}
 }
-
 
 function checkForTabElementsEntered(tabId) { //if elements exist, add marker to JSON string.  This will be used by report options logic. 
 	var formJsonData = null;
@@ -2004,7 +1653,6 @@ function checkForTabElementsEntered(tabId) { //if elements exist, add marker to 
 
 			if (nodeId) {  
 				if (nodeId in JsonData) { //if the JSON string exists, add tab id and break out of loop.
-					console.log("checkForTabElementsEntered ... found node in JSON string ");
 					JsonData[tabId] = '1'; 
 					break;
 				} 
