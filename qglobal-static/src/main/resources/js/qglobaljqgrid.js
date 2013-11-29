@@ -421,7 +421,7 @@ function setSelectedRadio() {
 
                 sortorder: isColState ? myColumnsState.sortorder : 'desc',
 
-                rownumbers: true,
+                rownumbers: showRowNum,
 
                 ignoreCase: true,
                 
