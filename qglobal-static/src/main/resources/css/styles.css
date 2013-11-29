@@ -3228,34 +3228,36 @@ div .basic-buttonForPopUp{
       color: buttontext;
 }
 #purchased{
-              padding-right: 66px;
-              font-weight: bolder;
+              padding-right: 15px;
+              font-weight: normal !important;
+			  padding-left: 90px;
 
 }
 #allocated{
          
-              padding-right: 40px;
-             font-weight: bolder;
+              padding-right: 15px;
+             font-weight: normal !important;
 }
 #available{
-                font-weight: bolder;
+                font-weight: normal !important;
+				padding-right: 15px;
 }
 #purchasedDown{
                 float: none;
-     padding-right: 65px;
-     font-weight: 400;
+     padding-right: 60px;
+     font-weight: bolder;
       text-align: center;
 }
 
 #allocatedDown{
-    font-weight: 400;
+    font-weight: bolder;
     text-align: center;
-      padding-right: 36px;
+      padding-right: 60px;
 }
 
 #availableDown{
      
-    font-weight: 400;
+    font-weight: bolder;
           text-align: center;
 }
 #pur{
