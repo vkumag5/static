@@ -592,6 +592,7 @@ function addToFormValues(node, slangVariable) { //this array contains the IDs of
 			var oldValue = formValsLocal[FVIndex].VALUE; 
 			if (nodeValue != oldValue){
 				formValues[FVIndex].VALUE = nodeValue;
+				//console.log("formValues[FVIndex].VALUE = nodeValue : " + nodeValue);
 			}
 		}
 	}
@@ -604,7 +605,7 @@ function initializeHistoryWritersJSONString() {
 //This approach to capturing inputs was needed originally because of an earlier requirement to have the
 //history tabs dynamically selected.  The requirement went away so this is probably overly complicated now - but it will work as is.
 function updateHistoryWritersJSONString() { //fires upon save 
-//	console.log("updateHistoryWritersJSONString ........................... saving entered data");
+	//console.log("updateHistoryWritersJSONString ........................... saving entered data");
 	var formJsonData = null;
 	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
 		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
@@ -678,6 +679,9 @@ function updateHistoryWritersJSONString() { //fires upon save
 		checkForTabElementsEntered("educationHistInfo");
 		checkForTabElementsEntered("healthHistInfo");
 		checkForTabElementsEntered("employmentHistInfo");
+		
+		//console.log("updateHistoryWritersJSONString ........................... completed saving data");
+		
 	}
 }
 
@@ -1020,7 +1024,7 @@ function reloadActiveTabs() {
 	initializeLoopRadioSelections(dojo.byId("LengthEnglishExposure"), "strLengthEnglishExposure", "strLengthEnglishExposure_OtherWrp");
 	initializeLoopRadioSelections(dojo.byId("LengthEnglishSpoken"), "strLengthEnglishSpoken_Other", "strLengthEnglishSpoken_OtherWrp");
 	initializeLoopRadioSelections(dojo.byId("Milestones_Other"), "strMilestones_Other", "strMilestones_Other_Wrp", 0, false);
-	manageChkBoxRelatedOtherField(dojo.byId("MilestonesAccord"), false, 'strMilestonesAccord_Other', 'strMilestonesAccord_OtherWrp');
+	manageChkBoxRelatedOtherField(dojo.byId("DevelopmentAccord"), false, 'strDevelopmentAccord_Other', 'strDevelopmentAccord_OtherWrp');
 	manageLoopedChkBoxRelatedOtherField(dojo.byId("Birth_Other"), false, 'strPregBirth_Other', 'Birth_Other', 'strPregBirth_OtherWrp');
 
 	dojo.parser.parse("educationHistInfo");
@@ -1170,7 +1174,7 @@ function removeTabElementsFromFormValues(node, tabId) { //this array contains th
 
 				if (nodeId) {  
 					if (nodeId in JsonData) { //if the JSON string exists, remove it
-						console.log("removeTabElementsFromFormValues ... found node in JSON string ");
+						//console.log("removeTabElementsFromFormValues ... found node in JSON string ");
 						delete JsonData[nodeId]; 
 					} 
 				}
