@@ -1680,3 +1680,30 @@ function showHideExampleSentences(showHideDiv, switchImgTag) {
     	imageEle.innerHTML = '<img src="/qg/static/images/minus.gif">';
     }
 }
+
+//This approach to capturing inputs was needed originally because of an earlier requirement to have the
+//history tabs dynamically selected.  The requirement went away so this is probably overly complicated now - but it will work as is.
+//the onchange event for all form elements, this adds the IDs of changed values to the array
+function addToFormDateValues(node, slangVariable, additionalSlangIndicator) {
+	//console.log("addToFormDateValues .......................................");
+	var formJsonData = null;
+	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
+	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
+	}
+	if (formJsonData != null) {
+		JsonData = dojo.fromJson(formJsonData.value);
+	}
+	if (!node.value.length) {
+		if (additionalSlangIndicator in JsonData) {
+			delete JsonData[additionalSlangIndicator];
+		} 
+	} else {
+		JsonData[additionalSlangIndicator] = "1"; 
+	}
+	addToFormValues(node, slangVariable);
+	
+	var revisedJson = dojo.toJson(JsonData);
+	dojo.attr(formJsonData, "value", revisedJson);
+}
