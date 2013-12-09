@@ -1908,5 +1908,10 @@ float: none;
 }
 
 .assetErrorMsgIE{
-	margin-top: -87px\9 !important;
+margin-top:-88px\9 !important;
+}
+
+#ieOnly
+{
+margin-bottom:9px\9 !important;
 }
