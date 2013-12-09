@@ -1219,12 +1219,6 @@ function isTabInvalid(tabId, tabLabel) {
 			}
 		}
 		
-		if (tabId === 'healthHistInfo') {
-			if (!checkForSubmit()) {
-				errorsExist = true;
-			}
-		}
-		
 		if (errorsExist) {
 			dojo.style(tabLabel, "color", "rgb(160,0,0)"); 
 		} else {
