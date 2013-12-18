@@ -72,7 +72,7 @@ function manageLoopedChkBoxRelatedOtherField(node, focus, relatedOtherField, oth
 	if (nodeSelected) {
 		
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", true);		
+			dijit.byId(relatedOtherField).required = true;
 		}
 		if (relatedOtherLblWrp) {
 			dojo.removeClass(dojo.byId(relatedOtherLblWrp), "hide");
@@ -86,7 +86,7 @@ function manageLoopedChkBoxRelatedOtherField(node, focus, relatedOtherField, oth
 			dojo.byId(relatedOtherField).value = "";
 
 			if (dijit.byId(relatedOtherField)) {
-				dijit.byId(relatedOtherField).attr("required", false);	
+				dijit.byId(relatedOtherField).required = false;
 				dijit.byId(relatedOtherField).reset();
 			}
 			
@@ -134,7 +134,7 @@ function manageChkBoxMultiRelatedOtherField(node, focus) {
 	    	relatedOtherlBLWrpNode = dojo.byId(relatedOtherLblWrp);
 			if (node.checked) {
 				if (dijit.byId(relatedOtherField)) {
-					dijit.byId(relatedOtherField).attr("required", true);		
+					dijit.byId(relatedOtherField).required = true;
 				}
 				if (relatedOtherlBLWrpNode) {
 					dojo.removeClass(relatedOtherlBLWrpNode, "hide");
@@ -145,7 +145,7 @@ function manageChkBoxMultiRelatedOtherField(node, focus) {
 			} else {
 				dojo.byId(relatedOtherField).value = "";
 				if (dijit.byId(relatedOtherField)) {
-					dijit.byId(relatedOtherField).attr("required", false);
+					dijit.byId(relatedOtherField).required = false;
 					dijit.byId(relatedOtherField).reset();
 				}
 				if (relatedOtherlBLWrpNode) {
@@ -166,7 +166,7 @@ function manageChkBoxRelatedOtherField(node, focus, relatedOtherField, relatedOt
 	
 	if (nodeSelected) {
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", true);		
+			dijit.byId(relatedOtherField).required = true;
 		}
 		if (relatedOtherLbl) {
 			dojo.removeClass(dojo.byId(relatedOtherLbl), "hide");
@@ -178,7 +178,7 @@ function manageChkBoxRelatedOtherField(node, focus, relatedOtherField, relatedOt
 	else {
 		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", false);
+			dijit.byId(relatedOtherField).required = false;
 			dijit.byId(relatedOtherField).reset();
 		}
 		if (relatedOtherLbl) {
@@ -201,7 +201,7 @@ function manageLoopRadioSelections(node, focus, relatedOtherField, isOther, rela
 			dojo.addClass(dojo.byId(relatedOtherFldWrp), "hide");
 		}
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", false);
+			dijit.byId(relatedOtherField).required = false;
 		}
 		var foundCheckedValue = false;
 
@@ -209,7 +209,7 @@ function manageLoopRadioSelections(node, focus, relatedOtherField, isOther, rela
 			if (radio.checked) {
 				//selection was made on 'other' field
 				if (dijit.byId(relatedOtherField)) {
-					dijit.byId(relatedOtherField).attr("required", true);		
+					dijit.byId(relatedOtherField).required = true;
 				}
 				if (relatedOtherFldWrp) {
 					dojo.removeClass(dojo.byId(relatedOtherFldWrp), "hide");
@@ -272,7 +272,7 @@ function checkIfPositionTitleRequired(node, positionTextId, rltPosLblWrp) {
 		if (options[i].selected) {
 			if (jobsWithPositionTitle.indexOf(options[i].text) > -1) {
 				if (dijit.byId(positionTextId)) {
-					dijit.byId(positionTextId).attr("required", true);		
+					dijit.byId(positionTextId).required = true;
 					dojo.byId(positionTextId).focus();
 				}
 				if (rltPosLblWrp) {
@@ -282,7 +282,7 @@ function checkIfPositionTitleRequired(node, positionTextId, rltPosLblWrp) {
 			else {
 				if (dijit.byId(positionTextId)) {
 					dijit.byId(positionTextId).value = "";
-					dijit.byId(positionTextId).attr("required", false);
+					dijit.byId(positionTextId).required = false;
 					dijit.byId(positionTextId).reset();
 				}
 				if (rltPosLblWrp) {
@@ -303,7 +303,7 @@ function setCorrespondingHealthCheckBox(node, checkBoxId, noMedCndId, unknownMed
 		if (medCndOthersCheckboxArray.indexOf(otherId) > -1) {
 			if (!dojo.byId(relatedNodeId).checked) {
 				if (dijit.byId(otherTextId)) {
-					dijit.byId(otherTextId).attr("required", true);		
+					dijit.byId(otherTextId).required = true;
 				}
 				dijit.byId(otherTextId).focus();
 			}
@@ -319,7 +319,7 @@ function setCorrespondingHealthCheckBox(node, checkBoxId, noMedCndId, unknownMed
 		if (medCndOthersCheckboxArray.indexOf(otherId) > -1) {
 			if (!dojo.byId(relatedNodeId).checked) {
 				if (dijit.byId(otherTextId)) {
-					dijit.byId(otherTextId).attr("required", false);
+					dijit.byId(otherTextId).required = false;
 					dijit.byId(otherTextId).reset();
 				}
 			}
@@ -1265,7 +1265,7 @@ function manageRefReasonsChkBoxRelatedOtherField(node, nodeName, focus, relatedO
 	if (nodeSelected) {
 		if (dijit.byId(relatedOtherField)) {
 			dojo.removeClass(dojo.byId(relatedOtherFieldWrp), "hide");
-			dijit.byId(relatedOtherField).attr("required", true);
+			dijit.byId(relatedOtherField).required = true;
 		}
 		if (focus) {
 			dojo.byId(relatedOtherField).focus();
@@ -1275,7 +1275,7 @@ function manageRefReasonsChkBoxRelatedOtherField(node, nodeName, focus, relatedO
 		if (dijit.byId(relatedOtherField)) {
 			dojo.byId(relatedOtherField).value = "";
 			dojo.addClass(dojo.byId(relatedOtherFieldWrp), "hide");
-			dijit.byId(relatedOtherField).attr("required", false);
+			dijit.byId(relatedOtherField).required = false;
 			dijit.byId(relatedOtherField).reset();
 		}
 	}
@@ -1298,7 +1298,7 @@ function manageChkBoxRelatedAcrdToOtherField(node, focus, relatedOtherField, rel
 	}	
 	if (nodeSelected) {
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", true);		
+			dijit.byId(relatedOtherField).required = true;
 		}
 		if (relatedOtherLbl) {
 			dojo.removeClass(dojo.byId(relatedOtherLbl), "hide");
@@ -1313,7 +1313,7 @@ function manageChkBoxRelatedAcrdToOtherField(node, focus, relatedOtherField, rel
 	else {
 		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", false);
+			dijit.byId(relatedOtherField).required = false;
 			dijit.byId(relatedOtherField).reset();
 		}
 		if (relatedOtherLbl) {
@@ -1339,7 +1339,7 @@ function manageChkBoxRelatedOtherFieldValueBased(node, focus, relatedOtherField,
 	
 	if (nodeSelected) {
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", true);		
+			dijit.byId(relatedOtherField).required = true;
 		}
 		if (relatedOtherLbl) {
 			dojo.removeClass(dojo.byId(relatedOtherLbl), "hide");
@@ -1351,7 +1351,7 @@ function manageChkBoxRelatedOtherFieldValueBased(node, focus, relatedOtherField,
 	else {
 		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
-			dijit.byId(relatedOtherField).attr("required", false);
+			dijit.byId(relatedOtherField).required = false;
 			dijit.byId(relatedOtherField).reset();
 		}
 		if (relatedOtherLbl) {
@@ -1375,7 +1375,7 @@ function manageLoopRadioSelectionsForMilestones(node, focus, relatedOtherField, 
 			if (radio.checked && radio.value != 0) {
 				//selection was made on 'other' field
 				if (dijit.byId(relatedOtherField)) {
-					dijit.byId(relatedOtherField).attr("required", true);		
+					dijit.byId(relatedOtherField).required = true;
 				}
 				if (relatedOtherFldWrp) {
 					dojo.removeClass(dojo.byId(relatedOtherFldWrp), "hide");
@@ -1391,7 +1391,7 @@ function manageLoopRadioSelectionsForMilestones(node, focus, relatedOtherField, 
 				dojo.addClass(dojo.byId(relatedOtherFldWrp), "hide");
 			}
 			if (dijit.byId(relatedOtherField)) {
-				dijit.byId(relatedOtherField).attr("required", false);
+				dijit.byId(relatedOtherField).required = false;
 				dijit.byId(relatedOtherField).reset();
 			}
 			dojo.byId(relatedOtherField).value = "";
@@ -1477,7 +1477,7 @@ function noSensoryConditionsChecked(node, cndName, othTxtFld, othTxtWrpFld) { //
 		});
 		if (dijit.byId(othTxtFld)) {
 			dijit.byId(othTxtFld).value = '';
-			dijit.byId(othTxtFld).attr("required", false);	
+			dijit.byId(othTxtFld).required = false;
 			dijit.byId(othTxtFld).reset();
 		}
 		if (othTxtWrpFld) {
@@ -1506,7 +1506,7 @@ function noMotorConditionsChecked(node, cndName, grossOthTxtFld, grossOthTxtWrpF
 		});
 		if (dijit.byId(grossOthTxtFld)) {
 			dijit.byId(grossOthTxtFld).value = '';
-			dijit.byId(grossOthTxtFld).attr("required", false);	
+			dijit.byId(grossOthTxtFld).required = false;
 			dijit.byId(grossOthTxtFld).reset();
 		}
 		if (grossOthTxtWrpFld) {
@@ -1514,7 +1514,7 @@ function noMotorConditionsChecked(node, cndName, grossOthTxtFld, grossOthTxtWrpF
 		}
 		if (dijit.byId(fineOthTxtFld)) {
 			dijit.byId(fineOthTxtFld).value = '';
-			dijit.byId(fineOthTxtFld).attr("required", false);	
+			dijit.byId(fineOthTxtFld).required = false;
 			dijit.byId(fineOthTxtFld).reset();
 		}
 		if (fineOthTxtWrpFld) {
@@ -1570,7 +1570,7 @@ function initSensoryConditions(node, cndName, othTxtFld, othTxtWrpFld) { //deter
 		});
 		if (dijit.byId(othTxtFld)) {
 			dijit.byId(othTxtFld).value = '';
-			dijit.byId(othTxtFld).attr("required", false);	
+			dijit.byId(othTxtFld).required = false;
 			dijit.byId(othTxtFld).reset();
 		}
 		if (othTxtWrpFld) {
@@ -1599,7 +1599,7 @@ function initMotorConditions(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, f
 		});
 		if (dijit.byId(grossOthTxtFld)) {
 			dijit.byId(grossOthTxtFld).value = '';
-			dijit.byId(grossOthTxtFld).attr("required", false);	
+			dijit.byId(grossOthTxtFld).required = false;
 			dijit.byId(grossOthTxtFld).reset();
 		}
 		if (grossOthTxtWrpFld) {
@@ -1607,7 +1607,7 @@ function initMotorConditions(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, f
 		}
 		if (dijit.byId(fineOthTxtFld)) {
 			dijit.byId(fineOthTxtFld).value = '';
-			dijit.byId(fineOthTxtFld).attr("required", false);	
+			dijit.byId(fineOthTxtFld).required = false;
 			dijit.byId(fineOthTxtFld).reset();
 		}
 		if (fineOthTxtWrpFld) {
