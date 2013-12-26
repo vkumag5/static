@@ -3240,11 +3240,11 @@ div .basic-buttonForPopUp{
 }
 #available{
                 font-weight: normal !important;
-				padding-right: 15px;
+				padding-right: 35px;
 }
 #purchasedDown{
                 float: none;
-     padding-right: 60px;
+     padding-right: 65px;
      font-weight: bolder;
       text-align: center;
 }
@@ -3252,7 +3252,7 @@ div .basic-buttonForPopUp{
 #allocatedDown{
     font-weight: bolder;
     text-align: center;
-      padding-right: 60px;
+      padding-right: 36px;
 }
 
 #availableDown{
