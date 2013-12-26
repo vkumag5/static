@@ -8,10 +8,10 @@
 		<version>20.0.0-SNAPSHOT</version>
 	</parent>
 	
-	<artifactId>qglobal-static-dd</artifactId>
+	<artifactId>qglobal-static-deployment-descriptor</artifactId>
 	<packaging>jar</packaging>
 	
-	<name>qglobal-static-dd</name>
+	<name>qglobal-static-deployment-descriptor</name>
 
 	<build>
 		<plugins>
