@@ -711,7 +711,7 @@ function setSelectedRadio() {
             jq$grid.jqGrid('navGrid', '#' + pager, {edit: false, add: false, del: false, search:false, cloneToTop:true, refresh:false});
 
             if (showColumnChooser) {
-            
+            if (jq$(".ui-icon-calculator").length == 0) {
             jq$grid.jqGrid('navButtonAdd', '#' + pager, {
 
                 caption: "",
@@ -740,6 +740,7 @@ function setSelectedRadio() {
                 }
 
             });
+			}
             }
             /*jq$grid.jqGrid('navButtonAdd', '#pager', {
 

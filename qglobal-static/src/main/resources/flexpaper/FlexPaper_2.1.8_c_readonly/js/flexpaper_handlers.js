@@ -48,7 +48,16 @@ $(function() {
      *
      */
     jQuery('#documentViewer').bind('onDocumentLoading',function(e){
-
+		//alert(e.type);
+	   var xhr = new XMLHttpRequest();
+	   xhr.onprogress = function(e){
+		if (e.lengthComputable)
+			var percentageLoaded = (e.loaded / e.total) * 100;
+			jQuery(".flexpaper_initloader").children(".flexpaper_initloader_panel").children(".flexpaper_notifylabel").children(".flexpaper_notifystatus").text(Math.floor(percentageLoaded)+" %");
+		};
+		xhr.open('GET', "flexP.seam", true);
+		xhr.send(null);
+	   
     });
 
     /**
