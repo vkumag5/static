@@ -4457,3 +4457,101 @@ text-align:center!important;
 	padding:0px 0px 5px 10px;
 	font-family: verdana;
 }
+
+.rshCol { width: 45%; float: left;}
+.rsh1rightCell { 
+	width: 50%; 
+	float: right;
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rsh1leftCell { 
+	width: 50%; 
+	float: left; 
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rshOtherleftCell { 
+	width: 100%; 
+	float: left; 
+	text-align: left;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rshCol2 { width: 55%; float: left;}
+.rsh2rightCell { 
+	width: 60%; 
+	float: right;
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rsh2leftCell { 
+	width: 40%; 
+	float: left; 
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rsh70rightCell { 
+	width: 70%; 
+	float: right;
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rsh30leftCell { 
+	width: 30%; 
+	float: left; 
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rshNotesCol { width: 22.5%; float: left;}
+.rshNotes2Col { width: 77.5%; float: left;}
+.rshNotes1Cell { 
+	width: 100%; 
+	float: right;
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+.rshNotes2Cell { 
+	width: 95%; 
+	float: left; 
+	text-align: left;
+	min-height: 15px;
+	color: #827C7C;
+	font-family: verdana;
+	margin: 0px 0px 0px 0px;
+}
+
+.researchRadio input {
+float:left;
+width:auto;
+background:none;
+border:none;
+}
+
+.rschLink {
+	color: rgb(68, 111, 3);
+	font-size: 12px;
+	cursor: pointer;
+}
