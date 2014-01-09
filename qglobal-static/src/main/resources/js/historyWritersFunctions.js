@@ -83,9 +83,9 @@ function manageLoopedChkBoxRelatedOtherField(node, focus, relatedOtherField, oth
 	}
 	else {
 		if (!dojo.byId(otherChkBoxId).checked) {
-			dojo.byId(relatedOtherField).value = "";
 
 			if (dijit.byId(relatedOtherField)) {
+				dojo.byId(relatedOtherField).value = "";
 				dijit.byId(relatedOtherField).required = false;
 				dijit.byId(relatedOtherField).reset();
 			}
@@ -143,8 +143,8 @@ function manageChkBoxMultiRelatedOtherField(node, focus) {
 					dojo.byId(relatedOtherField).focus();
 				}
 			} else {
-				dojo.byId(relatedOtherField).value = "";
 				if (dijit.byId(relatedOtherField)) {
+					dojo.byId(relatedOtherField).value = "";
 					dijit.byId(relatedOtherField).required = false;
 					dijit.byId(relatedOtherField).reset();
 				}
@@ -176,8 +176,8 @@ function manageChkBoxRelatedOtherField(node, focus, relatedOtherField, relatedOt
 		}
 	}
 	else {
-		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
+			dojo.byId(relatedOtherField).value = "";
 			dijit.byId(relatedOtherField).required = false;
 			dijit.byId(relatedOtherField).reset();
 		}
@@ -1030,8 +1030,8 @@ function reloadActiveTabs() {
 	dojo.parser.parse("educationHistInfo");
 	fnConvertHistoryJsonToTab(formJsonData, "educationHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("ed_level"), false, "ed_levelOther", "exmEduOthLblWrp");
-	manageChkBoxRelatedOtherField(dojo.byId("EducMother"), false, "EducMotherOther", "mthEduOthLblWrp");
-	manageChkBoxRelatedOtherField(dojo.byId("EducFather"), false, "EducFatherOther", "fthEduOthLblWrp");
+	manageChkBoxRelatedOtherField(dojo.byId("EducMother"), false, "EducMother_Other", "mthEduOthLblWrp");
+	manageChkBoxRelatedOtherField(dojo.byId("EducFather"), false, "EducFather_Other", "fthEduOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolPlacement"), false, "SchoolPlacement_Other", "schPlaceOthLblWrp");
 	checkIfEducationCompletionRequired(dojo.byId("ed_level"), 'EducProgComp');
 	checkIfEducationCompletionRequired(dojo.byId("EducMother"), 'EducProgCompMother');
@@ -1311,8 +1311,8 @@ function manageChkBoxRelatedAcrdToOtherField(node, focus, relatedOtherField, rel
 		}
 	}
 	else {
-		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
+			dojo.byId(relatedOtherField).value = "";
 			dijit.byId(relatedOtherField).required = false;
 			dijit.byId(relatedOtherField).reset();
 		}
@@ -1349,8 +1349,8 @@ function manageChkBoxRelatedOtherFieldValueBased(node, focus, relatedOtherField,
 		}
 	}
 	else {
-		dojo.byId(relatedOtherField).value = "";
 		if (dijit.byId(relatedOtherField)) {
+			dojo.byId(relatedOtherField).value = "";
 			dijit.byId(relatedOtherField).required = false;
 			dijit.byId(relatedOtherField).reset();
 		}
@@ -1393,8 +1393,8 @@ function manageLoopRadioSelectionsForMilestones(node, focus, relatedOtherField, 
 			if (dijit.byId(relatedOtherField)) {
 				dijit.byId(relatedOtherField).required = false;
 				dijit.byId(relatedOtherField).reset();
+				dojo.byId(relatedOtherField).value = "";
 			}
-			dojo.byId(relatedOtherField).value = "";
 		}
 	}
 	
