@@ -105,10 +105,14 @@ function initializeEnablingLeafLevelReportOptions(wrapperIdElement, uiElementsLi
 }
 
 function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElementsArray, disabledElementsArray) {
-
+	var title = element.getAttribute('custom_title');
+	if (title == null) {
+		title = element.getAttribute('title');
+	}
+	
 	if (element.id.search(/pnlSingle/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]) {
+				if (title == enabled_element_array[x]) {
 					if (isEnabledElementInDiv(element, enabledElementsArray)) {
 						break;
 					}
@@ -116,7 +120,7 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlSingleDD/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]) {
+				if (title == enabled_element_array[x]) {
 					if (isEnabledElementInDiv(element, enabledElementsArray)) {
 						break;
 					}
@@ -124,7 +128,7 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlBoolean/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]) {
+				if (title == enabled_element_array[x]) {
 					if (isEnabledElementInDiv(element, enabledElementsArray)){
 						break;
 					}
@@ -132,7 +136,7 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlMulti/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]) {
+				if (title == enabled_element_array[x]) {
 					if (isEnabledElementInDiv(element, enabledElementsArray)) {
 						break;
 					}
@@ -140,7 +144,7 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlEnabling/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]) {
+				if (title == enabled_element_array[x]) {
 					if (isDisabledEnabledElementInDiv(element, disabledElementsArray)) {
 						break;
 					}
