@@ -666,6 +666,27 @@ background:transparent url(../images/buttons/command-button-right.png) no-repeat
 /* theme properties ends*/
 }
 
+div.basic-button .button .saverightLogin {
+	float:left;
+	
+	width:10px;
+	height:28px;
+	border: 0px;
+	/*margin:4px 3px 0px 5px;*/
+	font-family: verdana;
+	font-size:12px;
+	font-weight:bold;
+	color:#1f6b8b;
+	line-height: 16pt;
+	margin-right:-5px;
+	/* theme properties */
+	-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(../images/buttons/command-button-right.png) no-repeat scroll 0 0;
+/* theme properties ends*/
+}
+
 .disabled .saveleft {
 	display:table;
 	display:inline\0/;
