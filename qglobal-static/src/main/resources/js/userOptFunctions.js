@@ -88,6 +88,8 @@ function userOptMultiValidate(id, label, min, max, numOpts) {
  */
 function initializeEnablingLeafLevelReportOptions(wrapperIdElement, uiElementsList) {
 
+	console.log(".......................................... initializeEnablingLeafLevelReportOptions");
+
 	//get raw list of element id's (built in AbstractOptionsView class)
 	var enabled_element_list = uiElementsList.value;
 	//split out into simple array
@@ -104,11 +106,14 @@ function initializeEnablingLeafLevelReportOptions(wrapperIdElement, uiElementsLi
 	 * 
 	 * This list is managed by the platform and is implemented as a hidden input field on the "enabling" report options xhtml file.
 	 */
+
 	var jqq$ = jQuery.noConflict();
-	var resetElemetents = jqq$('input[id*="eRstDfltVal"]');
-	var resetJsonData = dojo.fromJson(resetElemetents[0].value);
-	
-	console.log(".......................................... retrieved reset data");
+	try {
+		var resetElements = jqq$('input[id*="eRstDfltVal"]');
+	} catch  (e) {
+		console.log("Error trying to retrieve eRstDfltVal array - " + e.message);
+	}
+	var resetJsonData = dojo.fromJson(resetElements[0].value);
 	
 	if (wrapperIdElement) {
 		
@@ -174,10 +179,15 @@ function initializeEnablingLeafLevelReportOptions(wrapperIdElement, uiElementsLi
  */
 function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElementsArray, disabledElementsArray, resetJsonData) {
 
+	
+	var title = element.getAttribute('custom_title');
+	if (title == null) {
+		title = element.getAttribute('title');
+	}
+	
 	if (element.id.search(/pnlSingle/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]
-					|| element.getAttribute('title') == enabled_element_array[x]) { //fixed issue with IE
+				if (title == enabled_element_array[x]) {
 					if (isEnabledElementInDiv(element, enabledElementsArray)) {
 						break;
 					}
@@ -185,8 +195,7 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlSingleDD/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]
-					|| element.getAttribute('title') == enabled_element_array[x]) { //fixed issue with IE
+				if (title == enabled_element_array[x]) { 
 					if (isEnabledElementInDiv(element, enabledElementsArray)) {
 						break;
 					}
@@ -194,8 +203,7 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlBoolean/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]
-					|| element.getAttribute('title') == enabled_element_array[x]) { //fixed issue with IE
+				if (title == enabled_element_array[x]) {
 					if (isEnabledElementInDiv(element, enabledElementsArray)){
 						break;
 					}
@@ -203,8 +211,7 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlMulti/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]
-					|| element.getAttribute('title') == enabled_element_array[x]) { //fixed issue with IE
+				if (title == enabled_element_array[x]) {
 					if (isEnabledElementInDiv(element, enabledElementsArray)) {
 						break;
 					}
@@ -212,20 +219,16 @@ function loadEnabledPnlWrapperDiv(element, enabled_element_array, enabledElement
 			}
 		} else if (element.id.search(/pnlEnabling/) > 0) {
 			for (var x = -1, y = enabled_element_array.length; ++x < y;) {
-				if (element.getAttribute('custom_title') == enabled_element_array[x]) {
-					var optIdArry = element.getAttribute('custom_title').split('_');
-				} else if (element.getAttribute('title') == enabled_element_array[x]) { //fixed issue with IE
-					var optIdArry = element.getAttribute('title').split('_');
-				}
-				// use resetJsonData to identify special cases where the element node needs to be disabled.
-				if (optIdArry) {
-					if (optIdArry[optIdArry.length-1] in resetJsonData) {
-						console.log(".......................................... do not disable");
-						break; // do not disable since element is in the resetJsonData
-					} else {
-						console.log(".......................................... do disable");
-						if (isDisabledEnabledElementInDiv(element, disabledElementsArray)) { // do disable if not in the resetJsonData AND it's value is checked.
-							break;
+				if (title == enabled_element_array[x]) {
+					var optIdArry = title.split('_');
+					// use resetJsonData to identify special cases where the element node needs to be disabled.
+					if (optIdArry) {
+						if (optIdArry[optIdArry.length-1] in resetJsonData) {
+							break; // do not disable since element is in the resetJsonData
+						} else {
+							if (isDisabledEnabledElementInDiv(element, disabledElementsArray)) { // do disable if not in the resetJsonData AND it's value is checked.
+								break;
+							}
 						}
 					}
 				}
