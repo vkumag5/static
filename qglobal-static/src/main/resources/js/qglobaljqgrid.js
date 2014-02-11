@@ -6,6 +6,7 @@
         /*jslint devel: true, browser: true, plusplus: true */
 		
 		var jq$ = jQuery.noConflict();
+		var resultMap='';
 		
         jq$.jgrid.formatter.integer.thousandsSeparator = ',';
 
@@ -388,9 +389,9 @@ function setSelectedRadio() {
             myColumnsState = restoreColumnState(cm);
 
             isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
-
+		     //alert(rowNumbers);
             jq$grid.jqGrid({
-
+              
                 datatype: 'json',
 
                 url: gridURL,
@@ -421,7 +422,7 @@ function setSelectedRadio() {
 
                 sortorder: isColState ? myColumnsState.sortorder : 'desc',
 
-                rownumbers: true,
+                rownumbers: false,
 
                 ignoreCase: true,
                 
@@ -733,7 +734,9 @@ function setSelectedRadio() {
 								saveColStatetoDb(this.jqGrid('getGridParam', 'colModel'), perm);
                                 saveColumnState.call(this);
                             }
-                            jq$grid.jqGrid('setGridWidth', width , true);
+							
+							width = getWidthAsPerTheColumn(resultMap);
+							jq$grid.jqGrid('setGridWidth', width , true);
                         }
                     });
 
@@ -792,7 +795,7 @@ function setSelectedRadio() {
   function saveColStatetoDb(colModel, perm) {
 	    Richfaces.showModalPanel('spinnerModal');
 		var l=colModel.length;
-		var resultMap = "{";
+		resultMap = "{";
 		var cmName, i;
 		for ( i = 0; i < l ; i++) {
 				colItem = colModel[i];
@@ -917,5 +920,73 @@ function setSelectedRadio() {
 		document.getElementById("hidden-field-for-shift-select").value =  selected;
 		setShiftSelectedExamineeIDs();
 	}
-		
+
+	function replaceSpWithNewLine(strToReplace){
+                         // alert(strToReplace);  
+			  if(strToReplace.startsWith('Examinee Assessment')){
+			     strToReplace = strToReplace.replace('Examinee ','');
+			     
+			     
+			  }
+                        if(strToReplace.startsWith('Assessment Count')){
+				 strToReplace = 'Number of <br/>Assessmnts';
+				 return strToReplace;
+			     
+			     
+			  }
+			   if(strToReplace.startsWith('Examinee Count')){
+				 strToReplace = 'Number of <br/>Examinees';
+				 return strToReplace;
+			     
+			     
+			  }
+
+
+			  if(strToReplace.startsWith('Administration')){
+			     strToReplace = strToReplace.replace('Administration','Admin');
+			     
+			     
+			  }
+			  if(strToReplace.startsWith('Group Assessments')){
+			     strToReplace = strToReplace.replace('Assessments','Assessmnts');
+			     
+			     
+			  }
+
+			  if(strToReplace.startsWith('Qualification')){
+			     strToReplace = strToReplace.replace('Qualification','Qual');
+			     return strToReplace;
+			     
+			  }
+			   if(strToReplace.startsWith('Parent')){
+			     strToReplace = strToReplace.replace('Account','Acct');
+
+			     
+			  }
+			  if(strToReplace.startsWith('Email')){
+				  if(strToReplace.indexOf('Id')!=-1){
+     			     strToReplace = strToReplace.replace('Id','');
+     			     return strToReplace;
+				  }
+				  if(strToReplace.indexOf('Address')!=-1){
+     			     strToReplace = strToReplace.replace('Address','');
+     			     return strToReplace;
+				  }
+			  }
+			  strToReplace = strToReplace.replace(' ','<br/>');
+			  return strToReplace;
+			 
+			
+			}
+
+			function getWidthAsPerTheColumn(resultMap) {
+
+			if(resultMap.match(/false/g).length >8)
+				width = '1745';
+			else
+			  width = '945';
+			 return width;
+			
+			}
+ 
     //]]>
