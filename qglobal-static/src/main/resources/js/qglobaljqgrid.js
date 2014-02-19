@@ -921,63 +921,63 @@ function setSelectedRadio() {
 		setShiftSelectedExamineeIDs();
 	}
 
-	function replaceSpWithNewLine(strToReplace){
-                         // alert(strToReplace);  
-			  if(strToReplace.startsWith('Examinee Assessment')){
-			     strToReplace = strToReplace.replace('Examinee ','');
-			     
-			     
-			  }
-                        if(strToReplace.startsWith('Assessment Count')){
-				 strToReplace = 'Number of <br/>Assessmnts';
-				 return strToReplace;
-			     
-			     
-			  }
-			   if(strToReplace.startsWith('Examinee Count')){
-				 strToReplace = 'Number of <br/>Examinees';
-				 return strToReplace;
-			     
-			     
-			  }
-
-
-			  if(strToReplace.startsWith('Administration')){
-			     strToReplace = strToReplace.replace('Administration','Admin');
-			     
-			     
-			  }
-			  if(strToReplace.startsWith('Group Assessments')){
-			     strToReplace = strToReplace.replace('Assessments','Assessmnts');
-			     
-			     
-			  }
-
-			  if(strToReplace.startsWith('Qualification')){
-			     strToReplace = strToReplace.replace('Qualification','Qual');
-			     return strToReplace;
-			     
-			  }
-			   if(strToReplace.startsWith('Parent')){
-			     strToReplace = strToReplace.replace('Account','Acct');
-
-			     
-			  }
-			  if(strToReplace.startsWith('Email')){
-				  if(strToReplace.indexOf('Id')!=-1){
-     			     strToReplace = strToReplace.replace('Id','');
-     			     return strToReplace;
-				  }
-				  if(strToReplace.indexOf('Address')!=-1){
-     			     strToReplace = strToReplace.replace('Address','');
-     			     return strToReplace;
-				  }
-			  }
-			  strToReplace = strToReplace.replace(' ','<br/>');
-			  return strToReplace;
-			 
-			
-			}
+//	function replaceSpWithNewLine(strToReplace){
+//                          
+//			  if(strToReplace.startsWith('Examinee Assessment')){
+//			     strToReplace = strToReplace.replace('Examinee ','');
+//			     
+//			     
+//			  }
+//                        if(strToReplace.startsWith('Assessment Count')){
+//				 strToReplace = 'Number of <br/>Assessmnts';
+//				 return strToReplace;
+//			     
+//			     
+//			  }
+//			   if(strToReplace.startsWith('Examinee Count')){
+//				 strToReplace = 'Number of <br/>Examinees';
+//				 return strToReplace;
+//			     
+//			     
+//			  }
+//
+//
+//			  if(strToReplace.startsWith('Administration')){
+//			     strToReplace = strToReplace.replace('Administration','Admin');
+//			     
+//			     
+//			  }
+//			  if(strToReplace.startsWith('Group Assessments')){
+//			     strToReplace = strToReplace.replace('Assessments','Assessmnts');
+//			     
+//			     
+//			  }
+//
+//			  if(strToReplace.startsWith('Qualification')){
+//			     strToReplace = strToReplace.replace('Qualification','Qual');
+//			     return strToReplace;
+//			     
+//			  }
+//			   if(strToReplace.startsWith('Parent')){
+//			     strToReplace = strToReplace.replace('Account','Acct');
+//
+//			     
+//			  }
+//			  if(strToReplace.startsWith('Email')){
+//				  if(strToReplace.indexOf('Id')!=-1){
+//     			     strToReplace = strToReplace.replace('Id','');
+//     			     return strToReplace;
+//				  }
+//				  if(strToReplace.indexOf('Address')!=-1){
+//     			     strToReplace = strToReplace.replace('Address','');
+//     			     return strToReplace;
+//				  }
+//			  }
+//			  strToReplace = strToReplace.replace(' ','<br/>');
+//			  return strToReplace;
+//			 
+//			
+//			}
 
 			function getWidthAsPerTheColumn(resultMap) {
 
