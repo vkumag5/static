@@ -773,6 +773,7 @@ function setSelectedRadio() {
   }
 		
   function showCustomSelectionOptions() {
+  if (jq$(".ui-iconbutton").length == 0) {
   +jq$('<button>').appendTo(jq$('#jqgh_list_cb')).iconbutton({
 	icons: {primary: "selectallclass"},text: false}).click(
 	function (e) {
@@ -791,6 +792,7 @@ function setSelectedRadio() {
 	$('custom-selection-dropdown').show();
 	return false;
 	});
+   }
   }
   function saveColStatetoDb(colModel, perm) {
 	    Richfaces.showModalPanel('spinnerModal');
