@@ -534,8 +534,10 @@ function showSelectedCheckbox() {
 								if (disabledIdsArray != null) {
 								var i, a;	  
 								for (a = 0; a < disabledIdsArray.length; a++) {
-									disabledId = disabledIdsArray[a].replace(' ', ''); 
+									disabledId = disabledIdsArray[a].replace(' ', '');
+									if($('jqg_list_' + disabledId)!= null) {
 									$('jqg_list_' + disabledId).checked = false;
+									}
 								}
 								}   
 								setShiftSelectedIDsjs(shiftSelectedIdsArray);
