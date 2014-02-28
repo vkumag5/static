@@ -295,7 +295,7 @@ function checkIfPositionTitleRequired(node, positionTextId, rltPosLblWrp) {
 	
 }
 
-function setCorrespondingHealthCheckBox(node, checkBoxId, noMedCndId, unknownMedCndId, otherId, otherTextId, otherWrpId, relatedNodeId) {
+function setCorrespondingHealthCheckBox(node, checkBoxId, noMedCndId, unknownMedCndId, otherId, otherTextId, otherWrpId, relatedNodeId, checkBoxSlang) {
 	if (node.checked) {
 		dojo.byId(checkBoxId).disabled = false;
 		dojo.byId(noMedCndId).disabled = true;
@@ -311,6 +311,7 @@ function setCorrespondingHealthCheckBox(node, checkBoxId, noMedCndId, unknownMed
 	} else {
 		dojo.byId(checkBoxId).disabled = true;
 		dojo.byId(checkBoxId).checked = false;
+		addToFormValues(dojo.byId(checkBoxId), checkBoxSlang);
 
 		if (medicalConditionsChecked('medCnd', 'psyCnd', 'neuroCnd', 'otherCnd') == false) {
 			dojo.byId(noMedCndId).disabled = false;
@@ -993,6 +994,9 @@ function retrieveMedicalConditionSlang(slangVariable, slangPosition) { //constru
 
 function initializeTabs() {
 	reloadActiveTabs();
+	if (historyTabsActive == "true") {
+		showHideHistoryDivSections('tabWrapperPnl', 'histTabImageDivLink');
+	}
 }	
 
 // Unfortunately a lot of hard coding of ID's.  This is needed to initialize all the fields.
@@ -1627,7 +1631,7 @@ function checkForTabElementsEntered(tabId) { //if elements exist, add marker to 
 	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
 		formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
 	}
-	if (formJsonData != null) {
+	if (formJsonData != null && (formJsonData != "{}" || formJsonData != "{ }" || formJsonData != "")) {
 
 		JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be manipulated here 
 
@@ -1700,4 +1704,24 @@ function addToFormDateValues(node, slangVariable, additionalSlangIndicator) {
 	
 	var revisedJson = dojo.toJson(JsonData);
 	dojo.attr(formJsonData, "value", revisedJson);
+}
+
+function showHideHistoryDivSections(showHideDiv, switchImgTag) {
+    var ele = document.getElementById(showHideDiv);
+    var imageEle = document.getElementById(switchImgTag);
+
+    if (historyTabsActive == "true") {
+    	ele.style.display = "block";
+    	imageEle.innerHTML = '<img src="/qg/static/images/minus.gif"/>';
+    	historyTabsActive = false;
+    } else {
+	    if(ele.style.display == "block") {
+	    	ele.style.display = "none";
+	    	imageEle.innerHTML = '<img src="/qg/static/images/plus.gif"/>';
+	    }
+	    else {
+	    	ele.style.display = "block";
+	    	imageEle.innerHTML = '<img src="/qg/static/images/minus.gif"/>';
+	    }
+    }
 }
