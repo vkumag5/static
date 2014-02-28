@@ -422,7 +422,7 @@ function setSelectedRadio() {
 
                 sortorder: isColState ? myColumnsState.sortorder : 'desc',
 
-                rownumbers: false,
+                rownumbers: (typeof (showRowNumberInGrid) != 'undefined' && showRowNumberInGrid != null)? showRowNumberInGrid:false,
 
                 ignoreCase: true,
                 
@@ -446,6 +446,10 @@ function setSelectedRadio() {
                 viewrecords: true,
                 
                 gridComplete: function(){
+					if( typeof (showRowNumberInGrid) != 'undefined' && showRowNumberInGrid != null)
+					{
+						showRowNumberInGrid = '';
+					}
                 	var rowCount = jq$grid.jqGrid('getGridParam', 'reccount');
                 	var colCount = jq$grid.jqGrid('getGridParam', 'colModel').length;
                 	var sortedColName = jq$grid.jqGrid('getGridParam', 'sortname');
