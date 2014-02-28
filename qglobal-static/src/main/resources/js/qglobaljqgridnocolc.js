@@ -534,8 +534,10 @@ function showSelectedCheckbox() {
 								if (disabledIdsArray != null) {
 								var i, a;	  
 								for (a = 0; a < disabledIdsArray.length; a++) {
-									disabledId = disabledIdsArray[a].replace(' ', ''); 
+									disabledId = disabledIdsArray[a].replace(' ', '');
+									if($('jqg_list_' + disabledId)!= null) {
 									$('jqg_list_' + disabledId).checked = false;
+									}
 								}
 								}   
 								setShiftSelectedIDsjs(shiftSelectedIdsArray);
@@ -720,6 +722,7 @@ function showSelectedCheckbox() {
   }
 		
   function showCustomSelectionOptions() {
+     if (jq$(".ui-iconbutton").length == 0) {
 	  +jq$('<button>').appendTo(jq$('#jqgh_list_cb')).iconbutton({
 		icons: {primary: "selectallclass"},text: false}).click(
 		function (e) {
@@ -738,6 +741,7 @@ function showSelectedCheckbox() {
 		$('custom-selection-dropdown').show();
 		return false;
 		});
+	}
   }
   function saveColStatetoDb(colModel) {
 		var l=colModel.length;
