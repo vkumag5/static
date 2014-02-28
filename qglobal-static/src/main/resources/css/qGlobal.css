@@ -4566,3 +4566,15 @@ border:none;
 	border: 1px solid rgb(240,240,240);
 	visibility: hidden;
 }
+
+#accountSearchRightPanel .formElementPair .select-many-checkbox label {
+	width: 230px !important;
+	word-wrap: break-word;
+	display: block;
+	float: left;
+}
+
+#accountSearchRightPanel .formElementPair .select-many-checkbox {
+	padding: 2px;
+	width: 251px !important;
+}
