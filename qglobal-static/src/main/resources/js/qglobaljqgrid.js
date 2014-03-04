@@ -422,7 +422,7 @@ function setSelectedRadio() {
 
                 sortorder: isColState ? myColumnsState.sortorder : 'desc',
 
-                rownumbers: false,
+                rownumbers: (typeof (showRowNumberInGrid) != 'undefined' && showRowNumberInGrid != null)? showRowNumberInGrid:false,
 
                 ignoreCase: true,
                 
@@ -446,6 +446,10 @@ function setSelectedRadio() {
                 viewrecords: true,
                 
                 gridComplete: function(){
+					if( typeof (showRowNumberInGrid) != 'undefined' && showRowNumberInGrid != null)
+					{
+						showRowNumberInGrid = '';
+					}
                 	var rowCount = jq$grid.jqGrid('getGridParam', 'reccount');
                 	var colCount = jq$grid.jqGrid('getGridParam', 'colModel').length;
                 	var sortedColName = jq$grid.jqGrid('getGridParam', 'sortname');
@@ -773,6 +777,7 @@ function setSelectedRadio() {
   }
 		
   function showCustomSelectionOptions() {
+  if (jq$(".ui-iconbutton").length == 0) {
   +jq$('<button>').appendTo(jq$('#jqgh_list_cb')).iconbutton({
 	icons: {primary: "selectallclass"},text: false}).click(
 	function (e) {
@@ -791,6 +796,7 @@ function setSelectedRadio() {
 	$('custom-selection-dropdown').show();
 	return false;
 	});
+   }
   }
   function saveColStatetoDb(colModel, perm) {
 	    Richfaces.showModalPanel('spinnerModal');
@@ -921,72 +927,76 @@ function setSelectedRadio() {
 		setShiftSelectedExamineeIDs();
 	}
 
-	function replaceSpWithNewLine(strToReplace){
-                         // alert(strToReplace);  
-			  if(strToReplace.startsWith('Examinee Assessment')){
-			     strToReplace = strToReplace.replace('Examinee ','');
-			     
-			     
-			  }
-                        if(strToReplace.startsWith('Assessment Count')){
-				 strToReplace = 'Number of <br/>Assessmnts';
-				 return strToReplace;
-			     
-			     
-			  }
-			   if(strToReplace.startsWith('Examinee Count')){
-				 strToReplace = 'Number of <br/>Examinees';
-				 return strToReplace;
-			     
-			     
-			  }
-
-
-			  if(strToReplace.startsWith('Administration')){
-			     strToReplace = strToReplace.replace('Administration','Admin');
-			     
-			     
-			  }
-			  if(strToReplace.startsWith('Group Assessments')){
-			     strToReplace = strToReplace.replace('Assessments','Assessmnts');
-			     
-			     
-			  }
-
-			  if(strToReplace.startsWith('Qualification')){
-			     strToReplace = strToReplace.replace('Qualification','Qual');
-			     return strToReplace;
-			     
-			  }
-			   if(strToReplace.startsWith('Parent')){
-			     strToReplace = strToReplace.replace('Account','Acct');
-
-			     
-			  }
-			  if(strToReplace.startsWith('Email')){
-				  if(strToReplace.indexOf('Id')!=-1){
-     			     strToReplace = strToReplace.replace('Id','');
-     			     return strToReplace;
-				  }
-				  if(strToReplace.indexOf('Address')!=-1){
-     			     strToReplace = strToReplace.replace('Address','');
-     			     return strToReplace;
-				  }
-			  }
-			  strToReplace = strToReplace.replace(' ','<br/>');
-			  return strToReplace;
-			 
-			
-			}
+//	function replaceSpWithNewLine(strToReplace){
+//                          
+//			  if(strToReplace.startsWith('Examinee Assessment')){
+//			     strToReplace = strToReplace.replace('Examinee ','');
+//			     
+//			     
+//			  }
+//                        if(strToReplace.startsWith('Assessment Count')){
+//				 strToReplace = 'Number of <br/>Assessmnts';
+//				 return strToReplace;
+//			     
+//			     
+//			  }
+//			   if(strToReplace.startsWith('Examinee Count')){
+//				 strToReplace = 'Number of <br/>Examinees';
+//				 return strToReplace;
+//			     
+//			     
+//			  }
+//
+//
+//			  if(strToReplace.startsWith('Administration')){
+//			     strToReplace = strToReplace.replace('Administration','Admin');
+//			     
+//			     
+//			  }
+//			  if(strToReplace.startsWith('Group Assessments')){
+//			     strToReplace = strToReplace.replace('Assessments','Assessmnts');
+//			     
+//			     
+//			  }
+//
+//			  if(strToReplace.startsWith('Qualification')){
+//			     strToReplace = strToReplace.replace('Qualification','Qual');
+//			     return strToReplace;
+//			     
+//			  }
+//			   if(strToReplace.startsWith('Parent')){
+//			     strToReplace = strToReplace.replace('Account','Acct');
+//
+//			     
+//			  }
+//			  if(strToReplace.startsWith('Email')){
+//				  if(strToReplace.indexOf('Id')!=-1){
+//     			     strToReplace = strToReplace.replace('Id','');
+//     			     return strToReplace;
+//				  }
+//				  if(strToReplace.indexOf('Address')!=-1){
+//     			     strToReplace = strToReplace.replace('Address','');
+//     			     return strToReplace;
+//				  }
+//			  }
+//			  strToReplace = strToReplace.replace(' ','<br/>');
+//			  return strToReplace;
+//			 
+//			
+//			}
 
 			function getWidthAsPerTheColumn(resultMap) {
 
-			if(resultMap.match(/false/g).length >8)
-				width = '1745';
-			else
-			  width = '945';
-			 return width;
+			var matchStringWithFalse = resultMap.match(/false/g);
 			
+		    if (typeof (matchStringWithFalse) != 'undefined' && matchStringWithFalse != null){
+			   if(matchStringWithFalse.length >8)
+			    	width = '1745';
+				else
+					width = '945';
+				    return width;
+			} else {
+			    return '945';
 			}
- 
+			}
     //]]>
