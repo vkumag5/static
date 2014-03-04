@@ -4555,3 +4555,26 @@ border:none;
 	font-size: 12px;
 	cursor: pointer;
 }
+
+#diagnosisMsgDiv
+{
+	position: absolute;
+	text-align: center; 
+	width: 340px; 
+	padding: 8px;
+	background-color: rgb(204,255,204); 
+	border: 1px solid rgb(240,240,240);
+	visibility: hidden;
+}
+
+#accountSearchRightPanel .formElementPair .select-many-checkbox label {
+	width: 230px !important;
+	word-wrap: break-word;
+	display: block;
+	float: left;
+}
+
+#accountSearchRightPanel .formElementPair .select-many-checkbox {
+	padding: 2px;
+	width: 251px !important;
+}

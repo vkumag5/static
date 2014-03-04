@@ -102,7 +102,7 @@ function initializeEnablingLeafLevelReportOptions(wrapperIdElement, uiElementsLi
 	/* 
 	 * Retrieve elements that can be reset.  This data will be used to identify any fields that need to be disabled.
 	 * See REPORT_OPTION database - min_selected and max_selected are equal.  If this condition is true for a given element,
-	 * it will not be in this list.
+	 * it will not be in this list and therefore should be disabled.
 	 * 
 	 * This list is managed by the platform and is implemented as a hidden input field on the "enabling" report options xhtml file.
 	 */
