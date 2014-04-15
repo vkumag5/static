@@ -3,6 +3,17 @@ div .basic-button .button .left .saveleft {
 	background: none no-repeat scroll 0 0 transparent;
 }
 
+div #endDateDiv {
+margin-left:82px;
+margin-left:88px\9;
+float:left;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+div #endDateDiv{
+ margin-left:90px;
+ float:left;} 
+}
 a:link {
 	font-family:verdana;
 	font-size:12px;
