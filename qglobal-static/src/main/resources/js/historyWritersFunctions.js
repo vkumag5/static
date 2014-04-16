@@ -30,7 +30,13 @@ var secondaryEducationValues = ["1-3 years college/technical school",
 								"Graduate Diploma / Graduate Certificate",
 								"Post-Graduate Diploma / Post-Graduate Certificate",
 								"Master's Degree",
-								"Doctoral Degree" ];
+								"Doctoral Degree",
+								"vocational/certificate course",
+								"college course",
+								"university degree course",
+								"masters course",
+								"doctoral programme",
+								"educated outside of country"];
 
 var jobsWithPositionTitle = ["employed full-time", 
 							 "employed part-time", 
