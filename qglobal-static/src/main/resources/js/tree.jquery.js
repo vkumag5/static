@@ -942,6 +942,9 @@ limitations under the License.
         cache: false,
         dataType: 'json',
         success: function(response) {
+		  if (response == '' || response == null) {
+		   Richfaces.hideModalPanel('spinnerModal');
+		  }
           var data;
           if ($.isArray(response) || typeof response === 'object') {
             data = response;
