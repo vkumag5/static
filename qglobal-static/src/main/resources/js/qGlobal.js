@@ -768,6 +768,11 @@ function changeDropDownWidthOnOpen(x) {
 	   x.style.width='auto';
 }}
 
+function changeDropDownWidthOnOpenReportFormat(x) {
+	if(navigator.appName=='Microsoft Internet Explorer'){
+	   x.style.width='150px';
+}}
+
 function changeDropDownWidthOnOpenTemplate(x) {
 	if(navigator.appName=='Microsoft Internet Explorer'){
 	   x.style.position='absolute';
@@ -775,7 +780,11 @@ function changeDropDownWidthOnOpenTemplate(x) {
 }}
 
 function changeDropDownWidthOnClose(obj,objWidth) {
-	obj.style.width=objWidth;
+	if(navigator.appName=='Microsoft Internet Explorer'){
+	obj.style.width='auto';
+	}else{
+		obj.style.width=objWidth;
+	}
 }
 
 function limitText(limitField,limitCount,limitNum) {
