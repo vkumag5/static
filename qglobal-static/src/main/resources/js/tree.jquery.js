@@ -983,7 +983,7 @@ limitations under the License.
         selected_nodes_under_parent = this.select_node_handler.getSelectedNodes(parent_node);
         for (_i = 0, _len = selected_nodes_under_parent.length; _i < _len; _i++) {
           n = selected_nodes_under_parent[_i];
-          this.select_node_handler.removeFromSelection(n);
+          //this.select_node_handler.removeFromSelection(n);
         }
         parent_node.loadFromData(data);
         parent_node.load_on_demand = false;
