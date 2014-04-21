@@ -1,5 +1,5 @@
 ul.jqtree-tree {
-    margin-left: 12px;
+    margin-left: 25px;
 }
 
 ul.jqtree-tree,
@@ -26,10 +26,10 @@ ul.jqtree-tree .jqtree-toggler {
     display: block;
     position: absolute;
     left: -1.0em;
-    top: 10%;
+    top: 5%;
     *top: 0;  /* fix for ie7 */
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 13px;
+    line-height: 13px;
     font-family: arial;  /* fix for ie9 */
     border-bottom: none;
     color: #333;
@@ -62,8 +62,28 @@ ul.jqtree-tree li.jqtree-folder .jqtree-title {
     margin-left: 0;
 }
 
-ul.jqtree-tree .jqtree-toggler.jqtree-closed {
-    background-position: 0 0;
+ul.jqtree-tree .jqtree-toggler.jqtree-closed-sub {
+	float:right;
+	 background:url(../images/url.png) no-repeat;
+	background-position:0px 0px;
+	margin:0px 15px 8px -5px;
+	width:13px;
+	height:13px;
+	white-space:nowrap;
+	font-size:12px;
+	cursor:pointer;
+}
+
+ul.jqtree-tree .jqtree-toggler.jqtree-closed-root {
+	float:right;
+	 background:url(../images/folder.png) no-repeat;
+	background-position:0px 0px;
+	margin:0px 15px 8px -5px;
+	width:13px;
+	height:13px;
+	white-space:nowrap;
+	font-size:12px;
+	cursor:pointer;
 }
 
 span.jqtree-dragging {

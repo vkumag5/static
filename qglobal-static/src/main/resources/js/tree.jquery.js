@@ -1328,10 +1328,16 @@ limitations under the License.
         }
         return $("<ul class=\"jqtree_common " + class_string + "\"></ul>");
       };
-      createLi = function(node) {
+      createLi = function(node, is_root_node) {
         var $li;
         if (node.isFolder()) {
-          $li = createFolderLi(node);
+			if(is_root_node){
+				$li = createFolderLiRoot(node);
+			}
+			else{
+				$li = createFolderLiSub(node);
+			}
+          
         } else {
           $li = createNodeLi(node);
         }
@@ -1350,7 +1356,7 @@ limitations under the License.
         escaped_name = escapeIfNecessary(node.name);
         return $("<li class=\"" + class_string + "\"><div class=\"jqtree-element jqtree_common\"><span class=\"jqtree-title jqtree_common\">" + escaped_name + "</span></div></li>");
       };
-      createFolderLi = function(node) {
+      createFolderLiRoot = function(node) {
         var button_char, button_classes, escaped_name, folder_classes, getButtonClasses, getFolderClasses;
         getButtonClasses = function() {
           var classes;
@@ -1371,13 +1377,44 @@ limitations under the License.
           }
           return classes.join(' ');
         };
-        button_classes = getButtonClasses();
+        button_classes = 'jqtree-toggler jqtree-closed-root';
         folder_classes = getFolderClasses();
         escaped_name = escapeIfNecessary(node.name);
         if (node.is_open) {
-          button_char = _this.options.openedIcon;
+          button_char = ' ';
         } else {
-          button_char = _this.options.closedIcon;
+          button_char = ' ';
+        }
+        return $("<li class=\"jqtree_common " + folder_classes + "\"><div class=\"jqtree-element jqtree_common\"><a class=\"jqtree_common " + button_classes + "\">" + button_char + "</a><span class=\"jqtree_common jqtree-title\">" + escaped_name + "</span></div></li>");
+      };
+	  createFolderLiSub = function(node) {
+        var button_char, button_classes, escaped_name, folder_classes, getButtonClasses, getFolderClasses;
+        getButtonClasses = function() {
+          var classes;
+          classes = ['jqtree-toggler'];
+          if (!node.is_open) {
+            classes.push('jqtree-closed');
+          }
+          return classes.join(' ');
+        };
+        getFolderClasses = function() {
+          var classes;
+          classes = ['jqtree-folder'];
+          if (!node.is_open) {
+            classes.push('jqtree-closed');
+          }
+          if (_this.select_node_handler && _this.select_node_handler.isNodeSelected(node)) {
+            classes.push('jqtree-selected');
+          }
+          return classes.join(' ');
+        };
+        button_classes = 'jqtree-toggler jqtree-closed-sub';
+        folder_classes = getFolderClasses();
+        escaped_name = escapeIfNecessary(node.name);
+        if (node.is_open) {
+          button_char = ' ';
+        } else {
+          button_char = ' ';
         }
         return $("<li class=\"jqtree_common " + folder_classes + "\"><div class=\"jqtree-element jqtree_common\"><a class=\"jqtree_common " + button_classes + "\">" + button_char + "</a><span class=\"jqtree_common jqtree-title\">" + escaped_name + "</span></div></li>");
       };
@@ -1387,7 +1424,7 @@ limitations under the License.
         $element.append($ul);
         for (_i = 0, _len = children.length; _i < _len; _i++) {
           child = children[_i];
-          $li = createLi(child);
+          $li = createLi(child,is_root_node);
           $ul.append($li);
           child.element = $li[0];
           $li.data('node', child);
