@@ -1725,7 +1725,7 @@ limitations under the License.
         this.node.is_open = false;
         $button = this.getButton();
         $button.addClass('jqtree-closed');
-        $button.html(this.tree_widget.options.closedIcon);
+        //$button.html(this.tree_widget.options.closedIcon);
         doClose = function() {
           _this.getLi().addClass('jqtree-closed');
           return _this.tree_widget._triggerEvent('tree.close', {
