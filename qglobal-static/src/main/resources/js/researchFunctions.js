@@ -546,9 +546,10 @@ function disableRelatedElement(nodeId, relatedNodeId) {
 		dojo.byId(relatedNodeId).disabled = false;
 	} 
 }
-function manageDiagnosisChkBoxRelatedOtherField(node, nodeName, focus, relatedOtherField, relatedOtherFieldWrp) { //determines whether related other field should be enabled
+function manageDiagnosisChkBoxRelatedOtherField(node, nodeIsOther, focus, relatedOtherField, relatedOtherFieldWrp) { //determines whether related other field should be enabled
+	console.log("..................................... nodeIsOther : " + nodeIsOther);
 	var nodeSelected = false;
-	if (node.checked && (nodeName == "Other" || nodeName == "other" )) {
+	if (node.checked && (nodeIsOther)) {
 		nodeSelected = true;
 	}	
 	if (nodeSelected) {
