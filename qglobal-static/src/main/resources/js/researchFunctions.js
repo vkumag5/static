@@ -62,238 +62,6 @@ function manageRschIdeaChkBoxFields(node, focus, relatedOtherField, relatedOther
 	}
 }
 
-function addAdditionalDSMInputFields() {
-	
-	if(dojo.style(dojo.byId('ng_diag_dsm05_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_dsm05_Wrp'), "hide");
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec05_Wrp'), "hide");
-		placeLinkOnLastdsmField();
-		addToResFormValues(dojo.byId('ng_diag_dsm05'), 'ng_diag_dsm05');
-		addToResFormValues(dojo.byId('ng_diag_dsmspec05'), 'ng_diag_dsmspec05');
-		dijit.byId('ng_diag_dsm05').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm06_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_dsm06_Wrp'), "hide");
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec06_Wrp'), "hide");
-		placeLinkOnLastdsmField();
-		addToResFormValues(dojo.byId('ng_diag_dsm06'), 'ng_diag_dsm06');
-		addToResFormValues(dojo.byId('ng_diag_dsmspec06'), 'ng_diag_dsmspec06');
-		dijit.byId('ng_diag_dsm06').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm07_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_dsm07_Wrp'), "hide");
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec07_Wrp'), "hide");
-		placeLinkOnLastdsmField();
-		addToResFormValues(dojo.byId('ng_diag_dsm07'), 'ng_diag_dsm07');
-		addToResFormValues(dojo.byId('ng_diag_dsmspec07'), 'ng_diag_dsmspec07');
-		dijit.byId('ng_diag_dsm07').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm08_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_dsm08_Wrp'), "hide");
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec08_Wrp'), "hide");
-		placeLinkOnLastdsmField();
-		addToResFormValues(dojo.byId('ng_diag_dsm08'), 'ng_diag_dsm08');
-		addToResFormValues(dojo.byId('ng_diag_dsmspec08'), 'ng_diag_dsmspec08');
-		dijit.byId('ng_diag_dsm08').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm09_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_dsm09_Wrp'), "hide");
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec09_Wrp'), "hide");
-		placeLinkOnLastdsmField();
-		addToResFormValues(dojo.byId('ng_diag_dsm09'), 'ng_diag_dsm09');
-		addToResFormValues(dojo.byId('ng_diag_dsmspec09'), 'ng_diag_dsmspec09');
-		dijit.byId('ng_diag_dsm09').required = true;
-		return true;
-	} else	if(dojo.style(dojo.byId('ng_diag_dsm10_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_dsm10_Wrp'), "hide");
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec10_Wrp'), "hide");
-		toggleAdditionalInputdsmLink();
-		placeLinkOnLastdsmField();
-		addToResFormValues(dojo.byId('ng_diag_dsm10'), 'ng_diag_dsm10');
-		addToResFormValues(dojo.byId('ng_diag_dsmspec10'), 'ng_diag_dsmspec10');
-		dijit.byId('ng_diag_dsm10').required = true;
-		return true;
-	}
-	
-}
-
-function placeLinkOnLastdsmField() {
-	dojo.addClass(dojo.byId('lnkdsm05'), "hide");
-	dojo.addClass(dojo.byId('lnkdsm06'), "hide");
-	dojo.addClass(dojo.byId('lnkdsm07'), "hide");
-	dojo.addClass(dojo.byId('lnkdsm08'), "hide");
-	dojo.addClass(dojo.byId('lnkdsm09'), "hide");
-	dojo.addClass(dojo.byId('lnkdsm10'), "hide");
-	if(dojo.style(dojo.byId('ng_diag_dsm10_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkdsm10'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm09_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkdsm09'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm08_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkdsm08'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm07_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkdsm07'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm06_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkdsm06'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_dsm05_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkdsm05'), "hide");
-		return true;
-	}
-}
-
-function addAdditionalIcdInputFields() {
-	
-	if(dojo.style(dojo.byId('ng_diag_icd05_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_icd05_Wrp'), "hide");
-		placeLinkOnLastIcdField();
-		addToResFormValues(dojo.byId('ng_diag_icd05'), 'ng_diag_icd05');
-		dijit.byId('ng_diag_icd05').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd06_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_icd06_Wrp'), "hide");
-		placeLinkOnLastIcdField();
-		addToResFormValues(dojo.byId('ng_diag_icd06'), 'ng_diag_icd06');
-		dijit.byId('ng_diag_icd06').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd07_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_icd07_Wrp'), "hide");
-		placeLinkOnLastIcdField();
-		addToResFormValues(dojo.byId('ng_diag_icd07'), 'ng_diag_icd07');
-		dijit.byId('ng_diag_icd07').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd08_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_icd08_Wrp'), "hide");
-		placeLinkOnLastIcdField();
-		addToResFormValues(dojo.byId('ng_diag_icd08'), 'ng_diag_icd08');
-		dijit.byId('ng_diag_icd08').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd09_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_icd09_Wrp'), "hide");
-		placeLinkOnLastIcdField();
-		addToResFormValues(dojo.byId('ng_diag_icd09'), 'ng_diag_icd09');
-		dijit.byId('ng_diag_icd09').required = true;
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd10_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('ng_diag_icd10_Wrp'), "hide");
-		toggleAdditionalInputIcdLink();
-		placeLinkOnLastIcdField();
-		addToResFormValues(dojo.byId('ng_diag_icd10'), 'ng_diag_icd10');
-		dijit.byId('ng_diag_icd10').required = true;
-		return true;
-	}
-}
-
-function placeLinkOnLastIcdField() {
-	dojo.addClass(dojo.byId('lnkIcd05'), "hide");
-	dojo.addClass(dojo.byId('lnkIcd06'), "hide");
-	dojo.addClass(dojo.byId('lnkIcd07'), "hide");
-	dojo.addClass(dojo.byId('lnkIcd08'), "hide");
-	dojo.addClass(dojo.byId('lnkIcd09'), "hide");
-	dojo.addClass(dojo.byId('lnkIcd10'), "hide");
-	if(dojo.style(dojo.byId('ng_diag_icd10_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkIcd10'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd09_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkIcd09'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd08_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkIcd08'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd07_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkIcd07'), "hide");
-		return true;
-	} else if(dojo.style(dojo.byId('ng_diag_icd06_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkIcd06'), "hide");
-		return true;
-	} else	if(dojo.style(dojo.byId('ng_diag_icd05_Wrp'), "display") != "none")
-	{
-		dojo.removeClass(dojo.byId('lnkIcd05'), "hide");
-		return true;
-	}
-}
-
-function removeAdditionalInputField(nodeId, inputId, addNodeId, addInputId) {
-	dojo.addClass(dojo.byId(nodeId), "hide");
-	if (dojo.byId(inputId)) {
-		dojo.byId(inputId).value = '';
-		addToResFormValues(dojo.byId(inputId), inputId);
-		dijit.byId(inputId).required = false;
-	}
-	
-	if (addNodeId) {
-		if (dojo.byId(addNodeId)) {
-			dojo.addClass(dojo.byId(addNodeId), "hide");
-		}
-	}
-	if (addInputId) {
-		if (dojo.byId(addInputId)) {
-			dojo.byId(addInputId).value = '';
-			addToResFormValues(dojo.byId(addInputId), addInputId);
-			dijit.byId(addInputId).required = false;
-		}		
-	}
-	toggleAdditionalInputdsmLink();
-	placeLinkOnLastdsmField();
-	toggleAdditionalInputIcdLink();
-	placeLinkOnLastIcdField();
-}
-
-function toggleAdditionalInputdsmLink() {
-	if(dojo.style(dojo.byId('ng_diag_dsm10_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('dsmLink'), "hide");
-	} else {
-		dojo.addClass(dojo.byId('dsmLink'), "hide");
-	}
-}
-
-function toggleAdditionalInputIcdLink() {
-	if(dojo.style(dojo.byId('ng_diag_icd10_Wrp'), "display") == "none")
-	{
-		dojo.removeClass(dojo.byId('icdLink'), "hide");
-	} else {
-		dojo.addClass(dojo.byId('icdLink'), "hide");
-	}
-}
-
-//jquery method to disable all elements within a parent div tag
-//function toggleStatusDisabled(node, divId) {
-//	var jqq$ = jQuery.noConflict();
-//	var jDivId = "#" + divId + " :input";
-//   if (node.checked) {
-//    	jqq$(jDivId).attr('disabled', true);
-//    } else {
-//    	jqq$(jDivId).removeAttr('disabled');
-//    }   
-//}
-
 //jquery method to disable all elements within a parent div tag
 function toggleStatusDisabled(node, divId) {
     if (node.checked) {
@@ -311,28 +79,8 @@ function toggleStatusDisabledRelatedNodes(node, relatedNode, divId) {
     }   
 }
 
-function toggleIdeaSelections(nodeId, divId) {
-	toggleCheckboxesWithinDiv(nodeId, divId);
-	if (!dojo.byId(nodeId).checked) {
-		clearOutAllTextBoxesWithinDiv(divId);
-	}
-	manageRschIdeaChkBoxFields(dojo.byId("ng_diag_idea8"), true, 'ng_diag_idea_hi_descrip', 'ideaOthLbl', 'othFld');
-	manageRschIdeaChkBoxFields(dojo.byId("ng_diag_idea9"), true, 'ng_diag_idea_sld_descrip', 'ideaSpcfLbl', 'spcfFld');
-}
 
-function toggleIcdSelections(nodeId, divId) {
-	toggleStatusEnabled(dojo.byId(nodeId), divId); 
-	if (!dojo.byId(nodeId).checked) {
-		clearOutAllTextBoxesWithinDiv(divId);
-	}
-}
 
-function toggleDsmSelections(nodeId, divId) {
-	toggleStatusEnabled(dojo.byId(nodeId), divId); 
-	if (!dojo.byId(nodeId).checked) {
-		clearOutAllTextBoxesWithinDiv(divId);
-	}
-}
 
 function toggleNoResearchSelection(nodeId, divId) {
 	if (dojo.byId(nodeId).checked) {
@@ -346,12 +94,6 @@ function toggleNoDiagnosisSelection(nodeId, relatedId, divId) {
 	if (dojo.byId(nodeId).checked || dojo.byId(relatedId).checked ) {
 		clearOutAllCheckboxesWithinDiv(divId);
 	}
-	toggleDsmSelections("ng_diag_dsm", "dsmWrp")	
-	toggleLinksEnabled(dojo.byId("ng_diag_dsm"), "dsmAddMore");
-	toggleIcdSelections("ng_diag_icd", "icdWrp");
-	toggleLinksEnabled(dojo.byId("ng_diag_icd"), "icdAddMore");
-	toggleIdeaSelections("ng_diag_idea", "ideaWrp")
-	toggleStatusEnabled(dojo.byId("ng_diag_specEd"), 'spcEdWrp');
 	toggleStatusDisabledRelatedNodes(dojo.byId(nodeId), dojo.byId(relatedId), divId);
 }
 
@@ -437,12 +179,10 @@ function initializeDiagnosisUI() {
 	
 }
 
-function fnConvertResearchDiagnosisEntryFormToJSON(historyFormId, jsonFormId) {
+function fnConvertResearchDiagnosisEntryFormToJSON(historyFormId, jsonId) {
     console.log('................................ fnConvertResearchDiagnosisEntryFormToJSON');
     var formJson = dojo.formToJson(historyFormId);
-    var jsonData = jsonFormId + ':researchJsonFormData';
-    console.log('................................ fnConvertResearchDiagnosisEntryFormToJSON - jsonData : ' + jsonData);
-    document.getElementById(jsonData).value = formJson;
+    document.getElementById(jsonId).value = formJson;
     console.log('................................ fnConvertResearchDiagnosisEntryFormToJSON - formJson : ' + formJson);
 }
 
@@ -552,10 +292,10 @@ function addToResFormValues(node, slangVariable) { //this array contains the IDs
 function updateResearchJSONString() { //fires upon save 
 //	console.log("updateResearchWritersJSONString ........................... saving entered data");
 	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:researchJsonFormData")) {
-		formJsonData = dojo.byId("editExamineeForm:researchJsonFormData");
-	} else if (dojo.byId("addExaminee:researchJsonFormData")) {
-		formJsonData = dojo.byId("addExaminee:researchJsonFormData");
+	if (dojo.byId("researchJsonFormData")) {
+		formJsonData = dojo.byId("researchJsonFormData");
+	} else if (dojo.byId("researchJsonFormData")) {
+		formJsonData = dojo.byId("researchJsonFormData");
 	}
 	if (formJsonData != null) {
 		JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be manipulated here 
@@ -619,6 +359,8 @@ function updateResearchJSONString() { //fires upon save
 		dojo.attr(formJsonData, "value", revisedJson);
 		resFormValues = [];
 //		console.log("updateResearchWritersJSONString ........................... completed saving data");
+		//update JSON string with diagnosis entered flag if data was entered.
+		checkForDiagnosisTabElementsEntered("diagInfo");
 	}
 }
 
@@ -630,27 +372,18 @@ function initializeResearchTabs() {
 // Unfortunately a lot of hard coding of ID's.  This is needed to initialize all the fields.
 function reloadResearchTab() {
 	console.log("reloadResearchTab ............................... starting.");
-	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:researchJsonFormData")) {
-		formJsonData = "editExamineeForm:researchJsonFormData";
-	} else if (dojo.byId("addExaminee:researchJsonFormData")) {
-		formJsonData = "addExaminee:researchJsonFormData";
-	}
+	formJsonData = "researchJsonFormData";
 	dojo.parser.parse("researchInfo");
 	fnConvertResearchJsonToTab(formJsonData, "researchInfo");
-	toggleNoResearchSelection('noRef', 'rshResWrpDiv');	
-	toggleNoDiagnosisSelection('noDiag', 'diagWithheld', 'diagWrpDiv');	
-	placeLinkOnLastdsmField();
-	placeLinkOnLastIcdField();	
-	initializeAdditionalDSMInputFields();	
-	toggleDsmSelections("ng_diag_dsm", "dsmWrp")	
-	toggleLinksEnabled(dojo.byId("ng_diag_dsm"), "dsmAddMore");
-	toggleIcdSelections("ng_diag_icd", "icdWrp");
-	toggleLinksEnabled(dojo.byId("ng_diag_icd"), "icdAddMore");
-	toggleIdeaSelections("ng_diag_idea", "ideaWrp")
-	toggleStatusEnabled(dojo.byId("ng_diag_specEd"), 'spcEdWrp');
-	disableRelatedElement('noDiag', 'diagWithheld');
-	disableRelatedElement('diagWithheld', 'noDiag');
+	toggleNoResearchSelection('research.ng_reason_noreason', 'rshResWrpDiv');	
+
+	dojo.parser.parse("diagInfo");
+	fnConvertHistoryJsonToTab(formJsonData, "diagInfo");
+	initializeDiagnosisOtherFlds();	
+	
+	//toggleNoDiagnosisSelection('noDiag', 'diagWithheld', 'diagWrpDiv');	
+	//disableRelatedElement('noDiag', 'diagWithheld');
+	//disableRelatedElement('diagWithheld', 'noDiag');
 }
 
 function removeElementFromArray(elementId) {
@@ -761,28 +494,8 @@ function removeWrapperDivHideStyle(nodeId) {
 	}
 }
 
-function initializeAdditionalDSMInputFields() {
 	
-	if(dojo.style(dojo.byId('ng_diag_dsm05_Wrp'), "display") != "none")	{
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec05_Wrp'), "hide");
-	} 
-	if(dojo.style(dojo.byId('ng_diag_dsm06_Wrp'), "display") != "none")	{
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec06_Wrp'), "hide");
-	}
-	if(dojo.style(dojo.byId('ng_diag_dsm07_Wrp'), "display") != "none")	{
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec07_Wrp'), "hide");
-	} 
-	if(dojo.style(dojo.byId('ng_diag_dsm08_Wrp'), "display") != "none")	{
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec08_Wrp'), "hide");
-	} 
-	if(dojo.style(dojo.byId('ng_diag_dsm09_Wrp'), "display") != "none")	{
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec09_Wrp'), "hide");
-	}
-	if(dojo.style(dojo.byId('ng_diag_dsm10_Wrp'), "display") != "none")	{
-		dojo.removeClass(dojo.byId('ng_diag_dsmspec10_Wrp'), "hide");
-	}
 	
-}
 
 function errorsExistOnResearchTab() {
 	
@@ -832,4 +545,84 @@ function disableRelatedElement(nodeId, relatedNodeId) {
 	} else {
 		dojo.byId(relatedNodeId).disabled = false;
 	} 
+}
+function manageDiagnosisChkBoxRelatedOtherField(node, nodeName, focus, relatedOtherField, relatedOtherFieldWrp) { //determines whether related other field should be enabled
+	var nodeSelected = false;
+	if (node.checked && (nodeName == "Other" || nodeName == "other" )) {
+		nodeSelected = true;
+	}	
+	if (nodeSelected) {
+		if (dijit.byId(relatedOtherField)) {
+			dojo.removeClass(dojo.byId(relatedOtherFieldWrp), "hide");
+			dijit.byId(relatedOtherField).required = true;
+		}
+		if (focus) {
+			dojo.byId(relatedOtherField).focus();
+		}
+	}
+	else {
+		if (dijit.byId(relatedOtherField)) {
+			dojo.byId(relatedOtherField).value = "";
+			dojo.addClass(dojo.byId(relatedOtherFieldWrp), "hide");
+			dijit.byId(relatedOtherField).required = false;
+			dijit.byId(relatedOtherField).reset();
+		}
+	}
+}
+function initializeDiagnosisOtherFlds() {
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_as_other"), 'Other', false, 'ng_diag_as_other_txt', 'ng_diag_as_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_be_other"), 'Other', false, 'ng_diag_be_other_txt', 'ng_diag_be_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_id_other"), 'Other', false, 'ng_diag_id_other_txt', 'ng_diag_id_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_ldd_other"), 'Other', false, 'ng_diag_ldd_other_txt', 'ng_diag_ldd_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_ld_other"), 'Other', false, 'ng_diag_ld_other_txt', 'ng_diag_ld_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_mr_other"), 'Other', false, 'ng_diag_mr_other_txt', 'ng_diag_mr_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_md_other"), 'Other', false, 'ng_diag_md_other_txt', 'ng_diag_md_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_pd_other"), 'Other', false, 'ng_diag_pd_other_txt', 'ng_diag_pd_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_sc_other"), 'Other', false, 'ng_diag_sc_other_txt', 'ng_diag_sc_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_sp_other"), 'Other', false, 'ng_diag_sp_other_txt', 'ng_diag_sp_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_sa_other"), 'Other', false, 'ng_diag_sa_other_txt', 'ng_diag_sa_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_tb_other"), 'Other', false, 'ng_diag_tb_other_txt', 'ng_diag_tb_otherWrp');
+	manageDiagnosisChkBoxRelatedOtherField(dojo.byId("ng_diag_ot_other"), 'Other', false, 'ng_diag_ot_other_txt', 'ng_diag_ot_otherWrp');
+}
+
+function checkForDiagnosisTabElementsEntered(tabId) { //if elements exist, add marker to JSON string. This will be used by platform diagnosis ETL process. 
+	var formJsonData = null;
+	if (dojo.byId("researchJsonFormData")) {
+		formJsonData = dojo.byId("researchJsonFormData");
+	} else if (dojo.byId("researchJsonFormData")) {
+		formJsonData = dojo.byId("researchJsonFormData");
+	}
+	if (formJsonData != null && (formJsonData != "{}" || formJsonData != "{ }" || formJsonData != "")) {
+
+		JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be manipulated here 
+
+		if (tabId in JsonData) { //clear out tabid before checking
+			delete JsonData[tabId];
+		}
+		
+		queryString = '[id^="' + tabId + '"]';
+		
+		var nodeList = dojo.query(queryString).query("*");
+
+		for (var i = 0; i<nodeList.length; i++) {
+
+			var element = nodeList[i];
+			
+			try {
+				var nodeId = element.getAttribute("id");
+			} catch(e) {
+				var nodeId = element.domNode.getAttribute("id"); //if it's a Dijit
+			}
+
+			if (nodeId) {  
+				if (nodeId in JsonData) { //if the JSON string exists, add tab id and break out of loop.
+					JsonData[tabId] = '1'; 
+					break;
+				} 
+			}
+		}
+		
+		var revisedJson = dojo.toJson(JsonData);
+		dojo.attr(formJsonData, "value", revisedJson);
+	}		
 }

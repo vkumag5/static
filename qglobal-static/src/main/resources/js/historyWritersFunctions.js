@@ -613,7 +613,7 @@ function addToFormValues(node, slangVariable) { //this array contains the IDs of
 }
 
 function initializeHistoryWritersJSONString() {
-	dojo.byId("addExaminee:historyWritersJsonFormData").value = "{ }";
+	dojo.byId("historyWritersJsonFormData").value = "{ }";
 }
 
 //This approach to capturing inputs was needed originally because of an earlier requirement to have the
@@ -621,10 +621,10 @@ function initializeHistoryWritersJSONString() {
 function updateHistoryWritersJSONString() { //fires upon save 
 	//console.log("updateHistoryWritersJSONString ........................... saving entered data");
 	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
-		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
-	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
-		formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
+	if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("historyWritersJsonFormData");
+	} else if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("historyWritersJsonFormData");
 	}
 	if (formJsonData != null) {
 		JsonData = dojo.fromJson(formJsonData.value); //save the current JSON string into a temporary JS object that will be manipulated here 
@@ -1007,19 +1007,16 @@ function retrieveMedicalConditionSlang(slangVariable, slangPosition) { //constru
 
 function initializeTabs() {
 	reloadActiveTabs();
-	if (historyTabsActive == "true") {
-		showHideHistoryDivSections('tabWrapperPnl', 'histTabImageDivLink');
 	}
-}	
 
 // Unfortunately a lot of hard coding of ID's.  This is needed to initialize all the fields.
 function reloadActiveTabs() {
 	
 	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
-		formJsonData = "editExamineeForm:historyWritersJsonFormData";
-	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
-		formJsonData = "addExaminee:historyWritersJsonFormData";
+	if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = "historyWritersJsonFormData";
+	} else if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = "historyWritersJsonFormData";
 	}
 
 	dojo.parser.parse("referralHistInfo");
@@ -1166,10 +1163,10 @@ function removeTabElementsFromFormValues(node, tabId) { //this array contains th
 	} else {
 
 		var formJsonData = null;
-		if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
-			formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
-		} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
-			formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
+		if (dojo.byId("historyWritersJsonFormData")) {
+			formJsonData = dojo.byId("historyWritersJsonFormData");
+		} else if (dojo.byId("historyWritersJsonFormData")) {
+			formJsonData = dojo.byId("historyWritersJsonFormData");
 		}
 		if (formJsonData != null) {
 
@@ -1639,10 +1636,10 @@ function initMotorConditions(node, cndName, grossOthTxtFld, grossOthTxtWrpFld, f
 
 function checkForTabElementsEntered(tabId) { //if elements exist, add marker to JSON string.  This will be used by report options logic. 
 	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
-		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
-	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
-		formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
+	if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("historyWritersJsonFormData");
+	} else if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("historyWritersJsonFormData");
 	}
 	if (formJsonData != null && (formJsonData != "{}" || formJsonData != "{ }" || formJsonData != "")) {
 
@@ -1698,10 +1695,10 @@ function showHideExampleSentences(showHideDiv, switchImgTag) {
 function addToFormDateValues(node, slangVariable, additionalSlangIndicator) {
 	//console.log("addToFormDateValues .......................................");
 	var formJsonData = null;
-	if (dojo.byId("editExamineeForm:historyWritersJsonFormData")) {
-		formJsonData = dojo.byId("editExamineeForm:historyWritersJsonFormData");
-	} else if (dojo.byId("addExaminee:historyWritersJsonFormData")) {
-		formJsonData = dojo.byId("addExaminee:historyWritersJsonFormData");
+	if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("historyWritersJsonFormData");
+	} else if (dojo.byId("historyWritersJsonFormData")) {
+		formJsonData = dojo.byId("historyWritersJsonFormData");
 	}
 	if (formJsonData != null) {
 		JsonData = dojo.fromJson(formJsonData.value);
@@ -1719,22 +1716,4 @@ function addToFormDateValues(node, slangVariable, additionalSlangIndicator) {
 	dojo.attr(formJsonData, "value", revisedJson);
 }
 
-function showHideHistoryDivSections(showHideDiv, switchImgTag) {
-    var ele = document.getElementById(showHideDiv);
-    var imageEle = document.getElementById(switchImgTag);
 
-    if (historyTabsActive == "true") {
-    	ele.style.display = "block";
-    	imageEle.innerHTML = '<img src="/qg/static/images/minus.gif"/>';
-    	historyTabsActive = false;
-    } else {
-	    if(ele.style.display == "block") {
-	    	ele.style.display = "none";
-	    	imageEle.innerHTML = '<img src="/qg/static/images/plus.gif"/>';
-	    }
-	    else {
-	    	ele.style.display = "block";
-	    	imageEle.innerHTML = '<img src="/qg/static/images/minus.gif"/>';
-	    }
-    }
-}

@@ -71,7 +71,7 @@ function dropdownSelect(e, val) {
 
 var editExaminee = [];
 editExaminee['assignCurrentDob'] = function() {
-	editExaminee['currentDob'] = $('editExamineeForm:calendarInputDate').value;
+	editExaminee['currentDob'] = $('calendarInputDate').value;
 	// $('editExamineeForm:calendarmsg').children('span')[0].innerHTML = "";
 };
 editExaminee['checkDateEquals'] = function(dob1, dob2) {
@@ -83,15 +83,15 @@ editExaminee['checkDobEquals'] = function() {
 			editExaminee['initDob']);
 };
 editExaminee['checkDobFormat'] = function() {
-	return checkDate($('editExamineeForm:calendarInputDate').value,
-			$('editExamineeForm:calendarInputDate'));
+	return checkDate($('calendarInputDate').value,
+			$('calendarInputDate'));
 };
 editExaminee['oncompleteDob'] = function() {
-	if ($('editExamineeForm:calendarInputDate').value.length == 0) {
-		$('editExamineeForm:calendarmsg').select('span')[0].innerHTML = "Date of Birth should not be blank";
+	if ($('calendarInputDate').value.length == 0) {
+		$('calendarmsg').select('span')[0].innerHTML = "Date of Birth should not be blank";
 	} else if (!this.checkDobFormat()) {
-		$('editExamineeForm:calendarmsg').select('span')[0].innerHTML = "Invalid Format";
-		$('editExamineeForm:age').innerHTML = "";
+		$('calendarmsg').select('span')[0].innerHTML = "Invalid Format";
+		$('age').innerHTML = "";
 		return false;
 	} else {
 		return true;
@@ -100,15 +100,15 @@ editExaminee['oncompleteDob'] = function() {
 
 var addExaminee = [];
 addExaminee['checkDobFormat'] = function() {
-	return checkDate($('addExaminee:calendarInputDate').value,
-			$('addExaminee:calendarInputDate'));
+	return checkDate($('calendarInputDate').value,
+			$('calendarInputDate'));
 };
 addExaminee['oncompleteDob'] = function() {
-	if ($('addExaminee:calendarInputDate').value.length == 0) {
-		$('addExaminee:calendarmsg').select('span')[0].innerHTML = "Date of Birth should not be blank";
+	if ($('calendarInputDate').value.length == 0) {
+		$('calendarmsg').select('span')[0].innerHTML = "Date of Birth should not be blank";
 	} else if (!this.checkDobFormat()) {
-		$('addExaminee:calendarmsg').select('span')[0].innerHTML = "Invalid Format";
-		$('addExaminee:age').innerHTML = "";
+		$('calendarmsg').select('span')[0].innerHTML = "Invalid Format";
+		$('age').innerHTML = "";
 		return false;
 	}
 };
