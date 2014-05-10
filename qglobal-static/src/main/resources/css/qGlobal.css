@@ -472,6 +472,11 @@ div .delete-button .button .deleteright {
 	width: 40%;
 }
 
+.col_70_p {
+	text-align: left;
+	width: 23%;
+}
+
 .col_50_p {
 	text-align: left;
 	width: 50%;
@@ -3892,7 +3897,7 @@ div.wysiwyg iframe span {
 
 .tokenList {
 	list-style: none;
-	height: 130px;
+	height: auto;
 	overflow-y: auto;
 	margin-bottom: 10px;
 }
