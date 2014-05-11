@@ -59,15 +59,15 @@ ul.jqtree-tree li.jqtree-folder.jqtree-closed {
 }
 
 ul.jqtree-tree li.jqtree-folder .jqtree-title {
-    margin-left: 0;
+    margin-left: 4px;
 }
 
 ul.jqtree-tree .jqtree-toggler.jqtree-closed-sub {
 	float:right;
 	 background:url(../images/url.png) no-repeat;
-	background-position:0px 0px;
-	margin:0px 15px 8px -5px;
-	width:13px;
+	background-position:12px 0px;
+	margin:1px -12px 8px -12px;
+	width:33px;
 	height:13px;
 	white-space:nowrap;
 	font-size:12px;
@@ -75,13 +75,13 @@ ul.jqtree-tree .jqtree-toggler.jqtree-closed-sub {
 }
 
 ul.jqtree-tree .jqtree-toggler.jqtree-closed-root {
-	float:right;
+	float:left;
 	 background:url(../images/folder.png) no-repeat;
-	background-position:0px 0px;
-	margin:0px 15px 8px -5px;
-	width:13px;
+	background-position:10px 0px;
+	margin:1px -12px 8px -10px;
+	width:24px;
 	height:13px;
-	white-space:nowrap;
+	white-space:wrap;
 	font-size:12px;
 	cursor:pointer;
 }

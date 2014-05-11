@@ -1357,7 +1357,7 @@ limitations under the License.
         return $("<li class=\"" + class_string + "\"><div class=\"jqtree-element jqtree_common\"><span class=\"jqtree-title jqtree_common\">" + escaped_name + "</span></div></li>");
       };
       createFolderLiRoot = function(node) {
-        var button_char, button_classes, escaped_name, folder_classes, getButtonClasses, getFolderClasses;
+        var spaceHolder, iconclass, button_char, button_classes, escaped_name, folder_classes, getButtonClasses, getFolderClasses;
         getButtonClasses = function() {
           var classes;
           classes = ['jqtree-toggler'];
@@ -1377,15 +1377,17 @@ limitations under the License.
           }
           return classes.join(' ');
         };
-        button_classes = 'jqtree-toggler jqtree-closed-root';
+		iconclass = 'jqtree-toggler jqtree-closed-root';
+		spaceHolder = ' ';
+		button_classes = getButtonClasses();
         folder_classes = getFolderClasses();
         escaped_name = escapeIfNecessary(node.name);
         if (node.is_open) {
-          button_char = ' ';
+		  button_char = _this.options.openedIcon;
         } else {
-          button_char = ' ';
+		  button_char = _this.options.closedIcon;
         }
-        return $("<li class=\"jqtree_common " + folder_classes + "\"><div class=\"jqtree-element jqtree_common\"><a class=\"jqtree_common " + button_classes + "\">" + button_char + "</a><span class=\"jqtree_common jqtree-title\">" + escaped_name + "</span></div></li>");
+        return $("<li class=\"jqtree_common " + folder_classes + "\"><div class=\"jqtree-element jqtree_common\"><a class=\"jqtree_common " + iconclass + "\">" + button_char + "</a>" + spaceHolder + "<span class=\"jqtree_common jqtree-title\">" + escaped_name + "</span></div></li>");
       };
 	  createFolderLiSub = function(node) {
         var button_char, button_classes, escaped_name, folder_classes, getButtonClasses, getFolderClasses;
@@ -1408,15 +1410,17 @@ limitations under the License.
           }
           return classes.join(' ');
         };
-        button_classes = 'jqtree-toggler jqtree-closed-sub';
+		iconclass = 'jqtree-toggler jqtree-closed-sub';
+		spaceHolder = ' ';
+		button_classes = getButtonClasses();
         folder_classes = getFolderClasses();
         escaped_name = escapeIfNecessary(node.name);
-        if (node.is_open) {
-          button_char = ' ';
+       if (node.is_open) {
+		  button_char = _this.options.openedIcon;
         } else {
-          button_char = ' ';
+		  button_char = _this.options.closedIcon;
         }
-        return $("<li class=\"jqtree_common " + folder_classes + "\"><div class=\"jqtree-element jqtree_common\"><a class=\"jqtree_common " + button_classes + "\">" + button_char + "</a><span class=\"jqtree_common jqtree-title\">" + escaped_name + "</span></div></li>");
+        return $("<li class=\"jqtree_common " + folder_classes + "\"><div class=\"jqtree-element jqtree_common\"><a class=\"jqtree_common " + iconclass + "\">" + button_char + "</a><span class=\"jqtree_common jqtree-title\">" + escaped_name + "</span></div></li>");
       };
       doCreateDomElements = function($element, children, is_root_node, is_open) {
         var $li, $ul, child, _i, _len;
@@ -1696,7 +1700,7 @@ limitations under the License.
         this.node.is_open = true;
         $button = this.getButton();
         $button.removeClass('jqtree-closed');
-        //$button.html(this.tree_widget.options.openedIcon);
+        $button.html(this.tree_widget.options.openedIcon);
         doOpen = function() {
           _this.getLi().removeClass('jqtree-closed');
           if (on_finished) {
@@ -1725,7 +1729,7 @@ limitations under the License.
         this.node.is_open = false;
         $button = this.getButton();
         $button.addClass('jqtree-closed');
-        //$button.html(this.tree_widget.options.closedIcon);
+        $button.html(this.tree_widget.options.closedIcon);
         doClose = function() {
           _this.getLi().addClass('jqtree-closed');
           return _this.tree_widget._triggerEvent('tree.close', {
