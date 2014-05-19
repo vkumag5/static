@@ -780,11 +780,7 @@ function changeDropDownWidthOnOpenTemplate(x) {
 }}
 
 function changeDropDownWidthOnClose(obj,objWidth) {
-	if(navigator.appName=='Microsoft Internet Explorer'){
-	obj.style.width='auto';
-	}else{
 		obj.style.width=objWidth;
-	}
 }
 
 function limitText(limitField,limitCount,limitNum) {
