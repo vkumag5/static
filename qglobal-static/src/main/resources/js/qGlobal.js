@@ -79,7 +79,7 @@ editExaminee['checkDateEquals'] = function(dob1, dob2) {
 	return dob1 == dob2;
 };
 editExaminee['checkDobEquals'] = function() {
-	return editExaminee['checkDateEquals'](editExaminee['currentDob'],
+	return editExaminee['checkDateEquals']($('calendarInputDate').value,
 			editExaminee['initDob']);
 };
 editExaminee['checkDobFormat'] = function() {
