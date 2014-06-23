@@ -570,7 +570,9 @@ function fixDojoFormTabContainerContentPaneProblem(htmlFormId) {
 		     setTimeout(function() { 
 		    	 dojo.forEach(dijit.byId(htmlFormId).getChildren(), 
 		    		function(child){ 
+		    			if (child.resize) { // Some child objects don't have a resize method, so this must be checked first
 		    		 		child.resize(); 
+		    		 	}
 		 			}); 
 		    	 
 		    	 dojo.query('.dijitTabListContainer-top').forEach( 
