@@ -417,8 +417,11 @@ margin-bottom:20px;
     margin-top: 0.5em;
   }
 }
-table.dataTable tbody tr td:nth-child(2) {
+table.dataTable tbody tr td:first-child {
 float:left;
-margin-top:-4px;
-margin-top:-4px\9;
+margin-top:5px;
+}
+table.dataTable tbody tr td:last-child {
+float:left;
+margin-top:4px;
 }
