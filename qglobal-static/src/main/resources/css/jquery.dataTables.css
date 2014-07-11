@@ -417,3 +417,8 @@ margin-bottom:20px;
     margin-top: 0.5em;
   }
 }
+table.dataTable tbody tr td:nth-child(2) {
+float:left;
+margin-top:-4px;
+margin-top:-4px\9;
+}
