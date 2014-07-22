@@ -3311,8 +3311,11 @@ div .basic-buttonForPopUp{
 color:red !important;
 }
 
-#editAssessmentForm .errorMsg span{
-color:red !important;
+.errorMsg1 span{
+color:red;
+margin-left: 30px;
+display: block;
+line-height: 25px;
 }
 
 
