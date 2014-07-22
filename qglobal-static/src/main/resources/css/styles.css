@@ -3307,16 +3307,9 @@ div .basic-buttonForPopUp{
           text-align: left;
           width: 171px;
 }
-#editAssessmentForm  span .rich-message-label{
-color:red !important;
-}
 
-.errorMsg1 span{
-color:red;
-margin-left: 30px;
-display: block;
-line-height: 25px;
-}
+
+
 
 
 /********************************************** Data Grid styles ends *********************************/
