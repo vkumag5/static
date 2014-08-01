@@ -21,6 +21,18 @@
 	height: 185px;
 }
 
+#circle2 {
+			width: 15px;
+			height: 15px;
+			background: red;
+		}
+		
+.circle {
+			border-radius: 50%;
+			display: inline-block;
+			margin-right: 20px;
+		}
+
 .group-examinee-details .form-container {
 	margin-left: -30px;
 }
