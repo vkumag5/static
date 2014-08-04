@@ -1165,3 +1165,15 @@ body .ui-tooltip {
 	filter: Alpha(Opacity=30);
 	border-radius: 8px;
 }
+.ui-autocomplete
+        {
+            max-height: 300px;
+            overflow-y: auto; /* prevent horizontal scrollbar */
+            overflow-x: hidden; /* add padding to account for vertical scrollbar */
+            padding-right: -600px;
+			text-align: left;
+            z-index: 99999;
+            position: relative;
+            top: -20px;
+            margin: 20px 700px 60px 20px; /* The top margin defines the offset of textbox */
+        }
