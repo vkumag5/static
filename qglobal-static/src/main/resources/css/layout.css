@@ -1211,6 +1211,18 @@ border: 0px none;
     height: 36px;
     width: 980px;
 }
+.main_tab_assessment {
+    background-color: #f1f1f1;
+    background-image: url("../images/grey_background.jpeg");
+    background-repeat: repeat-x;
+    float: left;
+    height: 390px;
+    width: 671px;
+	margin-top:-11px;
+	margin-bottom:-10px;
+	margin-left:-10px;
+	margin-right:-11px;
+}
 .adriftDreams .rich-tab-bottom-line{
 	border-bottom: 0px none;
 	padding-left: 0px;
