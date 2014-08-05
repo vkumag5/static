@@ -1,9 +1,9 @@
 function showManualEntryHighPerVersion() {
 window.console.time("showManualEntryHighPerVersion");
   try {       
-		showProgressIcon(13000, 10, function(){});
+	// showProgressIcon(13000, 10, function(){});
 	  startBundleHTMLParsingHP();
-	  hideForm();
+	//hideForm();   This function is duplicate. This is called inside manualEntryHtmlSection.xhtml
 	
   } catch(e) {
    } finally {
