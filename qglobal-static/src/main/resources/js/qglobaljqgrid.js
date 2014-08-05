@@ -800,9 +800,6 @@ function setSelectedRadio() {
   }
   function saveColStatetoDb(colModel, perm) {
 	    Richfaces.showModalPanel('spinnerModal');
-		if(document.getElementById('reportExamineeAssessmentList:generateReport') != null) {
-	 document.getElementById('reportExamineeAssessmentList:generateReport').disabled=true;
-		}
 		var l=colModel.length;
 		resultMap = "{";
 		var cmName, i;
