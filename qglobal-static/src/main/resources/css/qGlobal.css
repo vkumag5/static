@@ -21,6 +21,26 @@
 	height: 185px;
 }
 
+#circle2 {
+			width: 18px;
+			height: 18px;
+			background: red;
+			position:relative;
+		}
+		
+.circle {
+			border-radius: 50%;
+			display: inline-block;
+			margin-right: 20px;
+			behavior: url(/qg/static/css/PIE.htc);
+			
+			width:10px;height:10px;
+			text-align:right;
+			line-height:18px;
+			top:-10px;
+			left:-5px;
+		}
+
 .group-examinee-details .form-container {
 	margin-left: -30px;
 }
