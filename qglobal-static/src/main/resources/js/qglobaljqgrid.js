@@ -446,7 +446,7 @@ function setSelectedRadio() {
                 viewrecords: true,
                 
                 gridComplete: function(){
-					if( typeof (showRowNumberInGrid) == 'undefined' && showRowNumberInGrid == null)
+					if( typeof (showRowNumberInGrid) != 'undefined' && showRowNumberInGrid != null)
 					{
 						showRowNumberInGrid = '';
 					}
