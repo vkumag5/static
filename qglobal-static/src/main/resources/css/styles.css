@@ -16,10 +16,12 @@ div #endDateDiv{
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) { 
-div #createButtonDiv{
- margin-left:0px;
+ #toggleButtonDiv{
+ margin-left:-1px;
  float:left;
- margin-top:0px;} 
+ margin-top:0px
+ position:relative; 
+ }
 }
 
 a:link {
