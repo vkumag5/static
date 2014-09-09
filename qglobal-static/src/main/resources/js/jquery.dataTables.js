@@ -2626,7 +2626,7 @@
 		var tableId = settings.sTableId;
 		var previousSearch = settings.oPreviousSearch;
 		var features = settings.aanFeatures;
-		var input = '<input type="text" class="'+classes.sFilterInput+'" style="height:20px;width:185px;margin-top:-8px;"/>';
+		var input = '<input type="text" id="searchText" class="'+classes.sFilterInput+'" style="height:20px;width:185px;margin-top:-8px;"/>';
 	
 		var str = settings.oLanguage.sSearch;
 		str = str.match(/_INPUT_/) ?
