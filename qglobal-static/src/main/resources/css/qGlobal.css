@@ -640,7 +640,7 @@ div .delete-button .button .deleteright {
 }
 
 .rich-tabpanel {
-	margin-top: 10px;
+	margin-top: 22px;
 }
 
 .rich-tab-header {
@@ -4602,4 +4602,12 @@ border:none;
 #accountSearchRightPanel .formElementPair .select-many-checkbox {
 	padding: 2px;
 	width: 251px !important;
+}
+
+.styleForYesPanel {
+float:left;
+margin-left: 87px;
+margin-top: 12px\9;
+*margin-top: 0px;
+margin-bottom: 10px;
 }

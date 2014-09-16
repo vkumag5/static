@@ -14,6 +14,16 @@ div #endDateDiv{
  margin-left:90px;
  float:left;} 
 }
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+ #toggleButtonDiv{
+ margin-left:-1px;
+ float:left;
+ margin-top:0px
+ position:relative; 
+ }
+}
+
 a:link {
 	font-family:verdana;
 	font-size:12px;
