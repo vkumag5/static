@@ -4611,3 +4611,11 @@ margin-top: 12px\9;
 *margin-top: 0px;
 margin-bottom: 10px;
 }
+
+
+.nonsubmitLink {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #000000;
+    cursor: default;
+}
