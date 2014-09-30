@@ -1223,6 +1223,36 @@ border: 0px none;
 	margin-left:-10px;
 	margin-right:-11px;
 }
+.main_tab_report {
+    background-color: #f1f1f1;
+    background-image: url("../images/grey_background.jpeg");
+    background-repeat: repeat-x;
+    float: left;
+    height: auto;
+    width: 700px;
+	margin-top:-11px;
+	margin-bottom:-10px;
+	margin-left:-10px;
+	margin-right:-11px;
+	min-height:170px;
+}
+
+.reportModalDiv {
+background-color: #ffffff;
+width:645px;
+float:left;
+padding-left:50px;
+text-align:left;
+min-height:35px;
+height:auto;
+margin-bottom:15px;
+margin-top:10px;
+padding-left:25px;
+padding-top:15px;
+margin-left:12px;
+margin-right:10px;
+}
+
 .adriftDreams .rich-tab-bottom-line{
 	border-bottom: 0px none;
 	padding-left: 0px;
@@ -1916,7 +1946,7 @@ float: none;
 }
 
 .subscriptionErrorMsgIE{
-	margin-top: -88px\9 !important;
+	margin-top: -58px\9 !important;
 }
 
 .assetErrorMsgIE{

@@ -14,6 +14,15 @@ table.dataTable {
    * Body styles
    */
 }
+
+#searchText {
+  font-size: 14px;
+  padding: 1px;
+}
+
+#searchText::-webkit-input-placeholder { font-style: italic; }
+#searchText::-moz-placeholder { font-style: italic; }
+#searchText::-ms-input-placeholder { font-style: italic; }
 table.dataTable thead th,
 table.dataTable tfoot th {
   font-weight: bold;

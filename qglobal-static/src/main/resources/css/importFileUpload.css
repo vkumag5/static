@@ -44,9 +44,8 @@
 .rich-fileupload-button-border {
     border: 1px solid #c4c0c9;
     float: left;
-    margin: -20px -62px 2px 79px;
+    margin: -20px -502px 2px 108px;
 }
-
 .errorMsgImport {
     background: url("../images/alert.gif") no-repeat scroll left center #ffe0e0;
     color: red;
