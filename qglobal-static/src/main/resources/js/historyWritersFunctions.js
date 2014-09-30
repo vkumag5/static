@@ -1019,17 +1019,22 @@ function reloadActiveTabs() {
 		formJsonData = "historyWritersJsonFormData";
 	}
 
+	try {
 	dojo.parser.parse("referralHistInfo");
+	} catch (e) {}
 	fnConvertHistoryJsonToTab(formJsonData, "referralHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("RefRel"), false, 'strRefRel_Other', 'strRefRelOthLblWrp');
 	initializeReferralReasonsOtherFlds();
-	
+	try {
 	dojo.parser.parse("personalHistInfo");
+	} catch (e) {}
 	fnConvertHistoryJsonToTab(formJsonData, "personalHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("rel_stat"), false, "rel_statOther", "mrtOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("LivingArrangeType"), false, "strLivingArrangeType_Other", "curLivArngOthLblWrp");
 
+	try {
 	dojo.parser.parse("languageSocialHistInfo");
+	} catch (e) {}
 	fnConvertHistoryJsonToTab(formJsonData, "languageSocialHistInfo");
 	initializeDefaultRadioSelectionValues('LengthEnglishExposure');
 	initializeDefaultRadioSelectionValues('LengthEnglishSpoken');
@@ -1041,7 +1046,9 @@ function reloadActiveTabs() {
 	manageChkBoxRelatedOtherField(dojo.byId("DevelopmentAccord"), false, 'strDevelopmentAccord_Other', 'strDevelopmentAccord_OtherWrp');
 	manageLoopedChkBoxRelatedOtherField(dojo.byId("Birth_Other"), false, 'strPregBirth_Other', 'Birth_Other', 'strPregBirth_OtherWrp');
 
+	try {
 	dojo.parser.parse("educationHistInfo");
+	} catch (e) {}
 	fnConvertHistoryJsonToTab(formJsonData, "educationHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("ed_level"), false, "ed_levelOther", "exmEduOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("EducMother"), false, "EducMother_Other", "mthEduOthLblWrp");
@@ -1075,7 +1082,9 @@ function reloadActiveTabs() {
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolAcadPerformCurrent"), false, "SchoolAcadPerformCurrent_Other", "schCurPerfOthLblWrp");  
 	manageChkBoxRelatedOtherField(dojo.byId("SchoolAcadPerformPast"), false, "SchoolAcadPerformPast_Other", "schPastPerfOthLblWrp");  
 
+	try {
 	dojo.parser.parse("healthHistInfo");
+	} catch (e) {}
 	fnConvertHistoryJsonToTab(formJsonData, "healthHistInfo");
 	manageChkBoxRelatedAcrdToOtherField(dojo.byId("HealthRef"), false, "HealthRef_Other", "hthAcrdToOthLbl", "HealthRef_Other_Wrp");
 	manageLoopedChkBoxRelatedOtherField(dojo.byId("VisionScreenResult_Other"), false, 'strVisionScreenResult_Other', 'VisionScreenResult_Other', 'strVisionScreenResult_OtherWrp');
@@ -1090,7 +1099,9 @@ function reloadActiveTabs() {
 		setCount('CurrentMedication','medCount',255);
 	}
 	
+	try {
 	dojo.parser.parse("employmentHistInfo");
+	} catch (e) {}
 	fnConvertHistoryJsonToTab(formJsonData, "employmentHistInfo");
 	manageChkBoxRelatedOtherField(dojo.byId("CurrentEmployStatus"), false, "CurrentEmployStatus_Other", "empCurStsOthLblWrp");
 	manageChkBoxRelatedOtherField(dojo.byId("PreviousEmployStatus"), false, "PreviousEmployStatus_Other", "empPrvStsOthLblWrp");
@@ -1159,7 +1170,7 @@ function fnConvertHistoryJsonToTab(dataElementId, tabId) {
 
 function removeTabElementsFromFormValues(node, tabId) { //this array contains the IDs of every element that has been changed on a page and nothing else. 
 	if (node.checked) {
-		console.log("removeTabElementsFromFormValues .... node is still checked, no data to remove.");
+		//console.log("removeTabElementsFromFormValues .... node is still checked, no data to remove.");
 	} else {
 
 		var formJsonData = null;

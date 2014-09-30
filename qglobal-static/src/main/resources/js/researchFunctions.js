@@ -180,10 +180,8 @@ function initializeDiagnosisUI() {
 }
 
 function fnConvertResearchDiagnosisEntryFormToJSON(historyFormId, jsonId) {
-    console.log('................................ fnConvertResearchDiagnosisEntryFormToJSON');
     var formJson = dojo.formToJson(historyFormId);
     document.getElementById(jsonId).value = formJson;
-    console.log('................................ fnConvertResearchDiagnosisEntryFormToJSON - formJson : ' + formJson);
 }
 
 function toggleLinksDisabled(node, linkCSS) {
@@ -224,7 +222,6 @@ function checkForDiagnosisReset(node) {
 
 //This approach to capturing inputs is required due to tabs with different purposes under the same form.
 function addToResFormValues(node, slangVariable) { //this array contains the IDs of every element that has been changed on a page and nothing else. 
-	console.log("addToResFormValues ... : " + slangVariable);
 	var formValsLocal = resFormValues; 
 	try {
 		var nodeId = node.getAttribute("id");
@@ -276,13 +273,11 @@ function addToResFormValues(node, slangVariable) { //this array contains the IDs
 		}
 		if (existsInFormValues == false) {
 			resFormValues.push({ID: nodeId, ATTR: nodeAttr, VALUE: nodeValue, SLANG: slangVariable}); //add it to the array that says it needs to be updated
-			console.log("resFormValues.push : " + nodeId + " .. " + nodeAttr + " .. " + nodeValue + " .. " + slangVariable);
 		}
 		else {
 			var oldValue = formValsLocal[FVIndex].VALUE; 
 			if (nodeValue != oldValue){
 				resFormValues[FVIndex].VALUE = nodeValue;
-				console.log("resFormValues[FVIndex].VALUE = nodeValue : " + nodeValue);
 			}
 		}
 	}
@@ -371,13 +366,17 @@ function initializeResearchTabs() {
 
 // Unfortunately a lot of hard coding of ID's.  This is needed to initialize all the fields.
 function reloadResearchTab() {
-	console.log("reloadResearchTab ............................... starting.");
 	formJsonData = "researchJsonFormData";
+	
+	try {
 	dojo.parser.parse("researchInfo");
+	} catch (e) {}	
 	fnConvertResearchJsonToTab(formJsonData, "researchInfo");
 	toggleNoResearchSelection('research.ng_reason_noreason', 'rshResWrpDiv');	
 
+	try {
 	dojo.parser.parse("diagInfo");
+	} catch (e) {}	
 	fnConvertHistoryJsonToTab(formJsonData, "diagInfo");
 	initializeDiagnosisOtherFlds();	
 	
@@ -472,7 +471,7 @@ function fnConvertResearchJsonToTab(dataElementId, tabId) {
 				}
 			}
 		} else {
-			console.log('No JSON data to parse out to tab ......');
+			//console.log('No JSON data to parse out to tab ......');
 		}
 
 	} catch (e) {
@@ -547,7 +546,6 @@ function disableRelatedElement(nodeId, relatedNodeId) {
 	} 
 }
 function manageDiagnosisChkBoxRelatedOtherField(node, nodeIsOther, focus, relatedOtherField, relatedOtherFieldWrp) { //determines whether related other field should be enabled
-	console.log("..................................... nodeIsOther : " + nodeIsOther);
 	var nodeSelected = false;
 	if (node.checked && (nodeIsOther)) {
 		nodeSelected = true;
