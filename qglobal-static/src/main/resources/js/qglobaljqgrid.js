@@ -722,8 +722,9 @@ function setSelectedRadio() {
             });
             perm[0] = 0;
         }		
-					
+			if (perm != null && perm != '') {			
 		jq$grid.jqGrid("remapColumns", perm, true, false);
+		}
 					//saveColumnState.call(jq$this);
                     /*refreshSerchingToolbar(jq$this, myDefaultSearch);
 
