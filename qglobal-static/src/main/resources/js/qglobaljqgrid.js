@@ -681,7 +681,7 @@ function setSelectedRadio() {
                         }
 
                     }
-					
+		if (showColumnChooser) {	
 		var new_order_index = {};
         var new_order = new Array();
 		new_order = columnOrdering.split(",");
@@ -723,7 +723,8 @@ function setSelectedRadio() {
             perm[0] = 0;
         }		
 			if (perm != null && perm != '') {			
-		jq$grid.jqGrid("remapColumns", perm, true, false);
+			jq$grid.jqGrid("remapColumns", perm, true, false);
+			}
 		}
 					//saveColumnState.call(jq$this);
                     /*refreshSerchingToolbar(jq$this, myDefaultSearch);
