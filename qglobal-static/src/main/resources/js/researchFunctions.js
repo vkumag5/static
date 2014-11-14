@@ -372,6 +372,7 @@ function reloadResearchTab() {
 	dojo.parser.parse("researchInfo");
 	} catch (e) {}	
 	fnConvertResearchJsonToTab(formJsonData, "researchInfo");
+	initializeResearchOtherFields();
 	toggleNoResearchSelection('research.ng_reason_noreason', 'rshResWrpDiv');	
 
 	try {
@@ -384,6 +385,21 @@ function reloadResearchTab() {
 	//disableRelatedElement('noDiag', 'diagWithheld');
 	//disableRelatedElement('diagWithheld', 'noDiag');
 }
+
+
+function initializeResearchOtherFields() {
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_ac_other'), false, 'research.ac_Other', 'research.ac_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_ce_other'), false, 'research.ce_Other', 'research.ce_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_bc_other'), false, 'research.bc_Other', 'research.bc_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_mh_other'), false, 'research.mh_Other', 'research.mh_Other_Wrp');	
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_dd_other'), false, 'research.dd_Other', 'research.dd_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_lc_other'), false, 'research.lc_Other', 'research.lc_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_sc_other'), false, 'research.sc_Other', 'research.sc_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_pc_other'), false, 'research.pc_Other', 'research.pc_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_sa_other'), false, 'research.sa_Other', 'research.sa_Other_Wrp');
+	manageRschChkBoxRelatedOtherField(dojo.byId('research.ng_reason_em_other'), false, 'research.em_Other', 'research.em_Other_Wrp');	
+}
+
 
 function removeElementFromArray(elementId) {
 	var length = resFormValues.length;
