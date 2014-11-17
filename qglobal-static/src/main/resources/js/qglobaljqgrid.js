@@ -1,5 +1,4 @@
-
-    //<![CDATA[
+ //<![CDATA[
 
         /*global jq$ */
 
@@ -465,8 +464,11 @@ function setSelectedRadio() {
 						for(var i=0;i < ids.length;i++){ 
 						   var radioButtonId = ids[i].replace(' ', '');	
 						   var radioButton = '<input type="radio" name="selectedradio" id="'+ radioButtonId +'" onclick="getSelectedRowId('+radioButtonId+');"'+'  />';
+						if (typeof replaceRowNumberForRadio != 'undefined'  && typeof replaceRowNumberForRadio == 'boolean' && replaceRowNumberForRadio == true) {
+							jq$grid.jqGrid('setRowData',ids[i],{rn:radioButton}); 
+						} else {
 							jq$grid.jqGrid('setRowData',ids[i],{systemid:radioButton}); 
-							
+						}	
 					}
 					}
 					setSelectedRadio();
