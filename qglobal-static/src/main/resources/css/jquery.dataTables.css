@@ -29,7 +29,7 @@ table.dataTable tfoot th {
 }
 table.dataTable thead th,
 table.dataTable thead td {
-  padding: 1px 1.06px;
+  padding: 1px 1.07px;
   border-bottom: 1px solid #111111;
 }
 table.dataTable thead th:active,
@@ -433,4 +433,11 @@ margin-top:5px;
 table.dataTable tbody tr td:last-child {
 float:left;
 margin-top:4px;
+}
+table.dataTable {
+  border-collapse: collapse;
+}
+table.dataTable tbody tr { 
+  border-bottom: 1px solid #d3d3d3;
+  border-width: 1px 0;
 }
