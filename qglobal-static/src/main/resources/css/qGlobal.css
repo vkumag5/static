@@ -4620,3 +4620,8 @@ margin-bottom: 10px;
     color: #000000;
     cursor: default;
 }
+
+.feedbackclass{
+display: none;
+visibility: hidden;
+}
