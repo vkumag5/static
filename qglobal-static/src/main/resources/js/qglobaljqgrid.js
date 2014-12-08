@@ -51,6 +51,8 @@ function showSelectedCheckbox() {
 	}
 }
 
+var disableTotalRow = false;
+
 function setSelectedRadio() {
     var radios = document.getElementsByName("selectedradio");
    for( i = 0; i < radios.length; i++ ) {	      
@@ -503,11 +505,14 @@ function setSelectedRadio() {
 								setSelectedExamineeID(id, false);
 								}
 						 } else {						
-								try{								
-										Richfaces.showModalPanel('spinnerModal');
-										
-										setCurrentViewJS(id);
-										
+								try{		
+										if ($('jqg_list_' + id).disabled) {
+											$('jqg_list_' + id).checked = false;
+											Richfaces.hideModalPanel('spinnerModal');
+										} else {
+											Richfaces.showModalPanel('spinnerModal');
+											setCurrentViewJS(id);
+										}
 									} catch (err){										
 										Richfaces.hideModalPanel('spinnerModal');
 									}
@@ -877,7 +882,6 @@ function setSelectedRadio() {
 	  }
   
   function disableCheckBoxes() {
-
 	  if (disabledIdsArray != 'undefined' && disabledIdsArray != null && disabledIdsArray.length > 0) {
 
 			for (i = 0, count = disabledIdsArray.length; i < count; i++) {
