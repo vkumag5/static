@@ -505,14 +505,16 @@ function setSelectedRadio() {
 								setSelectedExamineeID(id, false);
 								}
 						 } else {						
-								try{		
-										if ($('jqg_list_' + id).disabled) {
-											$('jqg_list_' + id).checked = false;
-											Richfaces.hideModalPanel('spinnerModal');
-										} else {
-											Richfaces.showModalPanel('spinnerModal');
-											setCurrentViewJS(id);
-										}
+								try{	
+								var eleId = document.getElementById('jqg_list_' + id);
+								if (eleId != null && eleId != 'undefined' && $('jqg_list_' + id).disabled) {
+										$('jqg_list_' + id).checked = false;
+										Richfaces.hideModalPanel('spinnerModal');
+								} else {
+									Richfaces.showModalPanel('spinnerModal');
+									setCurrentViewJS(id);
+								}
+							
 									} catch (err){										
 										Richfaces.hideModalPanel('spinnerModal');
 									}
