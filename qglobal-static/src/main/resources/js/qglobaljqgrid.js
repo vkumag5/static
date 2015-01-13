@@ -19,7 +19,7 @@
 		if(typeof(window.localStorage) != 'undefined'){ 
 				window.localStorage.clear() ;
 		}
-		if(divId == undefined) {
+		if(divId != 'undefined' && divId != '') {
 		loadGrid();
 		showSelectedCheckbox();
 		setSelectedRadio();
