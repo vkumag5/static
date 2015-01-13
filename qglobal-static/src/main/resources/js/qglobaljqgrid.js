@@ -19,9 +19,11 @@
 		if(typeof(window.localStorage) != 'undefined'){ 
 				window.localStorage.clear() ;
 		}
+		if(divId == undefined) {
 		loadGrid();
 		showSelectedCheckbox();
 		setSelectedRadio();
+		}
 
 });
 
