@@ -19,9 +19,11 @@
 		if(typeof(window.localStorage) != 'undefined'){ 
 				window.localStorage.clear() ;
 		}
+		if(divId != 'undefined' && divId != '') {
 		loadGrid();
 		showSelectedCheckbox();
 		setSelectedRadio();
+		}
 
 });
 
@@ -690,6 +692,52 @@ function setSelectedRadio() {
                         }
 
                     }
+					
+					if (showColumnChooser) {	
+		var new_order_index = {};
+        var new_order = new Array();
+		new_order = columnOrdering.split(",");
+        jq$.each(new_order, function(i,n){
+            new_order_index[n] = i;
+        });
+		
+
+        var colModel = jq$grid.jqGrid('getGridParam', 'colModel');
+        var cur = [];
+        jq$.each(colModel, function(i,n){
+            var name = this.name;
+            if (name != "" && name != 'subgrid')
+                cur[cur.length] = name;
+        });
+        
+        var cur_index = {};
+        jq$.each(cur, function(i,n){
+            cur_index[n] = i;
+        });
+
+        var perm = [];
+		var new_item_index = {};
+		var new_item = [];
+		
+        jq$.each(cur, function(i, name){
+            new_item = new_order[i];			
+            new_item_index = cur_index[new_item];			
+			if (new_item_index != undefined) {
+            perm[i] = new_item_index;
+		}
+        });
+        if (colModel[0].name == 'subgrid')
+        {
+            perm.splice(0, 0, 0);
+            jq$.each(perm, function(i,n){
+                ++perm[i]
+            });
+            perm[0] = 0;
+        }		
+			if (perm != null && perm != '') {			
+			jq$grid.jqGrid("remapColumns", perm, true, false);
+			}
+		}
 		
 					//saveColumnState.call(jq$this);
                     /*refreshSerchingToolbar(jq$this, myDefaultSearch);
@@ -811,22 +859,27 @@ function setSelectedRadio() {
   }
   function saveColStatetoDb(colModel, perm) {
 	    Richfaces.showModalPanel('spinnerModal');
+		
 		var l=colModel.length;
 		resultMap = "{";
+		resultMapSequence='[';
 		var cmName, i;
 		for ( i = 0; i < l ; i++) {
 				colItem = colModel[i];
-                cmName = colItem.name;
-                if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {						
+                cmName = colItem.name;				
+                if (cmName !== 'subgrid') {						
 						map[colItem.name] = colItem.hidden;
 						resultMap=resultMap + colItem.name.toString() + ":" + colItem.hidden.toString();
+						resultMapSequence = resultMapSequence + colItem.name.toString();
 						if(i!=l-1) {
 						resultMap= resultMap + ",";
+						resultMapSequence = resultMapSequence + ',';
 						}
                   }
 				}
 		resultMap = resultMap+"}";
-		setCurrentColJS(resultMap, perm.toString());
+		resultMapSequence = resultMapSequence + ']';
+		setCurrentColJS(resultMap, resultMapSequence);
    }
   
   function sortedColumn(colName,totalRows,totalCols){
