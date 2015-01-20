@@ -258,6 +258,11 @@ tr.ui-search-toolbar select {margin: 1px 0px 0px 0px}
 #editAccntUsageSubscriptionForm .ui-jqgrid tr.jqgrow td{ padding: 0px;border-bottom-width: 1px; }
 #editAccntUsageSubscriptionForm .ui-jqgrid td input, .ui-jqgrid td select .ui-jqgrid td textarea { margin: 0em; border: none;}
 #editAccntUsageSubscriptionForm .ui-jqgrid .ui-jqgrid-titlebar{display: none;}
+#searchExamineeGroupAdministration .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
+#searchForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
+#buUsersForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
+#accountUsersForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
+#manageUsersForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
 
 #addAccntUsageSubscriptionForm  .ui-jqgrid tr.ui-row-ltr td{border-right-width: 1px; }
 #addAccntUsageSubscriptionForm .ui-jqgrid tr.jqgrow td{ padding: 0px;border-bottom-width: 1px; }
