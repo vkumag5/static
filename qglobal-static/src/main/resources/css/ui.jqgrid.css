@@ -264,6 +264,8 @@ tr.ui-search-toolbar select {margin: 1px 0px 0px 0px}
 #accountUsersForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
 #manageUsersForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
 #manageAcctForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
+#examAssessTabFormId .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
+#reportExamineeListForm .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
 
 #addAccntUsageSubscriptionForm  .ui-jqgrid tr.ui-row-ltr td{border-right-width: 1px; }
 #addAccntUsageSubscriptionForm .ui-jqgrid tr.jqgrow td{ padding: 0px;border-bottom-width: 1px; }
