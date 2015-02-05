@@ -1,14 +1,17 @@
 var ctrl = angular.module('dndCtrls', []);
-var source;
-var target;
+var sourceList=[];
+var targetList=[];
 var id;
+var value;
+var postUrl;
 ctrl.controller('dndCtrl', function($scope, $http) {
 	
 	$scope.model = [];
 	$scope.source = [];
 	var url = wsUrl;
+	
 	//alert('URL: ' + wsUrl);
-	callService($scope, $http, url);
+	callGetService($scope, $http, url);
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
@@ -28,35 +31,46 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 
 	if ($scope) {
 		$scope.sourceEmpty = function() {
-		if ($scope && $scope.source) {
-			return $scope.source.length == 0;
+			if ($scope && $scope.source) {
+				return $scope.source.length == 0;
+			}
+			 return false;
 		}
-		 return false;
-	}
 
-	$scope.modelEmpty = function() {
-		if ($scope && $scope.model) {
-			return $scope.model.length == 0;
-		}
-		return false;
+		$scope.modelEmpty = function() {
+			if ($scope && $scope.model) {
+				return $scope.model.length == 0;
+			}
+			return false;
 		}
 	}
-	$scope.checkValues = function() {
-	alert("hello"+" "+source+" "+target+" "+id);
-	console.log($scope);
-}
-	});
+	
+	$scope.saveOption = function() {
+		callPostService($scope, $http, postUrl);
+	}
+	
+});
 
-function callService($scope, $http, url) {
+function callGetService($scope, $http, url) {
     $http.get(url).success(function(data) {
 			//alert(JSON.stringify(data));
             $scope.source = data.source;
 			$scope.model = data.target;
-			source = data.source;
-			target = data.target;
+			sourceList = angular.toJson(data.source);
+			targetList = angular.toJson(data.target);
 			id = data.id;
+			postUrl = "dndDemoSendData.seam?id="+id+"&target="+targetList+"&source="+sourceList;
+			
+			
         });
 }
-function Test(){
-alert("Hi Anshul");
+
+function callPostService($scope, $http, postUrl) {
+   $http({
+    method: 'POST',
+    url: postUrl,
+    data: value,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}).success(function(data) {});
 }
+/* '{"id": ' + id + ',"source": ' + source + ', "target": ' + target + '}' */
