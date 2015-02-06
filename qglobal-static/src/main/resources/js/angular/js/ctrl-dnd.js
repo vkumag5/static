@@ -24,9 +24,11 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
 	$scope.$watch("source", function(value) {
+		
 		if (value) {
 			console.log("Source: " + value.map(function(e){return e.id}).join(','));
 		}
+		
 	},true);
 
 	if ($scope) {
@@ -46,6 +48,10 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 	}
 	
 	$scope.saveOption = function() {
+		sourceList = angular.toJson($scope.source);
+		targetList = angular.toJson($scope.model);
+		alert(sourceList);
+		var postUrl = "dndDemoSendData.seam?id="+id+"&target="+targetList+"&source="+sourceList;			
 		callPostService($scope, $http, postUrl);
 	}
 	
@@ -55,12 +61,11 @@ function callGetService($scope, $http, url) {
     $http.get(url).success(function(data) {
 			//alert(JSON.stringify(data));
             $scope.source = data.source;
+			alert($scope.source);
 			$scope.model = data.target;
 			sourceList = angular.toJson(data.source);
 			targetList = angular.toJson(data.target);
 			id = data.id;
-			postUrl = "dndDemoSendData.seam?id="+id+"&target="+targetList+"&source="+sourceList;
-			
 			
         });
 }
