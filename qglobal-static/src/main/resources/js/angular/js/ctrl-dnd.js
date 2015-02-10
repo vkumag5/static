@@ -51,8 +51,8 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 		sourceList = angular.toJson($scope.source);
 		targetList = angular.toJson($scope.model);
 		alert(sourceList);
-		var postUrl = "dndDemoSendData.seam?id="+id+"&target="+targetList+"&source="+sourceList;			
-		callPostService($scope, $http, postUrl);
+		var params = "id=" + id + "&target=" + targetList + "&source=" + sourceList;
+		callPostService($scope, $http, postUrl, params);
 	}
 	
 });
@@ -60,9 +60,13 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 function callGetService($scope, $http, url) {
     $http.get(url).success(function(data) {
 			//alert(JSON.stringify(data));
-            $scope.source = data.source;
-			alert($scope.source);
-			$scope.model = data.target;
+			if (data.source && data.source.length > 0) {
+				$scope.source = data.source;
+			}
+			
+			if (data.target && data.target.length > 0) {
+				$scope.model = data.target;
+			}
 			sourceList = angular.toJson(data.source);
 			targetList = angular.toJson(data.target);
 			id = data.id;
@@ -70,12 +74,11 @@ function callGetService($scope, $http, url) {
         });
 }
 
-function callPostService($scope, $http, postUrl) {
+function callPostService($scope, $http, postUrl, params) {
    $http({
     method: 'POST',
     url: postUrl,
-    data: value,
+    data: params,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(data) {});
 }
-/* '{"id": ' + id + ',"source": ' + source + ', "target": ' + target + '}' */
