@@ -50,7 +50,7 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 	$scope.saveOption = function() {
 		sourceList = angular.toJson($scope.source);
 		targetList = angular.toJson($scope.model);
-		alert(sourceList);
+		postUrl = "dndDemoSendData.seam";
 		var params = "id=" + id + "&target=" + targetList + "&source=" + sourceList;
 		callPostService($scope, $http, postUrl, params);
 	}
