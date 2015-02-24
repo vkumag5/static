@@ -718,6 +718,7 @@ ol ul {
 
 li {
   line-height: 20px;
+  width: 370px;
 }
 
 ul.unstyled,
@@ -3725,14 +3726,14 @@ input[type="submit"].btn.btn-mini {
 .alert-danger,
 .alert-error {
   color: #b94a48;
-  background-color: #f2dede;
-  border-color: #eed3d7;
+  background-color: #f2f2f2;
+  border-color: #ddd;
 }
 
 .alert-info {
   color: #3a87ad;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
+  background-color: #fff;
+  border-color: #ddd;
 }
 
 .alert-block {

@@ -47,11 +47,16 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 		}
 	}
 	
-	$scope.saveOption = function() {
-		sourceList = angular.toJson($scope.source);
-		targetList = angular.toJson($scope.model);
-		postUrl = "dndDemoSendData.seam";
-		var params = "id=" + id + "&target=" + targetList + "&source=" + sourceList;
+	$scope.saveOption = function() {	
+		
+		sourceList = $scope.source;
+		targetList = $scope.model;
+		var postUrl = "dndDemoSendData.seam";		
+		//alert();
+		var temp_source = angular.toJson(sourceList).replace(/hashKey/g,"").replace(/\$/g,"").replace(/\\/g,"").replace(/, "": "([0-9]|[A-Z])([0-9]|[A-Z])([0-9]|[A-Z])"/g,"").replace(/"\[/g,"[").replace(/\]"/g,"]");
+		var temp_target = angular.toJson(targetList).replace(/hashKey/g,"").replace(/\$/g,"").replace(/\\/g,"").replace(/, "": "([0-9]|[A-Z])([0-9]|[A-Z])([0-9]|[A-Z])"/g,"").replace(/\]"/g,"]").replace(/"\[/g,"[");
+		alert(temp_target);
+		var params = "id=" + id + "&target=" + temp_target + "&source=" + temp_source;
 		callPostService($scope, $http, postUrl, params);
 	}
 	
@@ -59,14 +64,14 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 
 function callGetService($scope, $http, url) {
     $http.get(url).success(function(data) {
-			//alert(JSON.stringify(data));
+			alert(JSON.stringify(data).replace(/\\/g,""));
 			if (data.source && data.source.length > 0) {
 				$scope.source = data.source;
 			}
 			
 			if (data.target && data.target.length > 0) {
 				$scope.model = data.target;
-			}
+			}			
 			sourceList = angular.toJson(data.source);
 			targetList = angular.toJson(data.target);
 			id = data.id;
