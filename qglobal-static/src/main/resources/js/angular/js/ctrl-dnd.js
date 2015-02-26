@@ -8,10 +8,19 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 	
 	$scope.model = [];
 	$scope.source = [];
-	var url = wsUrl;
+	$scope.ageGroup = [];
+	$scope.rater = [];
+	$scope.assmtList = [];
 	
-	//alert('URL: ' + wsUrl);
+	var url = wsUrl;
+	var urlAgeGroup = urlAge;
+	var urlRater = urlRate;
+	var urlAssessment = urlAssmt;
+	
 	callGetService($scope, $http, url);
+	callGetForAgeGroup($scope, $http, urlAgeGroup);
+	callGetForRater($scope, $http, urlRater);
+	callGetForAssessment($scope, $http, urlAssessment);
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
@@ -77,6 +86,25 @@ function callGetService($scope, $http, url) {
 			id = data.id;
 			
         });
+}
+
+function callGetForAgeGroup($scope, $http, urlAgeGroup) {
+    $http.get(urlAgeGroup).success(function(data) {
+		$scope.ageGroup = data;
+	});
+}
+
+function callGetForRater($scope, $http, urlRater) {
+    $http.get(urlRater).success(function(data) {
+		$scope.rater = data;
+	});
+}
+
+function callGetForAssessment($scope, $http, urlAssessment) {
+    $http.get(urlAssessment).success(function(data) {
+		$scope.assmtList = data;
+		alert('hi');
+	});
 }
 
 function callPostService($scope, $http, postUrl, params) {
