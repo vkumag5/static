@@ -15,12 +15,12 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 	var url = wsUrl;
 	var urlAgeGroup = urlAge;
 	var urlRater = urlRate;
-	var urlAssessment = urlAssmt;
+	var urlAssessment = urlAssmt;	
 	
-	callGetService($scope, $http, url);
 	callGetForAgeGroup($scope, $http, urlAgeGroup);
 	callGetForRater($scope, $http, urlRater);
 	callGetForAssessment($scope, $http, urlAssessment);
+	callGetService($scope, $http, url);
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
@@ -64,7 +64,7 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 		//alert();
 		var temp_source = angular.toJson(sourceList).replace(/hashKey/g,"").replace(/\$/g,"").replace(/\\/g,"").replace(/, "": "([0-9]|[A-Z])([0-9]|[A-Z])([0-9]|[A-Z])"/g,"").replace(/"\[/g,"[").replace(/\]"/g,"]");
 		var temp_target = angular.toJson(targetList).replace(/hashKey/g,"").replace(/\$/g,"").replace(/\\/g,"").replace(/, "": "([0-9]|[A-Z])([0-9]|[A-Z])([0-9]|[A-Z])"/g,"").replace(/\]"/g,"]").replace(/"\[/g,"[");
-		alert(temp_target);
+		//alert(temp_target);
 		var params = "id=" + id + "&target=" + temp_target + "&source=" + temp_source;
 		callPostService($scope, $http, postUrl, params);
 	}
@@ -73,7 +73,7 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 
 function callGetService($scope, $http, url) {
     $http.get(url).success(function(data) {
-			alert(JSON.stringify(data).replace(/\\/g,""));
+			//alert(JSON.stringify(data).replace(/\\/g,""));
 			if (data.source && data.source.length > 0) {
 				$scope.source = data.source;
 			}
@@ -103,7 +103,6 @@ function callGetForRater($scope, $http, urlRater) {
 function callGetForAssessment($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
 		$scope.assmtList = data;
-		alert('hi');
 	});
 }
 
