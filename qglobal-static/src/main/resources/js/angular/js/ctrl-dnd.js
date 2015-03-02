@@ -10,16 +10,16 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 	$scope.source = [];
 	$scope.ageGroup = [];
 	$scope.rater = [];
-	$scope.assmtList = [];
+	//$scope.assmtList = [];
 	
 	var url = wsUrl;
 	var urlAgeGroup = urlAge;
 	var urlRater = urlRate;
-	var urlAssessment = urlAssmt;	
+	//var urlAssessment = urlAssmt;	
 	
 	callGetForAgeGroup($scope, $http, urlAgeGroup);
 	callGetForRater($scope, $http, urlRater);
-	callGetForAssessment($scope, $http, urlAssessment);
+	//callGetForAssessment($scope, $http, urlAssessment);
 	callGetService($scope, $http, url);
 
 	// watch, use 'true' to also receive updates when values
