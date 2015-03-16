@@ -8,6 +8,7 @@ var favourites=[];
 var notFavourites=[];
 var leftColumnIds=[];
 var rightColumnIds=[];
+var originalJSON = [];
 
 ctrl.controller('dndCtrl', function($scope, $http) {
 	
@@ -132,6 +133,44 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 		return status;
 	}
 	
+	$scope.showThumbnailImage = function(idToCheck) {
+		if(favourites.indexOf(idToCheck)>-1){
+			return "static/images/star.png";
+		}
+		else{
+			return "static/images/star_blank.png";
+		}
+	
+	}
+	
+	$scope.ifFavIsChecked = function(key) {		
+		if(key.checked) {
+			var test = [];			
+			test = $scope.source;
+			for(var i=0; i < test.length; ){
+			var flag = false;
+			console.log(test[i].identifier);
+				for(var j=0;j < favourites.length; j++){
+					if(test[i].identifier == favourites[j]){
+						flag = true;
+						break;
+					}
+				}
+			if(!flag){
+				test.splice(i,1);
+			} else {
+				i++;
+			}
+			}
+			$scope.source = test;		
+		}
+		else if(!key.checked){
+		//alert("unchecked");
+		//alert(JSON.stringify(originalJSON));
+		$scope.source = angular.copy(originalJSON);
+		}
+	}
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -139,6 +178,7 @@ function callGetService($scope, $http, urlAssessment) {
 			//alert(JSON.stringify(data).replace(/\\/g,""));
 			if (data.items_list && data.items_list.length > 0) {
 				$scope.source = data.items_list;
+				originalJSON = angular.copy(data.items_list);
 			}
 			
 			if (data.target && data.target.length > 0) {
