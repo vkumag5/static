@@ -1,7 +1,4 @@
 var ctrl = angular.module('dndCtrls', []);
-var sourceList=[];
-var targetList=[];
-var id;
 var value;
 var postUrl;
 var favourites=[];
@@ -9,8 +6,9 @@ var notFavourites=[];
 var leftColumnIds=[];
 var rightColumnIds=[];
 var originalJSON = [];
+var untouchedOriginalJSON = [];
 
-ctrl.controller('dndCtrl', function($scope, $http) {
+ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.model = [];
 	$scope.source = [];
@@ -22,17 +20,17 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 	$scope.ImgTest = "star_blank.png";
 	$scope.questionsOnRight = "";
 	
-	var url = wsUrl;
-	var urlAgeGroup = urlAge;
-	var urlRater = urlRate;
-	var urlAssessment = urlAssmt;
-	var urlForTagList = urlTagList;
+	//var url = wsUrl;
+	//var urlAgeGroup = urlAge;
+	//var urlRater = urlRate;
+	var urlForEntireJSON = "fetchAllDetailsJson.seam";
+	//var urlForTagList = urlTagList;
 	
-	callGetForAgeGroup($scope, $http, urlAgeGroup);
-	callGetForRater($scope, $http, urlRater);
+	//callGetForAgeGroup($scope, $http, urlAgeGroup);
+	//callGetForRater($scope, $http, urlRater);
 	//callGetForAssessment($scope, $http, urlAssessment);
-	callGetService($scope, $http, urlAssessment);
-	callGetForTagList($scope, $http, urlForTagList);
+	callGetService($scope, $http, urlForEntireJSON);
+	//callGetForTagList($scope, $http, urlForTagList);
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
@@ -76,8 +74,9 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 		targetList = $scope.model;				
 		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds);
 		alert(params);
-		var postUrl = "dndDemoSendData.seam";
-		callPostService($scope, $http, postUrl, params)
+		var postUrl = "sendJSONDataToSave.seam";
+		callPostService($window, $scope, $http, postUrl, params);		
+		//callRedirectService($window, $scope, $http, redirectUrl);
 		
 		/*var postUrl = "dndDemoSendData.seam";		
 		//alert();
@@ -133,6 +132,23 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 		return status;
 	}
 	
+	$scope.showTagNames = function(ids) {
+		var showNames="";
+		for(var i=0; i < ids.length; i++){
+		for(var j=0; j < $scope.tagList.length; j++){
+			if(ids[i] == $scope.tagList[j].identifier){							
+				showNames = showNames + $scope.tagList[j].name;
+				break;
+				}
+			}
+			if(i != (ids.length)-1){
+				showNames = showNames +", ";
+			}
+			
+		}
+		return showNames;
+	}
+	
 	$scope.showThumbnailImage = function(idToCheck) {
 		if(favourites.indexOf(idToCheck)>-1){
 			return "static/images/star.png";
@@ -167,61 +183,101 @@ ctrl.controller('dndCtrl', function($scope, $http) {
 		else if(!key.checked){
 		//alert("unchecked");
 		//alert(JSON.stringify(originalJSON));
-		$scope.source = angular.copy(originalJSON);
+		var test = [];
+		test = $scope.model;
+		var testSource = [];
+		testSource = angular.copy(originalJSON);
+		for(var i=0;i<testSource.length;){
+		for(var j=0;j<test.length;j++){
+			if(test[j].identifier==testSource[i].identifier){
+				testSource.splice(i,1);
+			}
+			else{
+				i++;
+			}
+		}
+		}
+		//testSource = angular.copy(originalJSON);
+		$scope.source = testSource;
+		alert(untouchedOriginalJSON);
+		$scope.source = angular.copy(originalJSON);		
 		}
 	}
+	
+	$scope.ifRadioIsChecked = function(key) {
+	if(key.checked) {
+		console.log(key)
+		/*if(key.value=="Teacher"){
+			$scope.source = untouchedOriginalJSON;			
+		}
+		else if(key.value=="Parent"){
+			var test = $scope.source;
+			for(var i =0;i>test.length;i++){
+				if(test.raterIds==)
+			}
+		}
+		else if(key.value=="Student"){
+		
+		}*/
+		var test = [];
+		test = untouchedOriginalJSON;
+		for(var i=0;i<test.length;){			
+			var raterIds = [];
+			raterIds = test[i].raterIds;
+			for(var j=0;j<raterIds.length;j++) {
+			alert(key.id);
+			alert(raterIds[j]);
+			if(raterIds[j]!=key.id)
+				test.splice(i,1);
+			else
+				i++;
+			}
+			
+		}
+		$scope.source = test;
+	}
+
+	} 
 	
 });
 
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
+		alert('hi');
 			//alert(JSON.stringify(data).replace(/\\/g,""));
 			if (data.items_list && data.items_list.length > 0) {
 				$scope.source = data.items_list;
 				originalJSON = angular.copy(data.items_list);
+				$scope.tagList = data.tag_list;
+				$scope.ageGroup = data.ageGroup_list;
+				$scope.rater = data.rater_list;
+				if(untouchedOriginalJSON.length==0){
+					untouchedOriginalJSON = angular.copy($scope.source);
+				}
+				
 			}
 			
 			if (data.target && data.target.length > 0) {
-				$scope.model = data.target;
-			}			
-			sourceList = angular.toJson(data.items_list);
-			targetList = angular.toJson(data.target);
-			id = data.id;
+				//$scope.model = data.target;
+			}		
 			
         });
 }
 
-function callGetForAgeGroup($scope, $http, urlAgeGroup) {
-    $http.get(urlAgeGroup).success(function(data) {
-		$scope.ageGroup = data;
-	});
-}
-
-function callGetForRater($scope, $http, urlRater) {
-    $http.get(urlRater).success(function(data) {
-		$scope.rater = data;
-	});
-}
-
-function callGetForAssessment($scope, $http, urlAssessment) {
-    $http.get(urlAssessment).success(function(data) {
-		$scope.assmtList = data.items_list;
-		alert($scope.assmtList);
-		//$scope.itemTest = data.item_list;
-	});
-}
-
-function callGetForTagList($scope, $http, urlForTagList) {
-    $http.get(urlForTagList).success(function(data) {
-		$scope.tagList = data;
-	});
-}
-
-function callPostService($scope, $http, postUrl, params) {
+function callPostService($window, $scope, $http, postUrl, params) {
    $http({
     method: 'POST',
     url: postUrl,
     data: params,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-}).success(function(data) {});
+}).success(function(data) {
+	var redirectUrl = "redirectToManageFlexForm.seam";
+	callRedirectService($window, $scope, $http, redirectUrl);
+});	
+}
+
+function callRedirectService($window, $scope, $http, redirectUrl) {
+    $http.get(redirectUrl).success(function(data) {					
+		$window.location.href='/qg/manageFlexForms.seam';
+	});
 }
