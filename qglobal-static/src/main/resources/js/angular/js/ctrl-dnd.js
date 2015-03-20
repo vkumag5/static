@@ -6,9 +6,9 @@ var notFavourites=[];
 var leftColumnIds=[];
 var rightColumnIds=[];
 var originalJSON = [];
-var untouchedOriginalJSON = [];
+var masterJSON = [];
 
-ctrl.controller('dndCtrl', function($window, $scope, $http) {
+ctrl.controller('dndCtrl', function($window, $scope, $http) {	
 	
 	$scope.model = [];
 	$scope.source = [];
@@ -19,18 +19,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.tagList = [];
 	$scope.ImgTest = "star_blank.png";
 	$scope.questionsOnRight = "";
-	
-	//var url = wsUrl;
-	//var urlAgeGroup = urlAge;
-	//var urlRater = urlRate;
+	$scope.testVar = formId;
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
-	//var urlForTagList = urlTagList;
-	
-	//callGetForAgeGroup($scope, $http, urlAgeGroup);
-	//callGetForRater($scope, $http, urlRater);
-	//callGetForAssessment($scope, $http, urlAssessment);
-	callGetService($scope, $http, urlForEntireJSON);
-	//callGetForTagList($scope, $http, urlForTagList);
+	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
@@ -183,10 +174,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		else if(!key.checked){
 		//alert("unchecked");
 		//alert(JSON.stringify(originalJSON));
-		var test = [];
+		/*var test = [];
 		test = $scope.model;
-		var testSource = [];
-		testSource = angular.copy(originalJSON);
+		//var testSource = [];
+		var testSource = untouchedOriginalJSON[0];
+		//testSource = angular.copy(originalJSON);
 		for(var i=0;i<testSource.length;){
 		for(var j=0;j<test.length;j++){
 			if(test[j].identifier==testSource[i].identifier){
@@ -199,8 +191,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 		//testSource = angular.copy(originalJSON);
 		$scope.source = testSource;
-		alert(untouchedOriginalJSON);
+		//alert(untouchedOriginalJSON);*/
 		$scope.source = angular.copy(originalJSON);		
+		
 		}
 	}
 	
@@ -220,13 +213,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		
 		}*/
 		var test = [];
-		test = untouchedOriginalJSON;
+		test = $scope.source;
 		for(var i=0;i<test.length;){			
 			var raterIds = [];
 			raterIds = test[i].raterIds;
 			for(var j=0;j<raterIds.length;j++) {
-			alert(key.id);
-			alert(raterIds[j]);
 			if(raterIds[j]!=key.id)
 				test.splice(i,1);
 			else
@@ -237,29 +228,30 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$scope.source = test;
 	}
 
-	} 
+	}	
 	
 });
 
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
-		alert('hi');
 			//alert(JSON.stringify(data).replace(/\\/g,""));
+			masterJSON = data;			
 			if (data.items_list && data.items_list.length > 0) {
 				$scope.source = data.items_list;
 				originalJSON = angular.copy(data.items_list);
 				$scope.tagList = data.tag_list;
 				$scope.ageGroup = data.ageGroup_list;
-				$scope.rater = data.rater_list;
-				if(untouchedOriginalJSON.length==0){
-					untouchedOriginalJSON = angular.copy($scope.source);
-				}
-				
+				$scope.rater = data.rater_list;				
 			}
 			
 			if (data.target && data.target.length > 0) {
 				//$scope.model = data.target;
-			}		
+			}
+			if($scope.testVar!=null) {
+				var urlForEntireJSON = "fetchSavedJson.seam";
+				var params = "ID="+$scope.testVar;
+				callGetForSavedForm($scope, $http, urlForEntireJSON, params);
+			}
 			
         });
 }
@@ -280,4 +272,40 @@ function callRedirectService($window, $scope, $http, redirectUrl) {
     $http.get(redirectUrl).success(function(data) {					
 		$window.location.href='/qg/manageFlexForms.seam';
 	});
+}
+
+function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
+   $http({
+    method: 'POST',
+    url: urlForEntireJSON,
+    data: params,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}).success(function(data) {
+	var flag = false;
+	var sourceItemsOnLeft = [];
+	var targetItemsOnRight = [];
+	sourceItemsOnLeft = data.leftItem;
+	targetItemsOnRight = data.rightItem;
+	var testSource = $scope.source;
+	for(var i=0;i<testSource.length;){
+		for(var j=0;j<sourceItemsOnLeft;j++){
+		if(sourceItemsOnLeft[j].favorite==true)
+			favourites.push(sourceItemsOnLeft[j].identifier);
+		if(sourceItemsOnLeft[j].favorite==false)
+			notFavourites.push(sourceItemsOnLeft[j].identifier);
+		if(testSource[i].identifier==sourceItemsOnLeft[j].identifier) {
+			flag=true;
+			break;
+		}
+	}
+	if(!flag){
+		testSource.splice(i,1);
+	}
+	else{
+		i++;
+	}
+	}
+	$scope.source = testSource;
+	
+});	
 }
