@@ -20,7 +20,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.ImgTest = "star_blank.png";
 	$scope.questionsOnRight = "";
 	$scope.testVar = formId;
+	$('#loadingMessage').show();
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
+	$scope.viewLoading = true;
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -64,7 +66,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		sourceList = $scope.source;
 		targetList = $scope.model;				
 		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds);
-		alert(params);
 		var postUrl = "sendJSONDataToSave.seam";
 		callPostService($window, $scope, $http, postUrl, params);		
 		//callRedirectService($window, $scope, $http, redirectUrl);
@@ -252,7 +253,8 @@ function callGetService($scope, $http, urlAssessment) {
 				var params = "ID="+$scope.testVar;
 				callGetForSavedForm($scope, $http, urlForEntireJSON, params);
 			}
-			
+			$scope.viewLoading = false;
+			$('#loadingMessage').hide();
         });
 }
 
@@ -275,37 +277,52 @@ function callRedirectService($window, $scope, $http, redirectUrl) {
 }
 
 function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
-   $http({
+    $http({
     method: 'POST',
     url: urlForEntireJSON,
     data: params,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(data) {
-	var flag = false;
+	var rightItems = [];
+	var leftItems = [];
+	var flag = "";
 	var sourceItemsOnLeft = [];
 	var targetItemsOnRight = [];
 	sourceItemsOnLeft = data.leftItem;
 	targetItemsOnRight = data.rightItem;
 	var testSource = $scope.source;
-	for(var i=0;i<testSource.length;){
-		for(var j=0;j<sourceItemsOnLeft;j++){
-		if(sourceItemsOnLeft[j].favorite==true)
-			favourites.push(sourceItemsOnLeft[j].identifier);
-		if(sourceItemsOnLeft[j].favorite==false)
-			notFavourites.push(sourceItemsOnLeft[j].identifier);
-		if(testSource[i].identifier==sourceItemsOnLeft[j].identifier) {
-			flag=true;
-			break;
+	
+	angular.forEach(sourceItemsOnLeft, function(item) {
+		if (item.favorite) {
+			favourites.push(item.identifier);
+		} else {
+			notFavourites.push(item.identifier);
 		}
-	}
-	if(!flag){
-		testSource.splice(i,1);
-	}
-	else{
-		i++;
-	}
-	}
-	$scope.source = testSource;
+		for(var j = 0; j < testSource.length; j++) {
+			if (item.identifier == testSource[j].identifier) {
+				leftItems.push(testSource[j]);
+				break;
+			}
+		}
+
+	});
+	
+	angular.forEach(targetItemsOnRight, function(item) {
+		if (item.favorite) {
+			favourites.push(item.identifier);
+		} else {
+			notFavourites.push(item.identifier);
+		}
+		for(var j = 0; j < testSource.length; j++) {
+			if (item.identifier == testSource[j].identifier) {
+				rightItems.push(testSource[j]);
+				break;
+			}
+		}
+
+	});
+	$scope.source = leftItems;
+	$scope.model = rightItems;
 	
 });	
 }
