@@ -6,10 +6,7 @@ var notFavourites=[];
 var leftColumnIds=[];
 var rightColumnIds=[];
 var originalJSON = [];
-var masterJSON = [];
-
-ctrl.controller('dndCtrl', function($window, $scope, $http) {	
-	
+ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.model = [];
 	$scope.source = [];
 	$scope.ageGroup = [];
@@ -20,6 +17,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.ImgTest = "star_blank.png";
 	$scope.questionsOnRight = "";
 	$scope.testVar = formId;
+	$scope.formName = "";
 	$('#loadingMessage').show();
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
@@ -65,9 +63,17 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function() {
 		sourceList = $scope.source;
 		targetList = $scope.model;				
-		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds);
+		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName;
+		if($scope.testVar != 0) {		
+		params = params + "&formId=" + $scope.testVar;
+		}
 		var postUrl = "sendJSONDataToSave.seam";
-		callPostService($window, $scope, $http, postUrl, params);		
+		if($scope.formName==""){
+			alert("Please enter the form name.");
+		}
+		else {
+			callPostService($window, $scope, $http, postUrl, params);
+		}		
 		//callRedirectService($window, $scope, $http, redirectUrl);
 		
 		/*var postUrl = "dndDemoSendData.seam";		
@@ -229,45 +235,73 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$scope.source = test;
 	}
 
-	}	
+	}
+
+	$scope.updateFormName = function() {
+				 rater = "Student";
+				 ages = "All Ages";
+				 var today = new Date();
+				 var dd = today.getDate();
+				 var mm = today.getMonth()+1; //January is 0!
+				 var yyyy = today.getFullYear();
+	
+				 if(dd < 10) {
+				     dd='0'+dd;
+				 } 
+
+				 if(mm < 10) {
+				     mm='0'+mm;
+				 } 
+
+				 today = mm+'-'+dd+'-'+yyyy;
+				 
+				 $scope.formName = "Basc-3 Custom " + rater + " Monitor " + ages + " " + today;
+			}
 	
 });
 
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
 			//alert(JSON.stringify(data).replace(/\\/g,""));
-			masterJSON = data;			
 			if (data.items_list && data.items_list.length > 0) {
 				$scope.source = data.items_list;
 				originalJSON = angular.copy(data.items_list);
 				$scope.tagList = data.tag_list;
 				$scope.ageGroup = data.ageGroup_list;
-				$scope.rater = data.rater_list;				
+				$scope.rater = data.rater_list;
+				$scope.updateFormName();
 			}
 			
 			if (data.target && data.target.length > 0) {
 				//$scope.model = data.target;
 			}
-			if($scope.testVar!=null) {
+			if($scope.testVar && $scope.testVar.length > 0) {
 				var urlForEntireJSON = "fetchSavedJson.seam";
 				var params = "ID="+$scope.testVar;
 				callGetForSavedForm($scope, $http, urlForEntireJSON, params);
+			} else {
+				$scope.viewLoading = false;
+				$('#loadingMessage').hide();
 			}
-			$scope.viewLoading = false;
-			$('#loadingMessage').hide();
         });
 }
 
 function callPostService($window, $scope, $http, postUrl, params) {
+	$('#loadingMessage').show();
+	$scope.viewLoading = true;
+
    $http({
     method: 'POST',
     url: postUrl,
     data: params,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-}).success(function(data) {
-	var redirectUrl = "redirectToManageFlexForm.seam";
-	callRedirectService($window, $scope, $http, redirectUrl);
-});	
+	}).success(function(data) {
+		var redirectUrl = "redirectToManageFlexForm.seam";
+		callRedirectService($window, $scope, $http, redirectUrl);
+
+		$scope.viewLoading = false;
+		$('#loadingMessage').hide();
+	});	
 }
 
 function callRedirectService($window, $scope, $http, redirectUrl) {
@@ -323,6 +357,10 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	});
 	$scope.source = leftItems;
 	$scope.model = rightItems;
+	$scope.formName = data.formName;
 	
+	$scope.viewLoading = false;
+	$('#loadingMessage').hide();
+
 });	
 }
