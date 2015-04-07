@@ -939,7 +939,7 @@ function setSelectedRadio() {
   function disableCheckBoxes() {
 	  if (disabledIdsArray != 'undefined' && disabledIdsArray != null && disabledIdsArray.length > 0) {
 
-			for (i = 0, count = disabledIdsArray.length; i < count; i++) {
+			for (var i = 0, count = disabledIdsArray.length; i < count; i++) {
 				checkboxid = disabledIdsArray[i].replace(' ', '');
 				if ($('jqg_' + divId + '_' + checkboxid) != null) {
 					$('jqg_' + divId + '_' + checkboxid).disabled = true;
