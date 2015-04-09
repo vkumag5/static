@@ -74,6 +74,10 @@ app.directive('dndBetweenList', function($parse) {
                 // on start we define where the item is dragged from
                 startIndex = ($(ui.item).index());
             },
+			update: function (event, ui) {
+				// on update we check for any condition to restrict dragging
+				scope.updateCallback(ui.item, event.target);
+			},
             stop:function (event, ui) {
                 var newParent = ui.item[0].parentNode.id;
 

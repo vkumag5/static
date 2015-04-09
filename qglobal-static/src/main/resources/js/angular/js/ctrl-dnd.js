@@ -231,6 +231,13 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				 
 				 $scope.formName = "Basc-3 Custom " + rater + " Monitor " + ages + " " + today;
 			}
+			
+	$scope.updateCallback = function(uiItem, eventTarget) {
+		if (eventTarget.id == 'sourceList' && uiItem[0].parentNode.id == 'targetList'
+			&& $scope.questionsOnRight >= 3) {
+			$('#sourceList').sortable('cancel');
+		}
+	}
 	
 });
 

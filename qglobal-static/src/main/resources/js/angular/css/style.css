@@ -3710,6 +3710,11 @@ input[type="submit"].btn.btn-mini {
 	background: #A9F5D0;
 }
 
+.drag:hover{
+	background: #A9F5D0;
+	cursor: move;
+}
+
 .alert h4 {
   margin: 0;
 }
