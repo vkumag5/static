@@ -6,6 +6,10 @@ var notFavourites=[];
 var leftColumnIds=[];
 var rightColumnIds=[];
 var originalJSON = [];
+var tagList = [];
+var whichRadioSelected = "";
+var ageGroupCheckboxSelected = [];
+var favFlag = false;
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.model = [];
 	$scope.source = [];
@@ -13,7 +17,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.rater = [];
 	$scope.assmtList = [];
 	$scope.itemTest = [];
-	$scope.tagList = [];
 	$scope.ImgTest = "star_blank.png";
 	$scope.questionsOnRight = "";
 	$scope.testVar = formId;
@@ -60,10 +63,10 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 	}
 	
-	$scope.saveOption = function() {
+	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
-		targetList = $scope.model;				
-		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName;
+		targetList = $scope.model;	
+		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag;
 		if($scope.testVar != 0) {		
 		params = params + "&formId=" + $scope.testVar;
 		}
@@ -73,7 +76,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 		else {
 			callPostService($window, $scope, $http, postUrl, params);
-		}		
+		}
 		//callRedirectService($window, $scope, $http, redirectUrl);
 		
 		/*var postUrl = "dndDemoSendData.seam";		
@@ -83,7 +86,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		//alert(temp_target);
 		var params = "id=" + id + "&target=" + temp_target + "&source=" + temp_source;
 		callPostService($scope, $http, postUrl, params);*/
-	}	
+	}
 	
 	$scope.toggleStarImage = function(idx) {
 	
@@ -128,23 +131,10 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			}
 		}
 		return status;
-	}
+	}	
 	
-	$scope.showTagNames = function(ids) {
-		var showNames="";
-		for(var i=0; i < ids.length; i++){
-		for(var j=0; j < $scope.tagList.length; j++){
-			if(ids[i] == $scope.tagList[j].identifier){							
-				showNames = showNames + $scope.tagList[j].name;
-				break;
-				}
-			}
-			if(i != (ids.length)-1){
-				showNames = showNames +", ";
-			}
-			
-		}
-		return showNames;
+	$scope.returnTagNames = function(ids) {
+		return showTagNames(ids);
 	}
 	
 	$scope.showThumbnailImage = function(idToCheck) {
@@ -159,82 +149,66 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.ifFavIsChecked = function(key) {		
 		if(key.checked) {
-			var test = [];			
-			test = $scope.source;
-			for(var i=0; i < test.length; ){
-			var flag = false;
-			console.log(test[i].identifier);
-				for(var j=0;j < favourites.length; j++){
-					if(test[i].identifier == favourites[j]){
-						flag = true;
-						break;
-					}
-				}
-			if(!flag){
-				test.splice(i,1);
-			} else {
-				i++;
-			}
-			}
-			$scope.source = test;		
+			favFlag = true;			
 		}
 		else if(!key.checked){
-		//alert("unchecked");
-		//alert(JSON.stringify(originalJSON));
-		/*var test = [];
-		test = $scope.model;
-		//var testSource = [];
-		var testSource = untouchedOriginalJSON[0];
-		//testSource = angular.copy(originalJSON);
-		for(var i=0;i<testSource.length;){
-		for(var j=0;j<test.length;j++){
-			if(test[j].identifier==testSource[i].identifier){
-				testSource.splice(i,1);
-			}
-			else{
-				i++;
-			}
-		}
-		}
-		//testSource = angular.copy(originalJSON);
-		$scope.source = testSource;
-		//alert(untouchedOriginalJSON);*/
-		$scope.source = angular.copy(originalJSON);		
-		
+		favFlag = false;		
 		}
 	}
 	
-	$scope.ifRadioIsChecked = function(key) {
-	if(key.checked) {
-		console.log(key)
-		/*if(key.value=="Teacher"){
-			$scope.source = untouchedOriginalJSON;			
-		}
-		else if(key.value=="Parent"){
-			var test = $scope.source;
-			for(var i =0;i>test.length;i++){
-				if(test.raterIds==)
-			}
-		}
-		else if(key.value=="Student"){
-		
-		}*/
-		var test = [];
-		test = $scope.source;
-		for(var i=0;i<test.length;){			
-			var raterIds = [];
-			raterIds = test[i].raterIds;
-			for(var j=0;j<raterIds.length;j++) {
-			if(raterIds[j]!=key.id)
-				test.splice(i,1);
-			else
-				i++;
-			}
-			
-		}
-		$scope.source = test;
+	$scope.ifRadioIsChecked = function(val) {
+		whichRadioSelected = val;
 	}
-
+	$scope.whichAgeGroupSelected = function(val){
+		if ($.inArray(val, ageGroupCheckboxSelected)>=0){
+			ageGroupCheckboxSelected.splice(ageGroupCheckboxSelected.indexOf(val),1);
+		}
+		else {
+			ageGroupCheckboxSelected.push(val);
+		}		
+	}
+	
+	$scope.checkFavouriteFilter = function(items){
+		if(favFlag){
+		if ($.inArray(items.identifier, favourites)>=0){
+		return items;
+		}
+		else{
+			return;
+		}
+		}
+		else{
+		return items;
+		}
+	}
+	
+	$scope.radioCheckFilter = function(items){
+		if(whichRadioSelected != "") {
+		if ($.inArray(whichRadioSelected, items.raterIds)>=0){
+		return items;
+		}
+		else{
+			return;
+		}
+		}
+		else{
+			return items;
+		}
+	}
+	
+	$scope.checkAgeGroupFilter = function(items) {
+		var ageGroupId = items.ageGroupIds[0]; 
+		if(ageGroupCheckboxSelected.length != 0){
+		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) > -1){
+			return items;
+		}
+		else{
+			return;
+		}
+		}
+		else{
+			return;
+		}
 	}
 
 	$scope.updateFormName = function() {
@@ -266,10 +240,14 @@ function callGetService($scope, $http, urlAssessment) {
 			if (data.items_list && data.items_list.length > 0) {
 				$scope.source = data.items_list;
 				originalJSON = angular.copy(data.items_list);
-				$scope.tagList = data.tag_list;
+				tagList = data.tag_list;
 				$scope.ageGroup = data.ageGroup_list;
 				$scope.rater = data.rater_list;
 				$scope.updateFormName();
+				ageGroupCheckboxSelected = [];
+				for(var i=0;i<$scope.ageGroup.length;i++){
+					ageGroupCheckboxSelected.push($scope.ageGroup[i].identifier);
+				}
 			}
 			
 			if (data.target && data.target.length > 0) {
@@ -364,3 +342,35 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 
 });	
 }
+
+function showTagNames(ids) {
+		var showNames="";
+		for(var i=0; i < ids.length; i++){
+		for(var j=0; j < tagList.length; j++){
+			if(ids[i] == tagList[j].identifier){							
+				showNames = showNames + tagList[j].name;
+				break;
+				}
+			}
+			if(i != (ids.length)-1){
+				showNames = showNames +", ";
+			}
+			
+		}
+		return showNames;
+}
+
+ctrl.filter('startsWithLetter', function () {
+  return function (items, letter) {
+    var filtered = [];
+    var letterMatch = new RegExp(letter, 'i');
+    for (var i = 0; i < items.length; i++) {
+      var item = items[i].tagIds;
+	  var name = showTagNames(item);
+      if (letterMatch.test(name.substring(0, name.length))) {
+        filtered.push(items[i]);
+      }
+    }
+    return filtered;
+  };
+});
