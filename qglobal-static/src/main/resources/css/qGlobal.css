@@ -4102,11 +4102,11 @@ col_addGrp_4 {
 }
 
 .description {
-	color: #808080;
-	font-family: verdana;
-	font-size: 11px;
-	margin-left: 15px;
-	margin-right: 40px;
+	color: black;
+	font-size: 13px;
+	margin-left: 1px;
+	padding: 2px;
+	border: 1px solid;
 }
 
 .col_addGrp_5 {
