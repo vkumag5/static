@@ -1,3 +1,3 @@
-var app = angular.module('dnd', ['dndCtrls']);
+var app = angular.module('dnd', ['dndCtrls', 'ui.bootstrap']);
 
 
