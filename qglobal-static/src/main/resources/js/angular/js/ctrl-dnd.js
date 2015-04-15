@@ -77,15 +77,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		else {
 			callPostService($window, $scope, $http, postUrl, params);
 		}
-		//callRedirectService($window, $scope, $http, redirectUrl);
 		
-		/*var postUrl = "dndDemoSendData.seam";		
-		//alert();
-		var temp_source = angular.toJson(sourceList).replace(/hashKey/g,"").replace(/\$/g,"").replace(/\\/g,"").replace(/, "": "([0-9]|[A-Z])([0-9]|[A-Z])([0-9]|[A-Z])"/g,"").replace(/"\[/g,"[").replace(/\]"/g,"]");
-		var temp_target = angular.toJson(targetList).replace(/hashKey/g,"").replace(/\$/g,"").replace(/\\/g,"").replace(/, "": "([0-9]|[A-Z])([0-9]|[A-Z])([0-9]|[A-Z])"/g,"").replace(/\]"/g,"]").replace(/"\[/g,"[");
-		//alert(temp_target);
-		var params = "id=" + id + "&target=" + temp_target + "&source=" + temp_source;
-		callPostService($scope, $http, postUrl, params);*/
 	}
 	
 	$scope.toggleStarImage = function(idx) {
@@ -307,6 +299,11 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var flag = "";
 	var sourceItemsOnLeft = [];
 	var targetItemsOnRight = [];
+	var formStatus = data.formStatus;
+	if(formStatus != 'Draft'){
+		$('#savePublishButton').attr('disabled','disabled');
+		$('#saveDraftButton').attr('disabled','disabled');
+	}
 	sourceItemsOnLeft = data.leftItem;
 	targetItemsOnRight = data.rightItem;
 	var testSource = $scope.source;
@@ -381,3 +378,4 @@ ctrl.filter('startsWithLetter', function () {
     return filtered;
   };
 });
+
