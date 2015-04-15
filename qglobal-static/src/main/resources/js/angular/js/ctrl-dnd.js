@@ -11,6 +11,7 @@ var whichRadioSelected = "";
 var ageGroupCheckboxSelected = [];
 var favFlag = false;
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
+	$scope.alerts = [];
 	$scope.model = [];
 	$scope.source = [];
 	$scope.ageGroup = [];
@@ -21,6 +22,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.questionsOnRight = "";
 	$scope.testVar = formId;
 	$scope.formName = "";
+	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
 	$('#loadingMessage').show();
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
@@ -225,8 +227,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			}
 			
 	$scope.updateCallback = function(uiItem, eventTarget) {
+	//$scope.alerts.splice(0, $scope.alerts.length);
 		if (eventTarget.id == 'sourceList' && uiItem[0].parentNode.id == 'targetList'
-			&& $scope.questionsOnRight >= 3) {
+			&& $scope.questionsOnRight >= $scope.ngMaxItemRestrictCount) {
 			$('#sourceList').sortable('cancel');
 		}
 	}
