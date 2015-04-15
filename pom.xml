@@ -3,7 +3,7 @@
   
 	<groupId>com.pearson.qglobal.platform</groupId>
 	<artifactId>qglobal-static-content</artifactId>
-	<version>37.0.0-SNAPSHOT</version>
+	<version>37.0.0</version>
 	<packaging>pom</packaging>
     <name>qglobal-static-content</name>
 
@@ -15,7 +15,7 @@
 		<connection>scm:git:ssh://git@devops-tools.pearson.com/qglobal/qglobal-static-content.git</connection>	
 		<developerConnection>scm:git:ssh://git@devops-tools.pearson.com/qglobal/qglobal-static-content.git</developerConnection>
 		<url>https://devops-tools.pearson.com/stash/projects/QGLOBAL/repos/qglobal-static-content.git/</url>	
-		<tag>HEAD</tag>
+		<tag>qglobal-static-content-37.0.0</tag>
 	</scm>  
 
 	<modules>
