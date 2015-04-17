@@ -102,7 +102,6 @@ app.directive('dndBetweenList', function($parse) {
                 scope.$apply(targetArgs[0]);
                 scope.$apply(args[0]);
             },
-			revert: 100,
             connectWith:'#'+args[1]
         })
     }

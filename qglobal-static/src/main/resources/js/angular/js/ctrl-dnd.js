@@ -35,6 +35,12 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		if (value) {
 			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.identifier); return e.identifier}).join(','));			
 			$scope.questionsOnRight = rightColumnIds.length;
+			if($scope.questionsOnRight==0){
+				$("#dragDropMsgDiv").show();
+			}
+			else {
+				$("#dragDropMsgDiv").hide();
+			}
 		}
 	},true);
 
