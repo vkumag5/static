@@ -4109,6 +4109,14 @@ col_addGrp_4 {
 	margin-right: 40px;
 }
 
+.descriptionTsl {
+	color: black;
+	font-size: 13px;
+	margin-left: 1px;
+	padding: 2px;
+	border: 1px solid;
+}
+
 .col_addGrp_5 {
 	width: 120px;
 }

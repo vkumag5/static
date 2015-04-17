@@ -655,6 +655,7 @@ function setSelectedRadio() {
  
 					if (disabledId == aRowids[i]) {					
 		            	$('jqg_' + divId + '_' + aRowids[i]).checked = false;
+						jq$('#'+ disabledId).removeClass('ui-state-highlight');
 						}
 		            }
 		            

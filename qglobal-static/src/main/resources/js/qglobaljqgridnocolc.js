@@ -620,6 +620,7 @@ function showSelectedCheckbox() {
  
 					if (disabledId == aRowids[i]) {					
 		            	$('jqg_list_' + aRowids[i]).checked = false;
+						jq$('#'+ disabledId).removeClass('ui-state-highlight');
 						}
 		            }
 		            
