@@ -1426,6 +1426,13 @@ background-position: right center;
 	font-size: 12px;
     font-family: verdana;
 }
+.osaCompletedText{
+    font-weight: bold;
+    float: left;
+    color: #544E4F;
+    font-size: 14px;
+    font-family: verdana;
+}
 .adriftDreams .main_tab_gray_right {
     background: url(../images/main_tab_gray_right.png) no-repeat scroll 0 0 #3B8686;
     float: left;
