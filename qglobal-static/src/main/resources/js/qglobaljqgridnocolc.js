@@ -797,7 +797,7 @@ function showSelectedCheckbox() {
 		var sortIcons = document.getElementsByClassName('s-ico');
 		for(var s = 0; sortIcons.length > s ; s++){
 			if(sortIcons[s].className == "s-ico"){
-				sortIcons[s].className += " doNotDisplay";
+			//	sortIcons[s].className += " doNotDisplay";
 				}
 			}
 	}
