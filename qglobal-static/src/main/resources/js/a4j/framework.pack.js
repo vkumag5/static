@@ -2644,7 +2644,7 @@ A.appendNewHeadElements(G)
 }else{LOG.warn("No information in response about elements to replace");
 A.doFinish()
 }}var Q=A.getElementById("ajax-view-state");
-LOG.debug("Hidden JSF state fields: "+Q);
+LOG.debug("Hidden JSF state fields: ");//Q);
 if(Q!=null){var J=E.parameters["org.ajax4jsf.portlet.NAMESPACE"];
 LOG.debug("Namespace for hidden view-state input fields is "+J);
 var H=J?window.document.getElementById(J):window.document;
