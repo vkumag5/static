@@ -3377,5 +3377,29 @@ div .basic-buttonForPopUp{
 	margin-left: -22px;
 }
 
+#progressBar {
+    width: 100%;
+	background : url("./images/16pfprogressbar.gif") repeat scroll 0 0;
+    height: 20px;
+	border-radius: 7px;
+	opacity: 0.15;
+}
+
+#progressBarParentDiv {
+	background-color: #81F79F;
+	border-radius: 7px;
+	border: 1px;
+	width:0;
+}
+
+#progressBarBackground {
+	height: 20px;
+	border-radius: 7px;
+	background-color:#E6E6E6;
+	width:75%;
+	margin-left:100px;
+	margin-top:20px;
+	margin-bottom:20px;
+}
 
 /* styles for story id : 305933 ends here.   */
