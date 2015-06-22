@@ -1757,6 +1757,8 @@ input[type="submit"][disabled],
     border: 1px solid #D8D8D8;
     padding: 2px;
     margin-right: 5px;
+	/* width added for defect id 8559 */
+	width:85px;
 }
 
 #editExamineeForm .formElementInput span .rich-calendar-input {
