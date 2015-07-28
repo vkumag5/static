@@ -33,7 +33,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.$watch("model", function(value) {
 		rightColumnIds = [];
 		if (value) {
-			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.identifier); return e.identifier}).join(','));			
+			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.itemId); return e.itemId}).join(','));			
 			$scope.questionsOnRight = rightColumnIds.length;
 			if($scope.questionsOnRight==0){
 				$("#dragDropMsgDiv").show();
@@ -49,7 +49,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.$watch("source", function(value) {	
 		leftColumnIds = [];
 		if (value) {
-			console.log("Source: " + value.map(function(e){leftColumnIds.push(e.identifier); return e.identifier}).join(','));
+			console.log("Source: " + value.map(function(e){leftColumnIds.push(e.itemId); return e.itemId}).join(','));
 			
 		}
 		
@@ -94,19 +94,15 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
         console.log('clicked row', idx);
 		var str = idx.src;
 		var thumbnail = str.replace(str.substring(0, str.indexOf("star")), "");
-		//alert(thumbnail);
 		if (thumbnail=="star.png") {
 			idx.src = idx.src.replace(thumbnail,"star_blank.png");
 			notFavourites.push(idx.id);
-			//alert(notFavourites);
 			favourites.splice(favourites.indexOf(idx.id),1);
-			//alert(idx.src);
 		}
 		else if (thumbnail=="star_blank.png") {
 			idx.src = idx.src.replace(thumbnail,"star.png");
 			favourites.push(idx.id);
 			notFavourites.splice(notFavourites.indexOf(idx.id),1);
-			//alert(favourites);
 		}
 	}
 	
@@ -170,7 +166,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.checkFavouriteFilter = function(items){
 		if(favFlag){
-		if ($.inArray(items.identifier, favourites)>=0){
+		if ($.inArray(items.itemId, favourites)>=0){
 		return items;
 		}
 		else{
@@ -184,7 +180,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.radioCheckFilter = function(items){
 		if(whichRadioSelected != "") {
-		if ($.inArray(whichRadioSelected, items.raterIds)>=0){
+		if ($.inArray(whichRadioSelected, items.category)>=0){
 		return items;
 		}
 		else{
@@ -197,7 +193,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.checkAgeGroupFilter = function(items) {
-		var ageGroupId = items.ageGroupIds[0]; 
+		var ageGroupId = items.ageGroup[0]; 
 		if(ageGroupCheckboxSelected.length != 0){
 		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) > -1){
 			return items;
@@ -233,11 +229,28 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			}
 			
 	$scope.updateCallback = function(uiItem, eventTarget) {
-	//$scope.alerts.splice(0, $scope.alerts.length);
 		if (eventTarget.id == 'sourceList' && uiItem[0].parentNode.id == 'targetList'
 			&& $scope.questionsOnRight >= $scope.ngMaxItemRestrictCount) {
 			$('#sourceList').sortable('cancel');
 		}
+	}
+	
+	$scope.computeReliability = function() {
+		var jsonData = "";
+		if(rightColumnIds.length>0) {
+			jsonData = jsonData + "{";
+			for(var i=0; i < rightColumnIds.length; i++) {				
+				jsonData = jsonData + "\"" + rightColumnIds[i] + "\"" + ":" + "\"1\"";
+			if(!(i==rightColumnIds.length-1)) {
+				jsonData = jsonData + ",";
+				}
+			}
+		jsonData = jsonData + ",\"program_call\":\"5\"}";
+		}
+		var flexformIdsToSendForValidation = "flexFormItemsIdList=" + jsonData;
+		alert(jsonData);
+		var computeReliabilityServiceURL = "sendFlexFormItemsForValidation.seam"
+		callComputeValidationService($scope, $http, computeReliabilityServiceURL, flexformIdsToSendForValidation);
 	}
 	
 });
@@ -245,12 +258,12 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
 			//alert(JSON.stringify(data).replace(/\\/g,""));
-			if (data.items_list && data.items_list.length > 0) {
-				$scope.source = data.items_list;
-				originalJSON = angular.copy(data.items_list);
-				tagList = data.tag_list;
-				$scope.ageGroup = data.ageGroup_list;
-				$scope.rater = data.rater_list;
+			if (data.itemSet && data.itemSet.length > 0) {
+				$scope.source = data.itemSet;
+				originalJSON = angular.copy(data.itemSet);
+				tagList = data.metaData.tags;
+				$scope.ageGroup = data.metaData.ageGroup;
+				$scope.rater = data.metaData.category;
 				$scope.updateFormName();
 				ageGroupCheckboxSelected = [];
 				for(var i=0;i<$scope.ageGroup.length;i++){
@@ -324,7 +337,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 			notFavourites.push(item.identifier);
 		}
 		for(var j = 0; j < testSource.length; j++) {
-			if (item.identifier == testSource[j].identifier) {
+			if (item.identifier == testSource[j].itemId) {
 				leftItems.push(testSource[j]);
 				break;
 			}
@@ -339,7 +352,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 			notFavourites.push(item.identifier);
 		}
 		for(var j = 0; j < testSource.length; j++) {
-			if (item.identifier == testSource[j].identifier) {
+			if (item.identifier == testSource[j].itemId) {
 				rightItems.push(testSource[j]);
 				break;
 			}
@@ -378,7 +391,7 @@ ctrl.filter('startsWithLetter', function () {
     var filtered = [];
     var letterMatch = new RegExp(letter, 'i');
     for (var i = 0; i < items.length; i++) {
-      var item = items[i].tagIds;
+      var item = items[i].tags;
 	  var name = showTagNames(item);
       if (letterMatch.test(name.substring(0, name.length))) {
         filtered.push(items[i]);
@@ -388,3 +401,13 @@ ctrl.filter('startsWithLetter', function () {
   };
 });
 
+function callComputeValidationService($scope, $http, computeReliabilityServiceURL, flexformIdsToSendForValidation) {
+    $http({
+    method: 'POST',
+    url: computeReliabilityServiceURL,
+    data: flexformIdsToSendForValidation,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}).success(function(data) {
+	alert(data);
+});	
+}
