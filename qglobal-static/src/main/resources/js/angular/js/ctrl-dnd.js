@@ -10,6 +10,7 @@ var tagList = [];
 var whichRadioSelected = "";
 var ageGroupCheckboxSelected = [];
 var favFlag = false;
+var jsonDataForComputeReliability = "";
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.alerts = [];
 	$scope.model = [];
@@ -37,9 +38,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			$scope.questionsOnRight = rightColumnIds.length;
 			if($scope.questionsOnRight==0){
 				$("#dragDropMsgDiv").show();
+				$("#computeReliability").attr("disabled", "disabled");
 			}
 			else {
 				$("#dragDropMsgDiv").hide();
+				$("#computeReliability").removeAttr("disabled");
 			}
 		}
 	},true);
@@ -74,7 +77,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag;
+		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability;
 		if($scope.testVar != 0) {		
 		params = params + "&formId=" + $scope.testVar;
 		}
@@ -236,19 +239,19 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.computeReliability = function() {
-		var jsonData = "";
+		$('#loadingMessage').show();
+		jsonDataForComputeReliability = "";
 		if(rightColumnIds.length>0) {
-			jsonData = jsonData + "{";
+			jsonDataForComputeReliability = jsonDataForComputeReliability + "{";
 			for(var i=0; i < rightColumnIds.length; i++) {				
-				jsonData = jsonData + "\"" + rightColumnIds[i] + "\"" + ":" + "\"1\"";
+				jsonDataForComputeReliability = jsonDataForComputeReliability + "\"" + rightColumnIds[i] + "\"" + ":" + "\"1\"";
 			if(!(i==rightColumnIds.length-1)) {
-				jsonData = jsonData + ",";
+				jsonDataForComputeReliability = jsonDataForComputeReliability + ",";
 				}
 			}
-		jsonData = jsonData + ",\"program_call\":\"5\"}";
+		jsonDataForComputeReliability = jsonDataForComputeReliability + ",\"program_call\":\"5\"}";
 		}
-		var flexformIdsToSendForValidation = "flexFormItemsIdList=" + jsonData;
-		alert(jsonData);
+		var flexformIdsToSendForValidation = "flexFormItemsIdList=" + jsonDataForComputeReliability;
 		var computeReliabilityServiceURL = "sendFlexFormItemsForValidation.seam"
 		callComputeValidationService($scope, $http, computeReliabilityServiceURL, flexformIdsToSendForValidation);
 	}
@@ -257,7 +260,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
-			//alert(JSON.stringify(data).replace(/\\/g,""));
+			//alert(JSON.stringify(data).replace(/\\/g,""));						
 			if (data.itemSet && data.itemSet.length > 0) {
 				$scope.source = data.itemSet;
 				originalJSON = angular.copy(data.itemSet);
@@ -408,6 +411,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
     data: flexformIdsToSendForValidation,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(data) {
-	alert(data);
+	alert(JSON.stringify(data));
+	$('#loadingMessage').hide();
 });	
 }
