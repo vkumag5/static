@@ -25,8 +25,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.formName = "";
 	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
 	$('#loadingMessage').show();
+	$('#errorsWarningsMessageDiv').hide();
+	$scope.errorsWarnings=[];
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
+	$('#savePublishButton').attr('disabled','disabled');
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -298,11 +301,19 @@ function callPostService($window, $scope, $http, postUrl, params) {
     data: params,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 	}).success(function(data) {
+	$scope.errorsWarnings = [];
+	if(data.error) {		
+		$scope.errorsWarnings.push(data.error);
+		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");		
+		$('#errorsWarningsMessageDiv').show();
+		$('#loadingMessage').hide();
+	} else {
+		$('#errorsWarningsMessageDiv').hide();
 		var redirectUrl = "redirectToManageFlexForm.seam";
 		callRedirectService($window, $scope, $http, redirectUrl);
-
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
+	}
 	});	
 }
 
@@ -411,7 +422,25 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
     data: flexformIdsToSendForValidation,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(data) {
-	alert(JSON.stringify(data));
-	$('#loadingMessage').hide();
+	$scope.errorsWarnings = [];
+	if(data.error) {		
+		$scope.errorsWarnings.push(data.error);
+		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
+		$('#errorsWarningsMessageDiv').show();
+		$('#loadingMessage').hide();	
+	} else {		
+		$scope.errorsWarnings.push(data.response.validityStatus);
+		if(data.response.validityStatus.toLowerCase()=="success"){
+			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
+			$('#savePublishButton').removeAttr('disabled');
+			$('#errorsWarningsMessageDiv').show();
+		}
+		else {
+			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
+			$('#errorsWarningsMessageDiv').show();			
+		}
+		$('#loadingMessage').hide();		
+	}	
+	
 });	
 }
