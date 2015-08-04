@@ -11,6 +11,7 @@ var whichRadioSelected = "";
 var ageGroupCheckboxSelected = [];
 var favFlag = false;
 var jsonDataForComputeReliability = "";
+var formStatus = "";
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.alerts = [];
 	$scope.model = [];
@@ -30,6 +31,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
 	$('#savePublishButton').attr('disabled','disabled');
+	$scope.formOpenModeVar = formOpenMode;
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -335,7 +337,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var flag = "";
 	var sourceItemsOnLeft = [];
 	var targetItemsOnRight = [];
-	var formStatus = data.formStatus;
+	formStatus = data.formStatus;
 	if(formStatus != 'Draft'){
 		$('#savePublishButton').attr('disabled','disabled');
 		$('#saveDraftButton').attr('disabled','disabled');
@@ -375,8 +377,11 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	});
 	$scope.source = leftItems;
 	$scope.model = rightItems;
-	$scope.formName = data.formName;
-	
+	if($scope.formOpenModeVar=="true") {
+		$scope.formName = "Copy of " + data.formName;
+	} else {
+		$scope.formName = data.formName;
+	}
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
 
@@ -432,7 +437,9 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$scope.errorsWarnings.push(data.response.validityStatus);
 		if(data.response.validityStatus.toLowerCase()=="success"){
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
-			$('#savePublishButton').removeAttr('disabled');
+			if(formStatus == 'Draft') {
+				$('#savePublishButton').removeAttr('disabled');
+			}
 			$('#errorsWarningsMessageDiv').show();
 		}
 		else {
