@@ -437,7 +437,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$scope.errorsWarnings.push(data.response.validityStatus);
 		if(data.response.validityStatus.toLowerCase()=="success"){
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
-			if(formStatus == 'Draft') {
+			if(formStatus == 'Draft' || formStatus == "") {
 				$('#savePublishButton').removeAttr('disabled');
 			}
 			$('#errorsWarningsMessageDiv').show();
