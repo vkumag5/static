@@ -4633,3 +4633,163 @@ margin-bottom: 10px;
 display: none;
 visibility: hidden;
 }
+
+/* Exit Page column Style classes Start Qualtrics */
+.newQualtricsBody{
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+.topBarQualtricsExitPage {
+  background: #364395 none repeat scroll 0 0;
+  display: block;
+  height: 20px;
+}
+
+#logoQualtricsExitPage {
+	float: right;
+	color: #fff;
+	padding: 2px 15px;
+}
+
+.greyBarQualtricsExitPage {
+	display: block;
+	height: 50px;
+	background-color: #ededed;
+}
+
+h1pQualtricsExitPage {
+	margin-top: 0;	 
+	padding-right: 15px;
+	padding-left: 15px; 
+	font-size: 12px;
+	
+}
+
+imgQualtricsExitPage { 
+	border: none;
+}
+
+imgQualtricsExitPageLink:link {
+	color:#0066ff;
+	text-decoration: none; 
+}
+
+
+.containerQualtricsExitPage {
+	width: 80%;
+	max-width: 1260px;
+	min-width: 780px;
+	background-color: #FFF;
+	margin: 0 auto;
+}
+
+.contentQualtricsExitPage {
+	padding: 10px 0;
+	text-align: center;
+}
+
+.footerQualtricsExitPage {
+	display: block;
+	height: 49px;
+	background-color: #364395;
+}
+
+.clearfloatQualtricsExitPage {
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+}
+/*For TestNav Exit Page*/
+.newTestNavbody {
+	font: 100%/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background-color: #041d45;
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+
+.topBarTestNavExitPage{
+  
+  display: block;
+  height: 55px;
+  background-image: url("../images/testNavTopBar.png");
+}
+
+#logoTestNavExitPage {
+	float: right;
+	color: #fff;
+	padding: 2px 15px;
+}
+
+.testReturnTestNavExitPage{
+	padding: 10px;
+	margin: 50px;
+	background: #e9e9e9;
+	border: 1px solid #ccc;
+}
+
+.bottomBarTestNavExitPage {
+	display: block;
+	width: 734px;
+	height:47px;
+	background-image: url('../images/testNavBottomBar.png') ;
+	margin: 0 auto;
+}
+
+.h1pTestNavExitPage{
+	margin-top: 0;	 
+	padding-right: 15px;
+	padding-left: 15px; 
+}
+
+a imgTestNavExitPage { 
+	border: none;
+}
+
+imgTestNavExitPageLink:link {
+	color:#0066ff;
+	text-decoration: none; 
+}
+
+
+a:hover, a:active, a:focus { 
+	text-decoration: underline;
+}
+
+.containerTestNavExitPage {
+	display: block;
+	width: 734px;
+	height:505px;
+	background-color: #FFF;
+	margin: 98px auto 0;
+}
+
+.contentTestNavExitPage {
+	padding: 10px 0;
+	text-align: center;
+}
+
+.footerTestNavExitPage {
+	display: block;
+	height: 30px;
+}
+
+.fltrtTestNavExitPage { 
+	float: right;
+	margin-left: 8px;
+}
+.fltlftTestNavExitPage {
+	float: left;
+	margin-right: 8px;
+}
+.clearfloatTestNavExitPage {
+	clear:both;
+	height:0;
+	font-size: 1px;
+	line-height: 0px;
+} 
