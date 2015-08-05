@@ -4669,6 +4669,15 @@ h1pQualtricsExitPage {
 	
 }
 
+.hQualtricsExitPage{
+	margin-top: 0;	 
+	padding-right: 15px;
+	padding-left: 15px; 
+	font-size: 25px;
+	font-weight: bold;
+	
+}
+
 imgQualtricsExitPage { 
 	border: none;
 }
@@ -4741,10 +4750,29 @@ imgQualtricsExitPageLink:link {
 	margin: 0 auto;
 }
 
-.h1pTestNavExitPage{
+.hTestNavExitPage{
 	margin-top: 0;	 
 	padding-right: 15px;
 	padding-left: 15px; 
+	font-size: 30px;
+	font-weight: bold;
+	
+}
+
+.pTestNavExitPage{
+	margin-top: 30px; 
+	padding-right: 15px;
+	padding-left: 15px; 
+	font-size: 15px;
+	
+}
+
+.aTestNavExitPage{
+	margin-top: 0px; 
+	padding-right: 15px;
+	padding-left: 15px; 
+	font-size: 15px;
+	
 }
 
 a imgTestNavExitPage { 
