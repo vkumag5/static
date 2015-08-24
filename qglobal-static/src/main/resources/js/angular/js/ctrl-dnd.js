@@ -12,6 +12,7 @@ var ageGroupCheckboxSelected = [];
 var favFlag = false;
 var jsonDataForComputeReliability = "";
 var formStatus = "";
+var modelHeight = "";
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.alerts = [];
 	$scope.model = [];
@@ -46,6 +47,14 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				$("#computeReliability").attr("disabled", "disabled");
 			}
 			else {
+				if($scope.questionsOnRight<6) {
+				modelHeight = modelHeight+20;
+				var targetHeight = (modelHeight) + "px";
+				$('#targetList').css("height",targetHeight);
+				} else {
+					modelHeight = 300;
+					$('#targetList').css("height","");
+				}
 				$("#dragDropMsgDiv").hide();
 				$("#computeReliability").removeAttr("disabled");
 			}
@@ -82,7 +91,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability;
+		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareFavouritesJSON(favourites);
 		if($scope.testVar != 0) {		
 		params = params + "&formId=" + $scope.testVar;
 		}
@@ -97,7 +106,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.toggleStarImage = function(idx) {
-	
 		var elem = document.getElementById(idx);
         console.log('clicked row', idx);
 		var str = idx.src;
@@ -112,6 +120,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			favourites.push(idx.id);
 			notFavourites.splice(notFavourites.indexOf(idx.id),1);
 		}
+		console.log(favourites);
 	}
 	
 	$scope.prepareJsonUtility = function(idArray) {
@@ -124,6 +133,17 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 		var jsonString = "["+jsonToSave+"]";
 		return jsonString;
+	}
+	
+	$scope.prepareFavouritesJSON = function(idArray) {
+		var jsonData="";
+		for(var i=0; i < idArray.length; i++) {			
+			jsonData = jsonData + "\"" + idArray[i] + "\""
+			if(i<idArray.length-1) {
+				jsonData = jsonData + ",";
+			}
+		}
+		return "[" + jsonData + "]";
 	}
 	
 	$scope.checkIfFavorite = function(idToCheck) {
@@ -265,13 +285,20 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
-			//alert(JSON.stringify(data).replace(/\\/g,""));						
-			if (data.itemSet && data.itemSet.length > 0) {
-				$scope.source = data.itemSet;
-				originalJSON = angular.copy(data.itemSet);
-				tagList = data.metaData.tags;
-				$scope.ageGroup = data.metaData.ageGroup;
-				$scope.rater = data.metaData.category;
+			//alert(JSON.stringify(data).replace(/\\/g,""));
+			modelHeight = 300;
+			var flexFormItems = data.flexFormItems;
+			if(data.flexFormItemsFavorites) {
+				favourites = data.flexFormItemsFavorites;
+			} else {
+				favourites = [];
+			}
+			if (flexFormItems.itemSet && flexFormItems.itemSet.length > 0) {				
+				$scope.ageGroup = flexFormItems.metaData.ageGroup;
+				$scope.rater = flexFormItems.metaData.category;				
+				$scope.source = flexFormItems.itemSet;
+				originalJSON = angular.copy(flexFormItems.itemSet);
+				tagList = flexFormItems.metaData.tags;				
 				$scope.updateFormName();
 				ageGroupCheckboxSelected = [];
 				for(var i=0;i<$scope.ageGroup.length;i++){
@@ -334,48 +361,28 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 }).success(function(data) {
 	var rightItems = [];
 	var leftItems = [];
-	var flag = "";
-	var sourceItemsOnLeft = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
 	if(formStatus != 'Draft'){
 		$('#savePublishButton').attr('disabled','disabled');
 		$('#saveDraftButton').attr('disabled','disabled');
 	}
-	sourceItemsOnLeft = data.leftItem;
 	targetItemsOnRight = data.rightItem;
-	var testSource = $scope.source;
-	
-	angular.forEach(sourceItemsOnLeft, function(item) {
-		if (item.favorite) {
-			favourites.push(item.identifier);
-		} else {
-			notFavourites.push(item.identifier);
-		}
-		for(var j = 0; j < testSource.length; j++) {
-			if (item.identifier == testSource[j].itemId) {
-				leftItems.push(testSource[j]);
-				break;
-			}
-		}
-
-	});
-	
+	var testSource = $scope.source;	
 	angular.forEach(targetItemsOnRight, function(item) {
-		if (item.favorite) {
-			favourites.push(item.identifier);
-		} else {
-			notFavourites.push(item.identifier);
-		}
 		for(var j = 0; j < testSource.length; j++) {
 			if (item.identifier == testSource[j].itemId) {
 				rightItems.push(testSource[j]);
+				testSource.splice(testSource.indexOf(item),1);
 				break;
 			}
 		}
 
 	});
-	$scope.source = leftItems;
+	angular.forEach(rightItems, function(item) {
+		testSource.splice(testSource.indexOf(item),1);
+	});
+	$scope.source = testSource;
 	$scope.model = rightItems;
 	if($scope.formOpenModeVar=="true") {
 		$scope.formName = "Copy of " + data.formName;
