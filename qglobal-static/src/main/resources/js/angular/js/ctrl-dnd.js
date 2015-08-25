@@ -91,7 +91,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJsonUtility(rightColumnIds) + "&source=" + $scope.prepareJsonUtility(leftColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareFavouritesJSON(favourites);
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites);
 		if($scope.testVar != 0) {		
 		params = params + "&formId=" + $scope.testVar;
 		}
@@ -123,19 +123,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		console.log(favourites);
 	}
 	
-	$scope.prepareJsonUtility = function(idArray) {
-		var jsonToSave=[];
-		for(var i=0; i < idArray.length; i++) {
-			var jsonData="";				
-			jsonData = jsonData + "{\"identifier\":" + "\"" + idArray[i] + "\"" + ",";
-			jsonData = jsonData + "\"favorite\":" + $scope.checkIfFavorite(idArray[i]) + "}";			
-			jsonToSave.push(jsonData);			
-		}
-		var jsonString = "["+jsonToSave+"]";
-		return jsonString;
-	}
-	
-	$scope.prepareFavouritesJSON = function(idArray) {
+	$scope.prepareJSONToSave = function(idArray) {
 		var jsonData="";
 		for(var i=0; i < idArray.length; i++) {			
 			jsonData = jsonData + "\"" + idArray[i] + "\""
@@ -371,16 +359,13 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var testSource = $scope.source;	
 	angular.forEach(targetItemsOnRight, function(item) {
 		for(var j = 0; j < testSource.length; j++) {
-			if (item.identifier == testSource[j].itemId) {
+			if (item == testSource[j].itemId) {
 				rightItems.push(testSource[j]);
-				testSource.splice(testSource.indexOf(item),1);
+				testSource.splice(j,1);
 				break;
 			}
 		}
 
-	});
-	angular.forEach(rightItems, function(item) {
-		testSource.splice(testSource.indexOf(item),1);
 	});
 	$scope.source = testSource;
 	$scope.model = rightItems;
