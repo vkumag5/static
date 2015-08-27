@@ -164,7 +164,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			favFlag = true;			
 		}
 		else if(!key.checked){
-		favFlag = false;		
+			favFlag = false;		
 		}
 	}
 	
@@ -183,21 +183,21 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.checkFavouriteFilter = function(items){
 		if(favFlag){
 		if ($.inArray(items.itemId, favourites)>=0){
-		return items;
+			return items;
 		}
 		else{
 			return;
 		}
 		}
 		else{
-		return items;
+			return items;
 		}
 	}
 	
 	$scope.radioCheckFilter = function(items){
 		if(whichRadioSelected != "") {
 		if ($.inArray(whichRadioSelected, items.category)>=0){
-		return items;
+			return items;
 		}
 		else{
 			return;
@@ -305,6 +305,12 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.viewLoading = false;
 				$('#loadingMessage').hide();
 			}
+			if(data.error) {		
+				$scope.errorsWarnings.push(data.error);
+				$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
+				$('#errorsWarningsMessageDiv').show();
+				$('#loadingMessage').hide();	
+			}
         });
 }
 
@@ -356,7 +362,8 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$('#saveDraftButton').attr('disabled','disabled');
 	}
 	targetItemsOnRight = data.rightItem;
-	var testSource = $scope.source;	
+	var testSource = $scope.source;
+	if(targetItemsOnRight.length != 0) {
 	angular.forEach(targetItemsOnRight, function(item) {
 		for(var j = 0; j < testSource.length; j++) {
 			if (item == testSource[j].itemId) {
@@ -366,9 +373,10 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 			}
 		}
 
-	});
-	$scope.source = testSource;
-	$scope.model = rightItems;
+	});	
+		$scope.source = testSource;
+		$scope.model = rightItems;
+	}
 	if($scope.formOpenModeVar=="true") {
 		$scope.formName = "Copy of " + data.formName;
 	} else {
