@@ -12,7 +12,6 @@ var ageGroupCheckboxSelected = [];
 var favFlag = false;
 var jsonDataForComputeReliability = "";
 var formStatus = "";
-var modelHeight = "";
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.alerts = [];
 	$scope.model = [];
@@ -46,15 +45,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				$("#dragDropMsgDiv").show();
 				$("#computeReliability").attr("disabled", "disabled");
 			}
-			else {
-				if($scope.questionsOnRight<6) {
-				modelHeight = modelHeight+20;
-				var targetHeight = (modelHeight) + "px";
-				$('#targetList').css("height",targetHeight);
-				} else {
-					modelHeight = 300;
-					$('#targetList').css("height","");
-				}
+			else {				
 				$("#dragDropMsgDiv").hide();
 				$("#computeReliability").removeAttr("disabled");
 			}
@@ -274,7 +265,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
 			//alert(JSON.stringify(data).replace(/\\/g,""));
-			modelHeight = 300;
 			var flexFormItems = data.flexFormItems;
 			if(data.flexFormItemsFavorites) {
 				favourites = data.flexFormItemsFavorites;
