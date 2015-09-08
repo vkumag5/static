@@ -331,7 +331,7 @@ function callPostService($window, $scope, $http, postUrl, params) {
 }
 
 function callRedirectService($window, $scope, $http, redirectUrl) {
-    $http.get(redirectUrl).success(function(data) {					
+    $http.get(redirectUrl).success(function(data) {		
 		$window.location.href='/qg/manageFlexForms.seam';
 	});
 }
@@ -368,6 +368,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$scope.model = rightItems;
 	}
 	if($scope.formOpenModeVar=="true") {
+		$('#saveDraftButton').removeAttr('disabled');
 		$scope.formName = "Copy of " + data.formName;
 	} else {
 		$scope.formName = data.formName;
@@ -427,7 +428,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$scope.errorsWarnings.push(data.response.validityStatus);
 		if(data.response.validityStatus.toLowerCase()=="success"){
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
-			if(formStatus == 'Draft' || formStatus == "") {
+			if(formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				$('#savePublishButton').removeAttr('disabled');
 			}
 			$('#errorsWarningsMessageDiv').show();
