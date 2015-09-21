@@ -321,9 +321,10 @@ function callPostService($window, $scope, $http, postUrl, params) {
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();
 	} else {
-		$('#errorsWarningsMessageDiv').hide();
-		var redirectUrl = "redirectToManageFlexForm.seam";
-		callRedirectService($window, $scope, $http, redirectUrl);
+		$scope.errorsWarnings.push(data.response.message);
+		$scope.testVar = data.response.formId;
+		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
+		$('#errorsWarningsMessageDiv').show();
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 	}
