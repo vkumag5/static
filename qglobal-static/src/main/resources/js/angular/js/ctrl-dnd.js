@@ -91,7 +91,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			alert("Please enter the form name.");
 		}
 		else {
-			callPostService($window, $scope, $http, postUrl, params);
+			callPostService($window, $scope, $http, postUrl, params, flag);
 		}
 		
 	}
@@ -304,7 +304,7 @@ function callGetService($scope, $http, urlAssessment) {
         });
 }
 
-function callPostService($window, $scope, $http, postUrl, params) {
+function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag) {
 	$('#loadingMessage').show();
 	$scope.viewLoading = true;
 
@@ -325,6 +325,10 @@ function callPostService($window, $scope, $http, postUrl, params) {
 		$scope.testVar = data.response.formId;
 		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
 		$('#errorsWarningsMessageDiv').show();
+		if (saveOptionFlag == 'yes') {
+			$('#savePublishButton').attr('disabled','disabled');
+			$('#saveDraftButton').attr('disabled','disabled');
+		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 	}
