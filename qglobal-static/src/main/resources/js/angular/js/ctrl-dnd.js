@@ -14,6 +14,7 @@ var jsonDataForComputeReliability = "";
 var formStatus = "";
 var changeFormName = true;
 var selectedRaterName = "";
+var prefixFormName = "BASC-3 Custom Flex";
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.alerts = [];
 	$scope.model = [];
@@ -86,7 +87,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites);
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites);
 		if($scope.testVar != 0) {		
 		params = params + "&formId=" + $scope.testVar;
 		}
@@ -305,6 +306,7 @@ function callGetService($scope, $http, urlAssessment) {
 			if($scope.testVar && $scope.testVar.length > 0) {
 				var urlForEntireJSON = "fetchSavedJson.seam";
 				var params = "ID="+$scope.testVar;
+				$scope.toggleFormNameFlag();
 				callGetForSavedForm($scope, $http, urlForEntireJSON, params);
 			} else {
 				$scope.viewLoading = false;
@@ -335,6 +337,7 @@ function callPostService($window, $scope, $http, postUrl, params) {
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();
 	} else if(data.formExists) {
+		$('#errorsWarningsMessageDiv').hide();		
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 		$scope.callAngularErrorPopup($scope.errorMsgFormNameExists);		
@@ -381,7 +384,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$('#saveDraftButton').removeAttr('disabled');
 		$scope.formName = "Copy of " + data.formName;
 	} else {
-		$scope.formName = data.formName;
+		$scope.formName = data.formName.substr(19);
 	}
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
@@ -447,7 +450,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}
-		$('#loadingMessage').hide();		
+		$('#loadingMessage').hide();	
 	}	
 	
 });	
