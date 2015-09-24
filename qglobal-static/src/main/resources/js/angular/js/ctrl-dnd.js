@@ -12,6 +12,10 @@ var ageGroupCheckboxSelected = [];
 var favFlag = false;
 var jsonDataForComputeReliability = "";
 var formStatus = "";
+var flexFormRaterAgeGroupHandler = new FlexFormRaterAgeGroupHandler();
+var changeFormName = true;
+var selectedRaterName = "";
+var prefixFormName = "BASC-3 Custom Flex";
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.alerts = [];
 	$scope.model = [];
@@ -32,6 +36,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.viewLoading = true;
 	$('#savePublishButton').attr('disabled','disabled');
 	$scope.formOpenModeVar = formOpenMode;
+	$scope.errorMsgFormNameBlank = errorMsgFormNameBlank;
+	$scope.errorMsgFormNameExists = errorMsgFormNameExists;
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -82,13 +88,13 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" +$scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites);
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites);
 		if($scope.testVar != 0) {		
 		params = params + "&formId=" + $scope.testVar;
 		}
 		var postUrl = "sendJSONDataToSave.seam";
-		if($scope.formName==""){
-			alert("Please enter the form name.");
+		if($scope.formName==""){	
+			$scope.callAngularErrorPopup($scope.errorMsgFormNameBlank);
 		}
 		else {
 			callPostService($window, $scope, $http, postUrl, params, flag);
@@ -159,8 +165,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 	}
 	
-	$scope.ifRadioIsChecked = function(val) {
-		whichRadioSelected = val;
+	$scope.ifRadioIsChecked = function(raterItem) {
+		whichRadioSelected = raterItem.identifier;
+		selectedRaterName = raterItem.name;
+		ageGroupCheckboxSelected = [];
+		$scope.autoPopulateFormName();
 	}
 	$scope.whichAgeGroupSelected = function(val){
 		if ($.inArray(val, ageGroupCheckboxSelected)>=0){
@@ -168,7 +177,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 		else {
 			ageGroupCheckboxSelected.push(val);
-		}		
+		}
+		$scope.autoPopulateFormName();
 	}
 	
 	$scope.checkFavouriteFilter = function(items){
@@ -199,41 +209,47 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 	}
 	
-	$scope.checkAgeGroupFilter = function(items) {
-		var ageGroupId = items.ageGroup[0]; 
-		if(ageGroupCheckboxSelected.length != 0){
-		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) > -1){
+	$scope.ageGroupFilterLeftPane = function(items) {
+		var itemAgeGroupArray = items.ageGroup;
+		var itemAgeGroupMap = itemAgeGroupArray.map(function(obj) { 
+		  return obj; 
+		});
+		var isSubsetFlag = ageGroupCheckboxSelected.every(function(val) { 
+		  return itemAgeGroupMap.indexOf(val) >= 0;
+		});
+		if(isSubsetFlag) {
 			return items;
-		}
-		else{
-			return;
-		}
-		}
-		else{
+		} else {
 			return;
 		}
 	}
-
-	$scope.updateFormName = function() {
-				 rater = "Student";
-				 ages = "All Ages";
-				 var today = new Date();
-				 var dd = today.getDate();
-				 var mm = today.getMonth()+1; //January is 0!
-				 var yyyy = today.getFullYear();
+	$scope.autoPopulateFormName = function() {				
+		if(changeFormName) {
+			$scope.formName = selectedRaterName + $scope.getAgeGroupNameSection(ageGroupCheckboxSelected.sort());
+		}
+	}
 	
-				 if(dd < 10) {
-				     dd='0'+dd;
-				 } 
-
-				 if(mm < 10) {
-				     mm='0'+mm;
-				 } 
-
-				 today = mm+'-'+dd+'-'+yyyy;
-				 
-				 $scope.formName = "Basc-3 Custom " + rater + " Monitor " + ages + " " + today;
+	$scope.getAgeGroupNameSection = function(selectedAgeGroupIds) {
+		var ageGroupNameSection = "";
+		angular.forEach(selectedAgeGroupIds, function(id) {
+		for(var j = 0; j < $scope.ageGroup.length; j++) {
+			if (id ==  $scope.ageGroup[j].identifier) {
+				ageGroupNameSection = ageGroupNameSection + " " +  $scope.ageGroup[j].name;
+				break;
 			}
+		}
+		});
+		return ageGroupNameSection;
+	}
+	
+	$scope.ageGroupBasedOnRaterFilter = function(ageGroupVal) {
+		var ageGroupIdListBasedOnRater = flexFormRaterAgeGroupHandler.getAgeGroupIdListBasedOnRater(originalJSON, whichRadioSelected);
+		if ($.inArray(ageGroupVal.identifier, ageGroupIdListBasedOnRater) > -1) {
+			return ageGroupVal;
+		} else {
+			return;
+		}
+	};
 			
 	$scope.updateCallback = function(uiItem, eventTarget) {
 		if (eventTarget.id == 'sourceList' && uiItem[0].parentNode.id == 'targetList'
@@ -260,6 +276,21 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		callComputeValidationService($scope, $http, computeReliabilityServiceURL, flexformIdsToSendForValidation);
 	}
 	
+	$scope.toggleFormNameFlag = function() {
+		changeFormName = false;
+	}
+	$scope.callAngularErrorPopup = function(msg) {
+		var maskHeight = $(document).height();  
+		var maskWidth = $(window).width();			
+		// calculate the values for center alignment
+		var dialogTop =  (maskHeight/3) - ($('#dialog-box').height());  
+		var dialogLeft = (maskWidth/2) - ($('#dialog-box').width()/2);			
+		// assign values to the overlay and dialog box		
+		$('#errorMessageSection').text(msg);
+		$('#error-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
+		$('#error-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
+	}
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -277,11 +308,9 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.source = flexFormItems.itemSet;
 				originalJSON = angular.copy(flexFormItems.itemSet);
 				tagList = flexFormItems.metaData.tags;				
-				$scope.updateFormName();
-				ageGroupCheckboxSelected = [];
-				for(var i=0;i<$scope.ageGroup.length;i++){
-					ageGroupCheckboxSelected.push($scope.ageGroup[i].identifier);
-				}
+				whichRadioSelected = flexFormRaterAgeGroupHandler.getStudentRaterId($scope.rater);
+				selectedRaterName = flexFormRaterAgeGroupHandler.getStudentRaterName($scope.rater);
+				$scope.autoPopulateFormName();				
 			}
 			
 			if (data.target && data.target.length > 0) {
@@ -290,6 +319,7 @@ function callGetService($scope, $http, urlAssessment) {
 			if($scope.testVar && $scope.testVar.length > 0) {
 				var urlForEntireJSON = "fetchSavedJson.seam";
 				var params = "ID="+$scope.testVar;
+				$scope.toggleFormNameFlag();
 				callGetForSavedForm($scope, $http, urlForEntireJSON, params);
 			} else {
 				$scope.viewLoading = false;
@@ -307,7 +337,6 @@ function callGetService($scope, $http, urlAssessment) {
 function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag) {
 	$('#loadingMessage').show();
 	$scope.viewLoading = true;
-
    $http({
     method: 'POST',
     url: postUrl,
@@ -320,6 +349,11 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");		
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();
+	} else if(data.formExists) {
+		$('#errorsWarningsMessageDiv').hide();		
+		$scope.viewLoading = false;
+		$('#loadingMessage').hide();
+		$scope.callAngularErrorPopup($scope.errorMsgFormNameExists);		
 	} else {
 		$scope.errorsWarnings.push(data.response.message);
 		$scope.testVar = data.response.formId;
@@ -333,12 +367,6 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		$('#loadingMessage').hide();
 	}
 	});	
-}
-
-function callRedirectService($window, $scope, $http, redirectUrl) {
-    $http.get(redirectUrl).success(function(data) {		
-		$window.location.href='/qg/manageFlexForms.seam';
-	});
 }
 
 function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
@@ -376,7 +404,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$('#saveDraftButton').removeAttr('disabled');
 		$scope.formName = "Copy of " + data.formName;
 	} else {
-		$scope.formName = data.formName;
+		$scope.formName = data.formName.substr(19);
 	}
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
@@ -442,7 +470,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}
-		$('#loadingMessage').hide();		
+		$('#loadingMessage').hide();	
 	}	
 	
 });	
