@@ -221,6 +221,24 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			return;
 		}
 	}
+	
+	$scope.ageGroupFilterRightPane = function(items) {
+		var itemAgeGroupArray = items.ageGroup;
+		var itemAgeGroupMap = itemAgeGroupArray.map(function(obj) { 
+		  return obj; 
+		});
+		var isSubsetFlag = ageGroupCheckboxSelected.every(function(val) { 
+		  return itemAgeGroupMap.indexOf(val) >= 0;
+		});
+		if(isSubsetFlag) {
+			return items;
+		} else {			
+			$scope.source.push(items);
+			$scope.model = [];
+			return;
+		}
+	}
+	
 	$scope.autoPopulateFormName = function() {				
 		if(changeFormName) {
 			$scope.formName = selectedRaterName + $scope.getAgeGroupNameSection(ageGroupCheckboxSelected.sort());
@@ -232,7 +250,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		angular.forEach(selectedAgeGroupIds, function(id) {
 		for(var j = 0; j < $scope.ageGroup.length; j++) {
 			if (id ==  $scope.ageGroup[j].identifier) {
-				ageGroupNameSection = ageGroupNameSection + " " +  $scope.ageGroup[j].name;
+				if(ageGroupNameSection == "") {
+					ageGroupNameSection = ageGroupNameSection + " " +  $scope.ageGroup[j].name;
+				} else {
+					ageGroupNameSection = ageGroupNameSection + " and " +  $scope.ageGroup[j].name;
+				}
 				break;
 			}
 		}
