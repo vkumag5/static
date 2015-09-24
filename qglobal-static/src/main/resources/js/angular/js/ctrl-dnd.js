@@ -42,20 +42,28 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
+	//modified to show 'Compute Reliability' button as active when minimum 5 questions will be on right window pane.
+    //and dotted div will be visible only when no question will be on right window pane.
 	$scope.$watch("model", function(value) {
 		rightColumnIds = [];
 		if (value) {
 			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.itemId); return e.itemId}).join(','));			
 			$scope.questionsOnRight = rightColumnIds.length;
-			if($scope.questionsOnRight==0){
-				$("#dragDropMsgDiv").show();
-				$("#computeReliability").attr("disabled", "disabled");
+			 
+    			if($scope.questionsOnRight==0){
+				      $("#dragDropMsgDiv").show();
+					   $("#computeReliability").attr("disabled", "disabled");
+				}
+				else {
+				      $("#dragDropMsgDiv").hide();
+					  
+				if ($scope.questionsOnRight<5) {
+					  $("#computeReliability").attr("disabled", "disabled");
+				} else {
+					  $("#computeReliability").removeAttr("disabled");
+				}
 			}
-			else {				
-				$("#dragDropMsgDiv").hide();
-				$("#computeReliability").removeAttr("disabled");
-			}
-		}
+        }
 	},true);
 
 	// watch, use 'true' to also receive updates when values
