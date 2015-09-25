@@ -224,26 +224,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.autoPopulateFormName = function() {				
 		if(changeFormName) {
-			$scope.formName = selectedRaterName + $scope.getAgeGroupNameSection(ageGroupCheckboxSelected.sort());
+			$scope.formName = selectedRaterName + getAgeGroupRelatedName(ageGroupCheckboxSelected.sort(), $scope.ageGroup);
 		}
-	}
-	
-	$scope.getAgeGroupNameSection = function(selectedAgeGroupIds) {
-		var ageGroupNameSection = "";
-		angular.forEach(selectedAgeGroupIds, function(id) {
-		for(var j = 0; j < $scope.ageGroup.length; j++) {
-			if (id ==  $scope.ageGroup[j].identifier) {
-				if(ageGroupNameSection == "") {
-					ageGroupNameSection = ageGroupNameSection + " " +  $scope.ageGroup[j].name;
-				} else {
-					ageGroupNameSection = ageGroupNameSection + " and " +  $scope.ageGroup[j].name;
-				}
-				break;
-			}
-		}
-		});
-		return ageGroupNameSection;
-	}
+	}	
 	
 	$scope.updateCallback = function(uiItem, eventTarget) {
 		if (eventTarget.id == 'sourceList' && uiItem[0].parentNode.id == 'targetList'
@@ -387,9 +370,10 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	}
 	if($scope.formOpenModeVar=="true") {
 		$('#saveDraftButton').removeAttr('disabled');
-		$scope.formName = "Copy of " + data.formName;
+		$scope.formName = data.formName + "-Copy";
+		scope.formName = data.formName.substr(prefixFormName.length + 1);
 	} else {
-		$scope.formName = data.formName.substr(19);
+		$scope.formName = data.formName.substr(prefixFormName.length + 1);
 	}
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
@@ -459,4 +443,28 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 	}	
 	
 });	
+}
+
+function getAgeGroupRelatedName(selectedAgeGroupIds, ageGroups) {
+	var ageGroupNameSection = "";
+	for (var i = 0; i < selectedAgeGroupIds.length; i++) {
+		var id = selectedAgeGroupIds[i];
+		if (i > 0) {
+			ageGroupNameSection = ageGroupNameSection + " and ";
+		} else {
+			ageGroupNameSection = ageGroupNameSection + " ";
+		}
+		var ageGroupName = getAgeGroupNameBasedOnId(ageGroups, id);
+		ageGroupNameSection = ageGroupNameSection + ageGroupName;
+	}
+	return ageGroupNameSection;
+}
+
+function getAgeGroupNameBasedOnId(ageGroups, id) {
+	for ( var j = 0; j < ageGroups.length; j++) {
+		if (id == ageGroups[j].identifier) {
+			return ageGroups[j].name;
+		}
+	}
+	return "";
 }
