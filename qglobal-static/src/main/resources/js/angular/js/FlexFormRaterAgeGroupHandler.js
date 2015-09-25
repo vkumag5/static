@@ -11,20 +11,11 @@ var FlexFormRaterAgeGroupHandler = Class.create({
 		}
 		return ageGroupBasedOnRater;
 	},
-	getStudentRaterId: function(raterList) {
+	getStudentRater: function(raterList) {
 		for (var i = 0; i < raterList.length; i++) {
 			var raterVal = raterList[i];
 			if (raterVal.name === "Student" || raterVal.name === "student") {
-				return raterVal.identifier;
-			}
-		}
-		return;
-	},
-	getStudentRaterName: function(raterList) {
-		for (var i = 0; i < raterList.length; i++) {
-			var raterVal = raterList[i];
-			if (raterVal.name === "Student" || raterVal.name === "student") {
-				return raterVal.name;
+				return raterVal;
 			}
 		}
 		return;

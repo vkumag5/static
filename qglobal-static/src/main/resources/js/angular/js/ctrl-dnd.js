@@ -171,6 +171,14 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		ageGroupCheckboxSelected = [];
 		$scope.autoPopulateFormName();
 	}
+	
+	$scope.isAgeGroupChecked = function(ageGroupId) {
+		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) >= 0) {
+			return true;
+		}
+		return false;
+	};
+	
 	$scope.whichAgeGroupSelected = function(val){
 		if ($.inArray(val, ageGroupCheckboxSelected)>=0){
 			ageGroupCheckboxSelected.splice(ageGroupCheckboxSelected.indexOf(val),1);
@@ -307,9 +315,10 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.rater = flexFormItems.metaData.category;				
 				$scope.source = flexFormItems.itemSet;
 				originalJSON = angular.copy(flexFormItems.itemSet);
-				tagList = flexFormItems.metaData.tags;				
-				whichRadioSelected = flexFormRaterAgeGroupHandler.getStudentRaterId($scope.rater);
-				selectedRaterName = flexFormRaterAgeGroupHandler.getStudentRaterName($scope.rater);
+				tagList = flexFormItems.metaData.tags;
+				var studentRater = flexFormRaterAgeGroupHandler.getStudentRater($scope.rater);
+				whichRadioSelected = studentRater.identifier;
+				selectedRaterName = studentRater.name;
 				$scope.autoPopulateFormName();				
 			}
 			
