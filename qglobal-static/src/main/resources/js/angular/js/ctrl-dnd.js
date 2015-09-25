@@ -370,8 +370,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	}
 	if($scope.formOpenModeVar=="true") {
 		$('#saveDraftButton').removeAttr('disabled');
-		$scope.formName = data.formName + "-Copy";
-		scope.formName = data.formName.substr(prefixFormName.length + 1);
+		$scope.formName = (data.formName + "-Copy").substr(prefixFormName.length + 1);		
 	} else {
 		$scope.formName = data.formName.substr(prefixFormName.length + 1);
 	}
