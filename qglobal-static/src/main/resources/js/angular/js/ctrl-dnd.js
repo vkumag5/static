@@ -220,24 +220,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		} else {
 			return;
 		}
-	}
-	
-	$scope.ageGroupFilterRightPane = function(items) {
-		var itemAgeGroupArray = items.ageGroup;
-		var itemAgeGroupMap = itemAgeGroupArray.map(function(obj) { 
-		  return obj; 
-		});
-		var isSubsetFlag = ageGroupCheckboxSelected.every(function(val) { 
-		  return itemAgeGroupMap.indexOf(val) >= 0;
-		});
-		if(isSubsetFlag) {
-			return items;
-		} else {			
-			$scope.source.push(items);
-			$scope.model = [];
-			return;
-		}
-	}
+	}	
 	
 	$scope.autoPopulateFormName = function() {				
 		if(changeFormName) {
