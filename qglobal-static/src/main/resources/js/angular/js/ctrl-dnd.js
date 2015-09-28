@@ -52,11 +52,10 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			 
     			if($scope.questionsOnRight==0){
 				      $("#dragDropMsgDiv").show();
-					   $("#computeReliability").attr("disabled", "disabled");
+					  $("#computeReliability").attr("disabled", "disabled");
 				}
 				else {
-				      $("#dragDropMsgDiv").hide();
-					  
+				      $("#dragDropMsgDiv").hide();					  
 				if ($scope.questionsOnRight<5) {
 					  $("#computeReliability").attr("disabled", "disabled");
 				} else {
@@ -393,7 +392,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$('#saveDraftButton').removeAttr('disabled');
 		$scope.formName = "Copy of " + data.formName;
 	} else {
-		$scope.formName = data.formName.substr(19);
+		$scope.formName = data.formName.substr(prefixFormName.length + 1);
 	}
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
