@@ -35,7 +35,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
 	$('#savePublishButton').attr('disabled','disabled');
-	$scope.formOpenModeVar = formOpenMode;
+	$scope.formOpenModeVar = formOpenMode;	
 	$scope.errorMsgFormNameBlank = errorMsgFormNameBlank;
 	$scope.errorMsgFormNameExists = errorMsgFormNameExists;
 	callGetService($scope, $http, urlForEntireJSON);		
@@ -45,7 +45,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.$watch("model", function(value) {
 		rightColumnIds = [];
 		if (value) {
-			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.itemId); return e.itemId}).join(','));			
+			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.itemId); return e.ageGroup}).join(','));			
 			$scope.questionsOnRight = rightColumnIds.length;
 			if($scope.questionsOnRight==0){
 				$("#dragDropMsgDiv").show();
@@ -88,9 +88,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites);
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave(ageGroupCheckboxSelected);
 		if($scope.testVar != 0) {		
-		params = params + "&formId=" + $scope.testVar;
+			params = params + "&formId=" + $scope.testVar;
 		}
 		var postUrl = "sendJSONDataToSave.seam";
 		if($scope.formName==""){	
@@ -179,6 +179,13 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		return false;
 	};
 	
+	$scope.isRaterSelected = function(raterId) {
+		if (raterId==whichRadioSelected) {
+			return true;
+		}
+		return false;
+	};
+	
 	$scope.whichAgeGroupSelected = function(val){
 		if ($.inArray(val, ageGroupCheckboxSelected)>=0){
 			ageGroupCheckboxSelected.splice(ageGroupCheckboxSelected.indexOf(val),1);
@@ -203,7 +210,21 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 	}
 	
-	$scope.radioCheckFilter = function(items){
+	$scope.raterFilterLeftPane = function(items){
+		if(whichRadioSelected != "") {
+		if ($.inArray(whichRadioSelected, items.category)>=0){
+			return items;
+		}
+		else{
+			return;
+		}
+		}
+		else{
+			return items;
+		}
+	}
+	
+	$scope.raterFilterRightPane = function(items){
 		if(whichRadioSelected != "") {
 		if ($.inArray(whichRadioSelected, items.category)>=0){
 			return items;
@@ -231,13 +252,25 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			return;
 		}
 	}
-	$scope.autoPopulateFormName = function() {				
-		if(changeFormName) {
-			$scope.formName = selectedRaterName + $scope.getAgeGroupNameSection(ageGroupCheckboxSelected.sort());
-		}
-	}
 	
-	$scope.getAgeGroupNameSection = function(selectedAgeGroupIds) {
+	$scope.ageGroupFilterRightPane = function(items) {
+		var itemAgeGroupArray = items.ageGroup;
+		var itemAgeGroupMap = itemAgeGroupArray.map(function(obj) { 
+		  return obj; 
+		});	
+		var isSubsetFlag = ageGroupCheckboxSelected.every(function(val) { 
+		  return itemAgeGroupMap.indexOf(val) >= 0;
+		});
+		if(isSubsetFlag) {
+			return items;
+		} else {			
+			$scope.source.push(items);
+			$scope.model.splice($scope.model.indexOf(items),1);
+			return;
+		}
+	}	
+	
+		$scope.getAgeGroupNameSection = function(selectedAgeGroupIds) {
 		var ageGroupNameSection = "";
 		angular.forEach(selectedAgeGroupIds, function(id) {
 		for(var j = 0; j < $scope.ageGroup.length; j++) {
@@ -257,8 +290,14 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		} else {
 			return;
 		}
-	};
-			
+	}
+	
+	$scope.autoPopulateFormName = function() {				
+		if(changeFormName) {
+			$scope.formName = selectedRaterName + getAgeGroupRelatedName(ageGroupCheckboxSelected.sort(), $scope.ageGroup);
+		}
+	}	
+	
 	$scope.updateCallback = function(uiItem, eventTarget) {
 		if (eventTarget.id == 'sourceList' && uiItem[0].parentNode.id == 'targetList'
 			&& $scope.questionsOnRight >= $scope.ngMaxItemRestrictCount) {
@@ -316,10 +355,7 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.source = flexFormItems.itemSet;
 				originalJSON = angular.copy(flexFormItems.itemSet);
 				tagList = flexFormItems.metaData.tags;
-				var studentRater = flexFormRaterAgeGroupHandler.getStudentRater($scope.rater);
-				whichRadioSelected = studentRater.identifier;
-				selectedRaterName = studentRater.name;
-				$scope.autoPopulateFormName();				
+					
 			}
 			
 			if (data.target && data.target.length > 0) {
@@ -331,6 +367,10 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.toggleFormNameFlag();
 				callGetForSavedForm($scope, $http, urlForEntireJSON, params);
 			} else {
+				var studentRater = flexFormRaterAgeGroupHandler.getStudentRater($scope.rater);
+				whichRadioSelected = studentRater.identifier;
+				selectedRaterName = studentRater.name;
+				$scope.autoPopulateFormName();	
 				$scope.viewLoading = false;
 				$('#loadingMessage').hide();
 			}
@@ -389,11 +429,13 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var leftItems = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
+	whichRadioSelected = data.rightItem.rater;
+	ageGroupCheckboxSelected = data.rightItem.ageGroup;
 	if(formStatus != 'Draft'){
 		$('#savePublishButton').attr('disabled','disabled');
 		$('#saveDraftButton').attr('disabled','disabled');
 	}
-	targetItemsOnRight = data.rightItem;
+	targetItemsOnRight = data.rightItem.items;
 	var testSource = $scope.source;
 	if(targetItemsOnRight.length != 0) {
 	angular.forEach(targetItemsOnRight, function(item) {
@@ -411,9 +453,9 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	}
 	if($scope.formOpenModeVar=="true") {
 		$('#saveDraftButton').removeAttr('disabled');
-		$scope.formName = "Copy of " + data.formName;
+		$scope.formName = (data.formName + "-Copy").substr(prefixFormName.length + 1);
 	} else {
-		$scope.formName = data.formName.substr(19);
+		$scope.formName = data.formName.substr(prefixFormName.length + 1);
 	}
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
@@ -483,4 +525,28 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 	}	
 	
 });	
+}
+
+function getAgeGroupRelatedName(selectedAgeGroupIds, ageGroups) {
+	var ageGroupNameSection = "";
+	for (var i = 0; i < selectedAgeGroupIds.length; i++) {
+		var id = selectedAgeGroupIds[i];
+		if (i > 0) {
+			ageGroupNameSection = ageGroupNameSection + " and ";
+		} else {
+			ageGroupNameSection = ageGroupNameSection + " ";
+		}
+		var ageGroupName = getAgeGroupNameBasedOnId(ageGroups, id);
+		ageGroupNameSection = ageGroupNameSection + ageGroupName;
+	}
+	return ageGroupNameSection;
+}
+
+function getAgeGroupNameBasedOnId(ageGroups, id) {
+	for ( var j = 0; j < ageGroups.length; j++) {
+		if (id == ageGroups[j].identifier) {
+			return ageGroups[j].name;
+		}
+	}
+	return "";
 }
