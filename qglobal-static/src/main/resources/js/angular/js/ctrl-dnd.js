@@ -29,6 +29,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.testVar = formId;
 	$scope.formName = "";
 	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
+	$scope.ngMinItemRestrictCount = minItemRestrictCount;
 	$('#loadingMessage').show();
 	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings=[];
@@ -42,20 +43,28 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
+	//modified to show 'Compute Reliability' button as active when minimum 5 questions will be on right window pane.
+    //and dotted div will be visible only when no question will be on right window pane.
 	$scope.$watch("model", function(value) {
 		rightColumnIds = [];
 		if (value) {
 			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.itemId); return e.itemId}).join(','));			
 			$scope.questionsOnRight = rightColumnIds.length;
-			if($scope.questionsOnRight==0){
-				$("#dragDropMsgDiv").show();
-				$("#computeReliability").attr("disabled", "disabled");
+			 
+    			if($scope.questionsOnRight==0){
+				      $("#dragDropMsgDiv").show();
+					   $("#computeReliability").attr("disabled", "disabled");
+				}
+				else {
+				      $("#dragDropMsgDiv").hide();
+					  
+				if ($scope.questionsOnRight<5) {
+					  $("#computeReliability").attr("disabled", "disabled");
+				} else {
+					  $("#computeReliability").removeAttr("disabled");
+				}
 			}
-			else {				
-				$("#dragDropMsgDiv").hide();
-				$("#computeReliability").removeAttr("disabled");
-			}
-		}
+        }
 	},true);
 
 	// watch, use 'true' to also receive updates when values
@@ -409,12 +418,15 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$scope.source = testSource;
 		$scope.model = rightItems;
 	}
-	if($scope.formOpenModeVar=="true") {
+	
+	// Add copy string if Create a copy is selected.
+	var tempFormName = data.formName;
+	if($scope.formOpenModeVar === "true") {
 		$('#saveDraftButton').removeAttr('disabled');
-		$scope.formName = "Copy of " + data.formName;
-	} else {
-		$scope.formName = data.formName.substr(19);
+		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
+	$scope.formName = tempFormName.substr(prefixFormName.length + 1);
+	
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
 
