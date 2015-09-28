@@ -36,6 +36,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
 	$('#savePublishButton').attr('disabled','disabled');
+	disableSaveNPublishFlag = true;
+	disableSaveDraftFlag = false;
 	$scope.formOpenModeVar = formOpenMode;
 	$scope.errorMsgFormNameBlank = errorMsgFormNameBlank;
 	$scope.errorMsgFormNameExists = errorMsgFormNameExists;
@@ -308,6 +310,27 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$('#error-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
 	}
 	
+
+	$scope.isSaveDraftDisabled = function() {
+		if (FlexFormBuilderUtil.isFormNamePresent($scope.formName)) {
+			if (disableSaveDraftFlag) {
+				return true;
+			}
+			return false;
+		}
+		return true;
+	};
+
+	$scope.isSaveNPublishDisabled = function() {
+		if (FlexFormBuilderUtil.isFormNamePresent($scope.formName)) {
+			if (disableSaveNPublishFlag) {
+				return true;
+			}
+			return false;
+		}
+		return true;
+	};
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -368,7 +391,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();
 	} else if(data.formExists) {
-		$('#errorsWarningsMessageDiv').hide();		
+		$('#errorsWarningsMessageDiv').hide();
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 		$scope.callAngularErrorPopup($scope.errorMsgFormNameExists);		
@@ -380,6 +403,8 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		if (saveOptionFlag == 'yes') {
 			$('#savePublishButton').attr('disabled','disabled');
 			$('#saveDraftButton').attr('disabled','disabled');
+			disableSaveNPublishFlag = true;
+			disableSaveDraftFlag = true;
 		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
@@ -401,6 +426,8 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	if(formStatus != 'Draft'){
 		$('#savePublishButton').attr('disabled','disabled');
 		$('#saveDraftButton').attr('disabled','disabled');
+		disableSaveNPublishFlag = true;
+		disableSaveDraftFlag = true;
 	}
 	targetItemsOnRight = data.rightItem;
 	var testSource = $scope.source;
@@ -484,6 +511,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
 			if(formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				$('#savePublishButton').removeAttr('disabled');
+				disableSaveNPublishFlag = false;
 			}
 			$('#errorsWarningsMessageDiv').show();
 		}

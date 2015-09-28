@@ -15,3 +15,17 @@ FlexFormBuilderUtil.getFormNameOfCopy = function(existingFormName) {
 	}
 	return formName + "-copy";
 };
+
+FlexFormBuilderUtil.isFormNamePresent = function(formName) {
+	if (formName && formName.length > 0) {
+		return true;
+	}
+	return false;
+};
+
+FlexFormBuilderUtil.isFormStatusActive = function(formStatus) {
+	if (formStatus && formStatus === 'Active') {
+		return true;
+	}
+	return false;
+};
