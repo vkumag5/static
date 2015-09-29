@@ -201,6 +201,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		if ($.inArray(ageGroupId, $scope.ageGroupCheckboxSelected) >= 0) {
 			return true;
 		}
+	
+	$scope.isAgeGroupChecked = function(ageGroupId) {
+		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) >= 0) {
+			return true;
+		}
 		return false;
 	};
 	
@@ -409,8 +414,6 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();
 	} else if(data.formExists) {
-		$('#errorsWarningsMessageDiv').hide();		
-		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 		$scope.callAngularErrorPopup($scope.errorMsgFormNameExists);		
 		$('#errorsWarningsMessageDiv').hide();		
@@ -524,13 +527,10 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();	
 	} else {		
-		//$scope.errorsWarnings.push(data.response.validityStatus);
 		if(data.response.validityStatus.toLowerCase() == "success") {
-			//$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
 			if (formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				disableSaveNPublishFlag = false;
 			}
-			//$('#errorsWarningsMessageDiv').show();
 			$scope.computeReliabilityResult = data.response.validityStatus;
 			$('#computeReliabilitySection').show();
 			valueChangedAfterCR = false;
@@ -543,4 +543,28 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 	}	
 	
 });
+}
+
+function getAgeGroupRelatedName(selectedAgeGroupIds, ageGroups) {
+	var ageGroupNameSection = "";
+	for (var i = 0; i < selectedAgeGroupIds.length; i++) {
+		var id = selectedAgeGroupIds[i];
+		if (i > 0) {
+			ageGroupNameSection = ageGroupNameSection + " and ";
+		} else {
+			ageGroupNameSection = ageGroupNameSection + " ";
+		}
+		var ageGroupName = getAgeGroupNameBasedOnId(ageGroups, id);
+		ageGroupNameSection = ageGroupNameSection + ageGroupName;
+	}
+	return ageGroupNameSection;
+}
+
+function getAgeGroupNameBasedOnId(ageGroups, id) {
+	for ( var j = 0; j < ageGroups.length; j++) {
+		if (id == ageGroups[j].identifier) {
+			return ageGroups[j].name;
+		}
+	}
+	return "";
 }
