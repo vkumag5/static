@@ -3406,4 +3406,26 @@ div .basic-buttonForPopUp{
 	margin-bottom:20px;
 }
 
+.errorsWarningsMessageDivError {
+background-image: url("../images/moreinfo.png") !important;
+background-repeat:no-repeat;
+background-position:10px 5px;
+}
+
+
+
+#errorsWarningsMessageDiv {
+background-image: url("../images/moreinfo.png") !important;
+background-repeat:no-repeat;
+background-position:10px 5px;
+
+}
+
+
+.errorsWarningsMessageDivSuccess {
+background-image: url("../images/moreinfo.png") !important;
+background-repeat:no-repeat;
+background-position:10px 5px;
+}
+
 /* styles for story id : 305933 ends here.   */
