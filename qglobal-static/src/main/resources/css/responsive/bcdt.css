@@ -373,7 +373,7 @@ div .basic-button .button .saveleft {
 	-moz-background-clip:border;
 	-moz-background-inline-policy:continuous;
 	-moz-background-origin:padding;
-	background:transparent url(../images/buttons/command-button-left.png) no-repeat scroll 0 0;
+	background:transparent url(../../images/buttons/command-button-left.png) no-repeat scroll 0 0;
 	/* theme properties ends*/
 }
 
@@ -414,7 +414,7 @@ div.basic-button .button .saveright {
 	-moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:transparent url(../images/buttons/command-button-right.png) no-repeat scroll 0 0;
+background:transparent url(../../images/buttons/command-button-right.png) no-repeat scroll 0 0;
 /* theme properties ends*/
 }
 div.basic-button .button .saverightLogin {
