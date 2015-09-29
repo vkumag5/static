@@ -101,13 +101,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			params = params + "&formId=" + $scope.testVar;
 		}
 		var postUrl = "sendJSONDataToSave.seam";
-		if($scope.formName==""){	
-			
-		}
-		else {
-			callPostService($window, $scope, $http, postUrl, params, flag);
-		}
 		
+		callPostService($window, $scope, $http, postUrl, params, flag);		
 	}
 	
 	$scope.toggleStarImage = function(idx) {
