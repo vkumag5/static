@@ -35,7 +35,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.errorsWarnings=[];
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
-	$('#savePublishButton').attr('disabled','disabled');
 	disableSaveNPublishFlag = true;
 	disableSaveDraftFlag = false;
 	$scope.formOpenModeVar = formOpenMode;
@@ -401,8 +400,6 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
 		$('#errorsWarningsMessageDiv').show();
 		if (saveOptionFlag == 'yes') {
-			$('#savePublishButton').attr('disabled','disabled');
-			$('#saveDraftButton').attr('disabled','disabled');
 			disableSaveNPublishFlag = true;
 			disableSaveDraftFlag = true;
 		}
@@ -423,9 +420,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var leftItems = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
-	if(formStatus != 'Draft'){
-		$('#savePublishButton').attr('disabled','disabled');
-		$('#saveDraftButton').attr('disabled','disabled');
+	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
 	}
@@ -509,13 +504,11 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$scope.errorsWarnings.push(data.response.validityStatus);
 		if(data.response.validityStatus.toLowerCase()=="success"){
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
-			if(formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
-				$('#savePublishButton').removeAttr('disabled');
+			if (formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				disableSaveNPublishFlag = false;
 			}
 			$('#errorsWarningsMessageDiv').show();
-		}
-		else {
+		} else {
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}

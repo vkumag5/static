@@ -22,10 +22,3 @@ FlexFormBuilderUtil.isFormNamePresent = function(formName) {
 	}
 	return false;
 };
-
-FlexFormBuilderUtil.isFormStatusActive = function(formStatus) {
-	if (formStatus && formStatus === 'Active') {
-		return true;
-	}
-	return false;
-};
