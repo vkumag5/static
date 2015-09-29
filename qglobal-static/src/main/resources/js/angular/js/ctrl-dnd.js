@@ -198,11 +198,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.isAgeGroupChecked = function(ageGroupId) {
-		if ($.inArray(ageGroupId, $scope.ageGroupCheckboxSelected) >= 0) {
-			return true;
-		}
-	
-	$scope.isAgeGroupChecked = function(ageGroupId) {
 		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) >= 0) {
 			return true;
 		}
