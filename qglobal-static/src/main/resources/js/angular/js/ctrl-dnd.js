@@ -16,6 +16,7 @@ var flexFormRaterAgeGroupHandler = new FlexFormRaterAgeGroupHandler();
 var changeFormName = true;
 var selectedRaterName = "";
 var prefixFormName = "BASC-3 Custom Flex";
+var whichScoringRadioSelected = "";
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.alerts = [];
 	$scope.model = [];
@@ -98,7 +99,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites);
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&scoringRadioValue=" + whichScoringRadioSelected;
 		if($scope.testVar != 0) {		
 		params = params + "&formId=" + $scope.testVar;
 		}
@@ -180,6 +181,10 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		selectedRaterName = raterItem.name;
 		ageGroupCheckboxSelected = [];
 		$scope.autoPopulateFormName();
+	}
+	
+	 $scope.ifScoringRadioChecked = function(scoringValue) {
+		whichScoringRadioSelected = scoringValue;		
 	}
 	
 	$scope.isAgeGroupChecked = function(ageGroupId) {
