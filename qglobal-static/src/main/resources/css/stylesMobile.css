@@ -1,0 +1,97 @@
+div.separator {
+	border-bottom:1px solid #AEAAB0;
+	margin:30px 0 13px;
+	width:100%;
+}
+
+div .basic-button .button .saveleft {
+	display: block;
+	display:inline\0/;
+	float:left;
+	height:28px;	
+	border: 0px;
+	/*margin:4px 3px 0px 5px;*/
+	font-family: verdana;
+	font-size:12px;
+	font-weight:bold;
+	cursor : pointer;
+	line-height: 16pt;	
+	padding : 2px 5px 5px 10px;
+	/* theme properties */
+	color:#437001;
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:transparent url(../images/buttons/command-button-left.png) no-repeat scroll 0 0;
+	/* theme properties ends*/
+}
+
+div.basic-button .button .saveright {
+	float:left;
+	
+	width:10px;
+	height:28px;
+	border: 0px;
+	/*margin:4px 3px 0px 5px;*/
+	font-family: verdana;
+	font-size:12px;
+	font-weight:bold;
+	color:#1f6b8b;
+	line-height: 16pt;
+	
+	/* theme properties */
+	-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:transparent url(../images/buttons/command-button-right.png) no-repeat scroll 0 0;
+/* theme properties ends*/
+}
+
+span {
+	font-family: verdana;
+    font-size: 12px;
+}
+
+.rich-mpnl-header {
+	-moz-background-clip: border;
+	-moz-background-inline-policy: continuous;
+	-moz-background-origin: padding;
+	background: #A9A9A9 none repeat scroll 0 0;
+	color: black;
+	height: 25px;
+}
+
+.rich-mpnl-text {
+	font-size: 13px;
+	padding-left: 10px;
+	padding-top: 5px;
+	text-align: left;
+	font-family: verdana;
+}
+
+@media screen and (min-width: 768px) {
+			.rich-mp-container {
+				width: 400px !important;
+				position: fixed !important;
+				left: 50% !important;
+				top: 50% !important;
+				transform: translate(-50%, -50%) !important;
+			}
+			.rich-mp-content-table {
+				width: 100% !important;
+				height: 120% !important;
+			}
+		}
+		@media screen and (max-width: 767px) {
+			.rich-mp-container {
+				min-width: 300px !important;
+				position: fixed !important;
+				left: 50% !important;
+				top: 50% !important;
+				transform: translate(-50%, -50%) !important;
+			}
+			.rich-mp-content-table {
+				width: 100% !important;
+				height: 120% !important;
+			}
+		}
