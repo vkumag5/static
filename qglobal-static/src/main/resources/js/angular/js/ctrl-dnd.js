@@ -12,6 +12,7 @@ var ageGroupCheckboxSelected = [];
 var favFlag = false;
 var jsonDataForComputeReliability = "";
 var formStatus = "";
+var flexFormRaterAgeGroupHandler = new FlexFormRaterAgeGroupHandler();
 var changeFormName = true;
 var selectedRaterName = "";
 var prefixFormName = "BASC-3 Custom Flex";
@@ -34,8 +35,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.errorsWarnings=[];
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
-	$('#savePublishButton').attr('disabled','disabled');
-	$scope.formOpenModeVar = formOpenMode;	
+	disableSaveNPublishFlag = true;
+	disableSaveDraftFlag = false;
+	$scope.formOpenModeVar = formOpenMode;
 	$scope.errorMsgFormNameBlank = errorMsgFormNameBlank;
 	$scope.errorMsgFormNameExists = errorMsgFormNameExists;
 	callGetService($scope, $http, urlForEntireJSON);		
@@ -104,7 +106,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			$scope.callAngularErrorPopup($scope.errorMsgFormNameBlank);
 		}
 		else {
-			callPostService($window, $scope, $http, postUrl, params);
+			callPostService($window, $scope, $http, postUrl, params, flag);
 		}
 		
 	}
@@ -175,8 +177,17 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.ifRadioIsChecked = function(raterItem) {
 		whichRadioSelected = raterItem.identifier;
 		selectedRaterName = raterItem.name;
+		ageGroupCheckboxSelected = [];
 		$scope.autoPopulateFormName();
 	}
+	
+	$scope.isAgeGroupChecked = function(ageGroupId) {
+		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) >= 0) {
+			return true;
+		}
+		return false;
+	};
+	
 	$scope.whichAgeGroupSelected = function(val){
 		if ($.inArray(val, ageGroupCheckboxSelected)>=0){
 			ageGroupCheckboxSelected.splice(ageGroupCheckboxSelected.indexOf(val),1);
@@ -248,6 +259,15 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		return ageGroupNameSection;
 	}
 	
+	$scope.ageGroupBasedOnRaterFilter = function(ageGroupVal) {
+		var ageGroupIdListBasedOnRater = flexFormRaterAgeGroupHandler.getAgeGroupIdListBasedOnRater(originalJSON, whichRadioSelected);
+		if ($.inArray(ageGroupVal.identifier, ageGroupIdListBasedOnRater) > -1) {
+			return ageGroupVal;
+		} else {
+			return;
+		}
+	};
+			
 	$scope.updateCallback = function(uiItem, eventTarget) {
 		if (eventTarget.id == 'sourceList' && uiItem[0].parentNode.id == 'targetList'
 			&& $scope.questionsOnRight >= $scope.ngMaxItemRestrictCount) {
@@ -288,6 +308,27 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$('#error-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
 	}
 	
+
+	$scope.isSaveDraftDisabled = function() {
+		if (FlexFormBuilderUtil.isFormNamePresent($scope.formName)) {
+			if (disableSaveDraftFlag) {
+				return true;
+			}
+			return false;
+		}
+		return true;
+	};
+
+	$scope.isSaveNPublishDisabled = function() {
+		if (FlexFormBuilderUtil.isFormNamePresent($scope.formName)) {
+			if (disableSaveNPublishFlag) {
+				return true;
+			}
+			return false;
+		}
+		return true;
+	};
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -304,7 +345,10 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.rater = flexFormItems.metaData.category;				
 				$scope.source = flexFormItems.itemSet;
 				originalJSON = angular.copy(flexFormItems.itemSet);
-				tagList = flexFormItems.metaData.tags;				
+				tagList = flexFormItems.metaData.tags;
+				var studentRater = flexFormRaterAgeGroupHandler.getStudentRater($scope.rater);
+				whichRadioSelected = studentRater.identifier;
+				selectedRaterName = studentRater.name;
 				$scope.autoPopulateFormName();				
 			}
 			
@@ -329,7 +373,7 @@ function callGetService($scope, $http, urlAssessment) {
         });
 }
 
-function callPostService($window, $scope, $http, postUrl, params) {
+function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag) {
 	$('#loadingMessage').show();
 	$scope.viewLoading = true;
    $http({
@@ -345,12 +389,19 @@ function callPostService($window, $scope, $http, postUrl, params) {
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();
 	} else if(data.formExists) {
-		$('#errorsWarningsMessageDiv').hide();		
+		$('#errorsWarningsMessageDiv').hide();
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 		$scope.callAngularErrorPopup($scope.errorMsgFormNameExists);		
 	} else {
-		$('#errorsWarningsMessageDiv').hide();		
+		$scope.errorsWarnings.push(data.response.message);
+		$scope.testVar = data.response.formId;
+		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
+		$('#errorsWarningsMessageDiv').show();
+		if (saveOptionFlag == 'yes') {
+			disableSaveNPublishFlag = true;
+			disableSaveDraftFlag = true;
+		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 	}
@@ -368,9 +419,9 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var leftItems = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
-	if(formStatus != 'Draft'){
-		$('#savePublishButton').attr('disabled','disabled');
-		$('#saveDraftButton').attr('disabled','disabled');
+	if (formStatus != 'Draft') {
+		disableSaveNPublishFlag = true;
+		disableSaveDraftFlag = true;
 	}
 	targetItemsOnRight = data.rightItem;
 	var testSource = $scope.source;
@@ -388,12 +439,15 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$scope.source = testSource;
 		$scope.model = rightItems;
 	}
-	if($scope.formOpenModeVar=="true") {
+	
+	// Add copy string if Create a copy is selected.
+	var tempFormName = data.formName;
+	if($scope.formOpenModeVar === "true") {
 		$('#saveDraftButton').removeAttr('disabled');
-		$scope.formName = "Copy of " + data.formName;
-	} else {
-		$scope.formName = data.formName.substr(prefixFormName.length + 1);
+		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
+	$scope.formName = tempFormName.substr(prefixFormName.length + 1);
+	
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
 
@@ -449,12 +503,11 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$scope.errorsWarnings.push(data.response.validityStatus);
 		if(data.response.validityStatus.toLowerCase()=="success"){
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivSuccess");
-			if(formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
-				$('#savePublishButton').removeAttr('disabled');
+			if (formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
+				disableSaveNPublishFlag = false;
 			}
 			$('#errorsWarningsMessageDiv').show();
-		}
-		else {
+		} else {
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}
