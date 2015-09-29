@@ -35,9 +35,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	var urlForEntireJSON = "fetchAllDetailsJson.seam";
 	$scope.viewLoading = true;
 	$('#savePublishButton').attr('disabled','disabled');
-	$scope.formOpenModeVar = formOpenMode;	
-	$scope.errorMsgFormNameBlank = errorMsgFormNameBlank;
-	$scope.errorMsgFormNameExists = errorMsgFormNameExists;
+	$scope.formOpenModeVar = formOpenMode;
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -94,7 +92,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 		var postUrl = "sendJSONDataToSave.seam";
 		if($scope.formName==""){	
-			$scope.callAngularErrorPopup($scope.errorMsgFormNameBlank);
+			
 		}
 		else {
 			callPostService($window, $scope, $http, postUrl, params, flag);
@@ -230,6 +228,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			return items;
 		}
 		else{
+			$scope.source.push(items);
+			$scope.model.splice($scope.model.indexOf(items),1);
 			return;
 		}
 		}
@@ -326,14 +326,13 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.toggleFormNameFlag = function() {
 		changeFormName = false;
 	}
-	$scope.callAngularErrorPopup = function(msg) {
+	$scope.callAngularErrorPopup = function() {
 		var maskHeight = $(document).height();  
 		var maskWidth = $(window).width();			
 		// calculate the values for center alignment
 		var dialogTop =  (maskHeight/3) - ($('#dialog-box').height());  
 		var dialogLeft = (maskWidth/2) - ($('#dialog-box').width()/2);			
 		// assign values to the overlay and dialog box		
-		$('#errorMessageSection').text(msg);
 		$('#error-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
 		$('#error-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
 	}
@@ -402,7 +401,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		$('#errorsWarningsMessageDiv').hide();		
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
-		$scope.callAngularErrorPopup($scope.errorMsgFormNameExists);		
+		$scope.callAngularErrorPopup();		
 	} else {
 		$scope.errorsWarnings.push(data.response.message);
 		$scope.testVar = data.response.formId;
