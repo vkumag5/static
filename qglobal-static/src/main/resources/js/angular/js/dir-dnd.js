@@ -54,6 +54,7 @@ app.directive('dndBetweenList', function($parse) {
         var toUpdate;
         var target;
         var startIndex = -1;
+		var identifier = -1;
 
         // watch the model, so we always know what element
         // is at a specific position
@@ -72,7 +73,9 @@ app.directive('dndBetweenList', function($parse) {
             items:'li',
             start:function (event, ui) {
                 // on start we define where the item is dragged from
-                startIndex = ($(ui.item).index());
+                //startIndex = ($(ui.item).index());
+				identifier = $(ui.item).find("img").attr("id");
+				startIndex = getIndexFromId(toUpdate, identifier);
             },
 			update: function (event, ui) {
 				// on update we check for any condition to restrict dragging
@@ -83,7 +86,9 @@ app.directive('dndBetweenList', function($parse) {
 
                 // on stop we determine the new index of the
                 // item and store it there
-                var newIndex = ($(ui.item).index());
+                //var newIndex = ($(ui.item).index());
+				var itemIdentifierOnLeft = $(ui.item).find("img").attr("id");
+				newIndex = getIndexFromId(toUpdate, itemIdentifierOnLeft);
                 var toMove = toUpdate[startIndex];
 
                 // we need to remove him from the configured model
@@ -106,3 +111,11 @@ app.directive('dndBetweenList', function($parse) {
         })
     }
 });
+
+function getIndexFromId(toUpdate, identifier) {
+	for(var i = 0; i < toUpdate.length; i++) {
+		if(toUpdate[i].itemId == identifier) {
+			return i;
+		}
+	}
+}
