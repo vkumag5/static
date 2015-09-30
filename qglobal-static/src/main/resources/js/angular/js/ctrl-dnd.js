@@ -13,9 +13,9 @@ var formStatus = "";
 var flexFormRaterAgeGroupHandler = new FlexFormRaterAgeGroupHandler();
 var changeFormName = true;
 var selectedRaterName = "";
-var prefixFormName = "BASC-3 Custom Flex";
 var valueChangedAfterCR = false;
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
+	$scope.prefixFormName = "BASC-3 Custom Flex";
 	$scope.alerts = [];
 	$scope.model = [];
 	$scope.source = [];
@@ -39,6 +39,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.formOpenModeVar = formOpenMode;	
 	$scope.whichRadioSelected = "";
 	$scope.ageGroupCheckboxSelected = [];
+	$scope.sharableFlag = false;
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -111,7 +112,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) ;
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + $scope.prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) + "&sharableFlag=" + $scope.sharableFlag;
 		if($scope.testVar != 0) {		
 			params = params + "&formId=" + $scope.testVar;
 		}
@@ -383,6 +384,17 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		return true;
 	};
 	
+	$scope.isSharableFlagChecked = function() {
+		if ($scope.sharableFlag == true) {
+			return true;
+		}
+		return false;
+	};
+	
+	$scope.setSharableFlagCheckedOnClick = function() {
+		$scope.sharableFlag = !$scope.sharableFlag;
+	};
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -499,13 +511,15 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		$scope.model = rightItems;
 	}
 	
+	$scope.sharableFlag = data.sharableFlag;
+	
 	// Add copy string if Create a copy is selected.
 	var tempFormName = data.formName;
 	if($scope.formOpenModeVar === "true") {
 		$('#saveDraftButton').removeAttr('disabled');
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
-	$scope.formName = tempFormName.substr(prefixFormName.length + 1);
+	$scope.formName = tempFormName.substr($scope.prefixFormName.length + 1);
 	
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
