@@ -111,7 +111,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave(ageGroupCheckboxSelected);
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected);
 		if($scope.testVar != 0) {		
 			params = params + "&formId=" + $scope.testVar;
 		}
@@ -191,15 +191,14 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.isAgeGroupChecked = function(ageGroupId) {
-		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) >= 0) {
+		if ($.inArray(ageGroupId, $scope.ageGroupCheckboxSelected) >= 0) {
 			return true;
 		}
-	}
 		return false;
 	};
 	
 	$scope.isRaterSelected = function(raterId) {
-		if (raterId==whichRadioSelected) {
+		if (raterId == $scope.whichRadioSelected) {
 			return true;
 		}
 		return false;
@@ -244,8 +243,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.raterFilterRightPane = function(items){
-		if(whichRadioSelected != "") {
-		if ($.inArray(whichRadioSelected, items.category)>=0){
+		if($scope.whichRadioSelected != "") {
+		if ($.inArray($scope.whichRadioSelected, items.category)>=0){
 			return items;
 		}
 		else{
@@ -476,8 +475,8 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var leftItems = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
-	whichRadioSelected = data.rightItem.rater;
-	ageGroupCheckboxSelected = data.rightItem.ageGroup;
+	$scope.whichRadioSelected = data.rightItem.rater;
+	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
