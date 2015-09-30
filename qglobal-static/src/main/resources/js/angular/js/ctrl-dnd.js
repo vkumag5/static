@@ -29,7 +29,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.formName = "";
 	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
 	$scope.ngMinItemRestrictCount = minItemRestrictCount;
-	$scope.whichScoringRadioSelected = "";
 	$('#loadingMessage').show();
 	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings=[];
@@ -112,7 +111,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) + "&scoringRadioValue=" + $scope.whichScoringRadioSelected ;
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) ;
 		if($scope.testVar != 0) {		
 			params = params + "&formId=" + $scope.testVar;
 		}
@@ -191,9 +190,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$scope.autoPopulateFormName();
 	}
 	
-	$scope.ifScoringRadioChecked = function(scoringValue) {
-		$scope.whichScoringRadioSelected = scoringValue;		
-	}
 	
 	$scope.isAgeGroupChecked = function(ageGroupId) {
 		if ($.inArray(ageGroupId, $scope.ageGroupCheckboxSelected) >= 0) {
