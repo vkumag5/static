@@ -312,9 +312,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 	}
 	
-	$scope.autoPopulateFormName = function() {				
+	$scope.autoPopulateFormName = function() {
 		if(changeFormName) {
-			$scope.formName = selectedRaterName + $scope.getAgeGroupRelatedName($scope.ageGroupCheckboxSelected.sort(), $scope.ageGroup);
+			$scope.formName = selectedRaterName + FlexFormBuilderUtil.getAgeGroupRelatedName($scope.ageGroupCheckboxSelected.sort(), $scope.ageGroup);
 		}
 	}	
 	
@@ -574,28 +574,4 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 	}	
 	
 });
-}
-
-function getAgeGroupRelatedName(selectedAgeGroupIds, ageGroups) {
-	var ageGroupNameSection = "";
-	for (var i = 0; i < selectedAgeGroupIds.length; i++) {
-		var id = selectedAgeGroupIds[i];
-		if (i > 0) {
-			ageGroupNameSection = ageGroupNameSection + " and ";
-		} else {
-			ageGroupNameSection = ageGroupNameSection + " ";
-		}
-		var ageGroupName = getAgeGroupNameBasedOnId(ageGroups, id);
-		ageGroupNameSection = ageGroupNameSection + ageGroupName;
-	}
-	return ageGroupNameSection;
-}
-
-function getAgeGroupNameBasedOnId(ageGroups, id) {
-	for ( var j = 0; j < ageGroups.length; j++) {
-		if (id == ageGroups[j].identifier) {
-			return ageGroups[j].name;
-		}
-	}
-	return "";
 }
