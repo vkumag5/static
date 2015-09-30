@@ -22,3 +22,27 @@ FlexFormBuilderUtil.isFormNamePresent = function(formName) {
 	}
 	return false;
 };
+
+FlexFormBuilderUtil.getAgeGroupRelatedName = function(selectedAgeGroupIds, ageGroups) {
+	var ageGroupNameSection = "";
+	for (var i = 0; i < selectedAgeGroupIds.length; i++) {
+		var id = selectedAgeGroupIds[i];
+		if (i > 0) {
+			ageGroupNameSection = ageGroupNameSection + " and ";
+		} else {
+			ageGroupNameSection = ageGroupNameSection + " ";
+		}
+		var ageGroupName = FlexFormBuilderUtil.getAgeGroupNameBasedOnId(ageGroups, id);
+		ageGroupNameSection = ageGroupNameSection + ageGroupName;
+	}
+	return ageGroupNameSection;
+}
+
+FlexFormBuilderUtil.getAgeGroupNameBasedOnId = function (ageGroups, id) {
+	for ( var j = 0; j < ageGroups.length; j++) {
+		if (id == ageGroups[j].identifier) {
+			return ageGroups[j].name;
+		}
+	}
+	return "";
+}

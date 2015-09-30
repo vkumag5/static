@@ -111,7 +111,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave(ageGroupCheckboxSelected);
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) ;
 		if($scope.testVar != 0) {		
 			params = params + "&formId=" + $scope.testVar;
 		}
@@ -190,15 +190,16 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$scope.autoPopulateFormName();
 	}
 	
+	
 	$scope.isAgeGroupChecked = function(ageGroupId) {
-		if ($.inArray(ageGroupId, ageGroupCheckboxSelected) >= 0) {
+		if ($.inArray(ageGroupId, $scope.ageGroupCheckboxSelected) >= 0) {
 			return true;
 		}	
 		return false;
 	};
 	
 	$scope.isRaterSelected = function(raterId) {
-		if (raterId==whichRadioSelected) {
+		if (raterId == $scope.whichRadioSelected) {
 			return true;
 		}
 		return false;
@@ -243,8 +244,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.raterFilterRightPane = function(items){
-		if(whichRadioSelected != "") {
-		if ($.inArray(whichRadioSelected, items.category)>=0){
+		if($scope.whichRadioSelected != "") {
+		if ($.inArray($scope.whichRadioSelected, items.category)>=0){
 			return items;
 		}
 		else{
@@ -312,9 +313,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 	}
 	
-	$scope.autoPopulateFormName = function() {				
+	$scope.autoPopulateFormName = function() {
 		if(changeFormName) {
-			$scope.formName = selectedRaterName + $scope.getAgeGroupRelatedName($scope.ageGroupCheckboxSelected.sort(), $scope.ageGroup);
+			$scope.formName = selectedRaterName + FlexFormBuilderUtil.getAgeGroupRelatedName($scope.ageGroupCheckboxSelected.sort(), $scope.ageGroup);
 		}
 	}	
 	
@@ -475,8 +476,8 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var leftItems = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
-	whichRadioSelected = data.rightItem.rater;
-	ageGroupCheckboxSelected = data.rightItem.ageGroup;
+	$scope.whichRadioSelected = data.rightItem.rater;
+	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
@@ -574,28 +575,4 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 	}	
 	
 });
-}
-
-function getAgeGroupRelatedName(selectedAgeGroupIds, ageGroups) {
-	var ageGroupNameSection = "";
-	for (var i = 0; i < selectedAgeGroupIds.length; i++) {
-		var id = selectedAgeGroupIds[i];
-		if (i > 0) {
-			ageGroupNameSection = ageGroupNameSection + " and ";
-		} else {
-			ageGroupNameSection = ageGroupNameSection + " ";
-		}
-		var ageGroupName = getAgeGroupNameBasedOnId(ageGroups, id);
-		ageGroupNameSection = ageGroupNameSection + ageGroupName;
-	}
-	return ageGroupNameSection;
-}
-
-function getAgeGroupNameBasedOnId(ageGroups, id) {
-	for ( var j = 0; j < ageGroups.length; j++) {
-		if (id == ageGroups[j].identifier) {
-			return ageGroups[j].name;
-		}
-	}
-	return "";
 }
