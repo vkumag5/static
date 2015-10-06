@@ -27,6 +27,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.questionsOnRight = "";
 	$scope.testVar = formId;
 	$scope.formName = "";
+	$scope.whichScoringRadioSelected = "";
 	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
 	$scope.ngMinItemRestrictCount = minItemRestrictCount;
 	$('#loadingMessage').show();
@@ -61,7 +62,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
 					  $("#computeReliability").attr("disabled", "disabled");
 				} else {
-					  $("#computeReliability").removeAttr("disabled");
+					  if($scope.whichScoringRadioSelected != "") {
+						$("#computeReliability").removeAttr("disabled");
+					  }
 				}
 			}
         }
@@ -92,6 +95,22 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		// any value is changed after compute reliability.
 		valueChangedAfterCR = true;
 	},true);
+	
+	$scope.$watch("whichScoringRadioSelected", function(value) {	
+		// Watch for whichScoringRadioSelected variable and change the valueChangedAfterCR to identify whether
+		// any value is changed after compute reliability.
+		if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
+					  $("#computeReliability").attr("disabled", "disabled");
+		} else {
+				if(value != "") {
+					  $("#computeReliability").removeAttr("disabled");
+				}
+				else {
+				$("#computeReliability").attr("disabled","disabled");
+				}
+		}
+		
+	},true);
 
 	if ($scope) {
 		$scope.sourceEmpty = function() {
@@ -112,7 +131,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
 		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + $scope.prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) + "&sharableFlag=" + $scope.sharableFlag;
+		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + $scope.prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) + "&sharableFlag=" + $scope.sharableFlag + "&scoringRadioValue=" + $scope.whichScoringRadioSelected;
 		if($scope.testVar != 0) {		
 			params = params + "&formId=" + $scope.testVar;
 		}
@@ -189,6 +208,18 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		selectedRaterName = raterItem.name;
 		$scope.ageGroupCheckboxSelected = [];
 		$scope.autoPopulateFormName();
+	}
+	
+	 $scope.ifScoringRadioChecked = function(scoringValue) {
+		$scope.whichScoringRadioSelected = scoringValue;		
+	}
+	
+	$scope.ifScoringValueChecked = function(scoringValue) {
+		if($scope.whichScoringRadioSelected == scoringValue) {
+			return true;
+		} else {
+			return false;
+        }		
 	}
 	
 	
@@ -489,6 +520,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
 	$scope.whichRadioSelected = data.rightItem.rater;
+	$scope.whichScoringRadioSelected = (data.scoringValue);
 	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
