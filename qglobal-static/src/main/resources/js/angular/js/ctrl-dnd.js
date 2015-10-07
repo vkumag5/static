@@ -548,7 +548,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	// Add copy string if Create a copy is selected.
 	var tempFormName = data.formName;
 	if($scope.formOpenModeVar === "true") {
-		$('#saveDraftButton').removeAttr('disabled');
+		disableSaveDraftFlag = false;
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
 	$scope.formName = tempFormName.substr($scope.prefixFormName.length + 1);
@@ -598,8 +598,9 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
     data: flexformIdsToSendForValidation,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(data) {
+	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings = [];
-	if(data.error) {		
+	if(data.error) {
 		$scope.errorsWarnings.push(data.error);
 		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 		$('#errorsWarningsMessageDiv').show();
