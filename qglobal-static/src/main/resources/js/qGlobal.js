@@ -595,17 +595,21 @@ function fixDojoFormTabContainerContentPaneProblem(htmlFormId) {
 
 
 function setFormMode(htmlFormId, isViewMode) {
+	var formViewModeFlag;
 	try {
 	    if(!$(htmlFormId)) { return; }
 	    if(isViewMode == 'true') {                    
 	        $(htmlFormId).disable();
 	        toggleSelectWidgets(true);
+		formViewModeFlag=true;
 	        //dijit.byId(htmlFormId).disable();
 	    } else {
 	        $(htmlFormId).enable();
 	        toggleSelectWidgets(false);
+		formViewModeFlag=false;
 	        //dijit.byId(htmlFormId).enable(); 
 	    }
+	return formViewModeFlag;
 	} catch (e) {
 		console.log('Problem setting form mode - '+e);
 	}
