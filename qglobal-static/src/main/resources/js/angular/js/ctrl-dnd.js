@@ -130,11 +130,22 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
-		targetList = $scope.model;	
-		var params = "target=" + $scope.prepareJSONToSave(rightColumnIds) + "&formName=" + $scope.prefixFormName + " " + $scope.formName + "&saveOption=" + flag + "&flexFormItemsIdList=" + jsonDataForComputeReliability + "&flexFormItemsFavouritesList=" + $scope.prepareJSONToSave(favourites) + "&selectedRater=" + $scope.whichRadioSelected + "&selectedAgeGroup=" + $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected) + "&sharableFlag=" + $scope.sharableFlag + "&scoringRadioValue=" + $scope.whichScoringRadioSelected;
+		targetList = $scope.model;
+		var paramsObj = {
+			"target" : $scope.prepareJSONToSave(rightColumnIds),
+			"formName" : $scope.prefixFormName + " " + $scope.formName,
+			"saveOption" : flag,
+			"flexFormItemsIdList" : jsonDataForComputeReliability,
+			"flexFormItemsFavouritesList" : $scope.prepareJSONToSave(favourites),
+			"selectedRater" : $scope.whichRadioSelected,
+			"selectedAgeGroup" : $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected),
+			"sharableFlag" : $scope.sharableFlag,
+			"scoringRadioValue" : $scope.whichScoringRadioSelected
+		};
 		if($scope.testVar != 0) {		
-			params = params + "&formId=" + $scope.testVar;
+			$.extend(paramsObj, { "formId" : $scope.testVar });
 		}
+		var params = $.param(paramsObj);
 		var postUrl = "sendJSONDataToSave.seam";
 		
 		callPostService($window, $scope, $http, postUrl, params, flag);		
