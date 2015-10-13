@@ -151,22 +151,22 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		callPostService($window, $scope, $http, postUrl, params, flag);		
 	}
 	
-	$scope.toggleStarImage = function(idx) {
-		var elem = document.getElementById(idx);
-        console.log('clicked row', idx);
-		var str = idx.src;
+	$scope.toggleStarImage = function($event) {
+		var elem = $event.target;
+		console.log('clicked row', elem);
+		var str = elem.src;
 		var thumbnail = str.replace(str.substring(0, str.indexOf("star")), "");
-		if (thumbnail=="star.png") {
-			idx.src = idx.src.replace(thumbnail,"star_blank.png");
-			notFavourites.push(idx.id);
-			favourites.splice(favourites.indexOf(idx.id),1);
-		}
-		else if (thumbnail=="star_blank.png") {
-			idx.src = idx.src.replace(thumbnail,"star.png");
-			favourites.push(idx.id);
-			notFavourites.splice(notFavourites.indexOf(idx.id),1);
+		if (thumbnail === "star.png") {
+			elem.src = elem.src.replace(thumbnail, "star_blank.png");
+			notFavourites.push(elem.id);
+			favourites.splice(favourites.indexOf(elem.id), 1);
+		} else if (thumbnail === "star_blank.png") {
+			elem.src = elem.src.replace(thumbnail, "star.png");
+			favourites.push(elem.id);
+			notFavourites.splice(notFavourites.indexOf(elem.id), 1);
 		}
 		console.log(favourites);
+		$event.preventDefault();
 	}
 	
 	$scope.prepareJSONToSave = function(idArray) {
@@ -196,10 +196,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.showThumbnailImage = function(idToCheck) {
-		if(favourites.indexOf(idToCheck)>-1){
+		if(favourites.indexOf(idToCheck) > -1) {
 			return "static/images/star.png";
-		}
-		else{
+		} else {
 			return "static/images/star_blank.png";
 		}
 	
@@ -258,16 +257,14 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$scope.autoPopulateFormName();
 	}
 	
-	$scope.checkFavouriteFilter = function(items){
-		if(favFlag){
-		if ($.inArray(items.itemId, favourites)>=0){
-			return items;
-		}
-		else{
-			return;
-		}
-		}
-		else{
+	$scope.checkFavouriteFilter = function(items) {
+		if(favFlag) {
+			if ($.inArray(items.itemId, favourites) >= 0) {
+				return items;
+			} else {
+				return;
+			}
+		} else {
 			return items;
 		}
 	}
@@ -571,20 +568,16 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 }
 
 function showTagNames(ids) {
-		var showNames="";
-		for(var i=0; i < ids.length; i++){
-		for(var j=0; j < tagList.length; j++){
-			if(ids[i] == tagList[j].identifier){							
-				showNames = showNames + tagList[j].name;
+	var showNames = [];
+	for ( var i = 0; i < ids.length; i++) {
+		for ( var j = 0; j < tagList.length; j++) {
+			if (ids[i] == tagList[j].identifier) {
+				showNames.push(tagList[j].name);
 				break;
-				}
 			}
-			if(i != (ids.length)-1){
-				showNames = showNames +", ";
-			}
-			
 		}
-		return showNames;
+	}
+	return showNames.join(", ");
 }
 
 ctrl.filter('startsWithLetter', function () {
