@@ -3412,6 +3412,8 @@ a#globalAccountLbl {
 	background-repeat: no-repeat;
 	display: inline-table;
 	padding-left: 25px;
+                    background-position: 0 1px;
+                    height:40px; 
 }
 
 .osaTestSessionLock {
