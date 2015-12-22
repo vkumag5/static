@@ -41,7 +41,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.whichRadioSelected = "";
 	$scope.ageGroupCheckboxSelected = [];
 	$scope.sharableFlag = false;
-	disableComputeReliabilityFlag = false;
+	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
