@@ -3734,9 +3734,13 @@ input[type="submit"].btn.btn-mini {
 
 .alert-danger,
 .alert-error {
-  color: #b94a48;
-  background-color: #f2f2f2;
-  border-color: #ddd;
+    background: linear-gradient(#C8E4FC,#AAD5FF);/* Standard syntax */
+	background: #C8E4FC; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#C8E4FC, #AAD5FF); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#C8E4FC, #AAD5FF); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#C8E4FC, #AAD5FF); /* For Firefox 3.6 to 15 */    
+    border-color: #fff;
+    color: #b94a48;
 }
 
 .alert-info {
