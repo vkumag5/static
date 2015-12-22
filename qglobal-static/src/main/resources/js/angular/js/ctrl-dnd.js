@@ -41,6 +41,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.whichRadioSelected = "";
 	$scope.ageGroupCheckboxSelected = [];
 	$scope.sharableFlag = false;
+	disableComputeReliabilityFlag = false;
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -62,7 +63,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
 					  $("#computeReliability").attr("disabled", "disabled");
 				} else {
-					  if($scope.whichScoringRadioSelected != "") {
+					  if(($scope.whichScoringRadioSelected != "") && (!disableComputeReliabilityFlag)) {
 						$("#computeReliability").removeAttr("disabled");
 					  }
 				}
@@ -102,7 +103,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
 					  $("#computeReliability").attr("disabled", "disabled");
 		} else {
-				if(value != "") {
+				if((value != "") && (!disableComputeReliabilityFlag)) {
 					  $("#computeReliability").removeAttr("disabled");
 				}
 				else {
@@ -509,6 +510,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		if (saveOptionFlag == 'yes') {
 			disableSaveNPublishFlag = true;
 			disableSaveDraftFlag = true;
+			disableComputeReliabilityFlag = true;
 		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
@@ -533,6 +535,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
+		disableComputeReliabilityFlag = true;
 	}
 	targetItemsOnRight = data.rightItem.items;
 	var testSource = $scope.source;
@@ -557,6 +560,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var tempFormName = data.formName;
 	if($scope.formOpenModeVar === "true") {
 		disableSaveDraftFlag = false;
+		disableComputeReliabilityFlag = false;
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
 	$scope.formName = tempFormName.substr($scope.prefixFormName.length + 1);
