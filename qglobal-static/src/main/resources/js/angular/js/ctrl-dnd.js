@@ -326,7 +326,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		  return obj; 
 		});	
 		var isSubsetFlag = $scope.ageGroupCheckboxSelected.every(function(val) { 
-		  return itemAgeGroupMap.indexOf(val) >= 0;
+		  var ageGroupIDToCheck = val.toLowerCase();
+		  return itemAgeGroupMap.indexOf(ageGroupIDToCheck) >= 0;
 		});
 		if(isSubsetFlag) {
 			return items;
