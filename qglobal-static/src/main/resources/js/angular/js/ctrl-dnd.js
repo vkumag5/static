@@ -42,6 +42,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.ageGroupCheckboxSelected = [];
 	$scope.sharableFlag = false;
 	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.
+	$(searchByCategory).attr('placeholder', searchByScalePlaceholder);
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -535,7 +536,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var leftItems = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
-	$scope.whichRadioSelected = data.rightItem.rater;
+	$scope.whichRadioSelected = data.selectedRater;
 	$scope.whichScoringRadioSelected = (data.scoringValue);
 	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
 	if (formStatus != 'Draft') {
