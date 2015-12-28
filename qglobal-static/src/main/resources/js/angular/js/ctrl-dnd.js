@@ -601,7 +601,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
     url: computeReliabilityServiceURL,
     data: flexformIdsToSendForValidation,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-}).success(function(data) {
+}).success(function(data) {	
 	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings = [];
 	if(data.error) {
@@ -610,15 +610,15 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();	
 	} else {		
-		if(data.response.validityStatus.toLowerCase() == "success") {
+		if(data.response.validationStatus.toLowerCase() == "success") {
 			if (formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				disableSaveNPublishFlag = false;
 			}
-			$scope.computeReliabilityResult = data.response.validityStatus;
+			$scope.computeReliabilityResult = data.response.validationStatus;
 			$('#computeReliabilitySection').show();
 			valueChangedAfterCR = false;
 		} else {
-			$scope.errorsWarnings.push(data.response.validityStatus);
+			$scope.errorsWarnings.push(data.response.validationStatus);
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}
