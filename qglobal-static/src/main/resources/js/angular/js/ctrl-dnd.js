@@ -41,6 +41,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.whichRadioSelected = "";
 	$scope.ageGroupCheckboxSelected = [];
 	$scope.sharableFlag = false;
+	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.
+	$(searchByCategory).attr('placeholder', searchByScalePlaceholder);
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -62,7 +64,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
 					  $("#computeReliability").attr("disabled", "disabled");
 				} else {
-					  if($scope.whichScoringRadioSelected != "") {
+					  if(($scope.whichScoringRadioSelected != "") && (!disableComputeReliabilityFlag)) {
 						$("#computeReliability").removeAttr("disabled");
 					  }
 				}
@@ -102,7 +104,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
 					  $("#computeReliability").attr("disabled", "disabled");
 		} else {
-				if(value != "") {
+				if((value != "") && (!disableComputeReliabilityFlag)) {
 					  $("#computeReliability").removeAttr("disabled");
 				}
 				else {
@@ -191,8 +193,12 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		return status;
 	}	
 	
-	$scope.returnTagNames = function(ids) {
-		return showTagNames(ids);
+	$scope.returnTagNames = function(tagsList) {
+		if(tagsList){
+			return tagsList.join(", ");
+		} else {
+			return;
+		}
 	}
 	
 	$scope.showThumbnailImage = function(idToCheck) {
@@ -304,8 +310,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		var itemAgeGroupMap = itemAgeGroupArray.map(function(obj) { 
 		  return obj; 
 		});
-		var isSubsetFlag = $scope.ageGroupCheckboxSelected.every(function(val) { 
-		  return itemAgeGroupMap.indexOf(val) >= 0;
+		var isSubsetFlag = $scope.ageGroupCheckboxSelected.every(function(val) {
+			var ageGroupIDToCheck = val.toLowerCase();
+		  return itemAgeGroupMap.indexOf(ageGroupIDToCheck) >= 0;
 		});
 		if(isSubsetFlag) {
 			return items;
@@ -320,7 +327,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		  return obj; 
 		});	
 		var isSubsetFlag = $scope.ageGroupCheckboxSelected.every(function(val) { 
-		  return itemAgeGroupMap.indexOf(val) >= 0;
+		  var ageGroupIDToCheck = val.toLowerCase();
+		  return itemAgeGroupMap.indexOf(ageGroupIDToCheck) >= 0;
 		});
 		if(isSubsetFlag) {
 			return items;
@@ -344,11 +352,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		return ageGroupNameSection;
 	}
 	
-	$scope.ageGroupBasedOnRaterFilter = function(ageGroupVal) {
-		var ageGroupIdListBasedOnRater = flexFormRaterAgeGroupHandler.getAgeGroupIdListBasedOnRater(originalJSON, $scope.whichRadioSelected);
-		if ($.inArray(ageGroupVal.identifier, ageGroupIdListBasedOnRater) > -1) {
+	$scope.ageGroupBasedOnRaterFilter = function(ageGroupVal) {		
+		var ageGroupIdListBasedOnRater = flexFormRaterAgeGroupHandler.getAgeGroupIdListBasedOnRater(originalJSON, $scope.whichRadioSelected);			
+		if ($.inArray(ageGroupVal.identifier.toLowerCase(), ageGroupIdListBasedOnRater) > -1) {			
 			return ageGroupVal;
-		} else {
+		} else {			
 			return;
 		}
 	}
@@ -509,6 +517,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		if (saveOptionFlag == 'yes') {
 			disableSaveNPublishFlag = true;
 			disableSaveDraftFlag = true;
+			disableComputeReliabilityFlag = true;
 		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
@@ -527,12 +536,13 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var leftItems = [];
 	var targetItemsOnRight = [];
 	formStatus = data.formStatus;
-	$scope.whichRadioSelected = data.rightItem.rater;
+	$scope.whichRadioSelected = data.selectedRater;
 	$scope.whichScoringRadioSelected = (data.scoringValue);
 	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
+		disableComputeReliabilityFlag = true;
 	}
 	targetItemsOnRight = data.rightItem.items;
 	var testSource = $scope.source;
@@ -557,6 +567,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	var tempFormName = data.formName;
 	if($scope.formOpenModeVar === "true") {
 		disableSaveDraftFlag = false;
+		disableComputeReliabilityFlag = false;
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
 	$scope.formName = tempFormName.substr($scope.prefixFormName.length + 1);
@@ -567,27 +578,16 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 });	
 }
 
-function showTagNames(ids) {
-	var showNames = [];
-	for ( var i = 0; i < ids.length; i++) {
-		for ( var j = 0; j < tagList.length; j++) {
-			if (ids[i] == tagList[j].identifier) {
-				showNames.push(tagList[j].name);
-				break;
-			}
-		}
-	}
-	return showNames.join(", ");
-}
-
 ctrl.filter('startsWithLetter', function () {
   return function (items, letter) {
     var filtered = [];
     var letterMatch = new RegExp(letter, 'i');
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i].tags;
-	  var name = showTagNames(item);
-      if (letterMatch.test(name.substring(0, name.length))) {
+    for (var i = 0; i < items.length; i++) {      
+	  var tagsString = "";
+	  if(items[i].tags){
+	    tagsString = items[i].tags.join(", ");
+	  }	  
+      if (letterMatch.test(tagsString.substring(0, tagsString.length))) {
         filtered.push(items[i]);
       }
     }
@@ -601,7 +601,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
     url: computeReliabilityServiceURL,
     data: flexformIdsToSendForValidation,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-}).success(function(data) {
+}).success(function(data) {	
 	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings = [];
 	if(data.error) {
@@ -610,15 +610,15 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();	
 	} else {		
-		if(data.response.validityStatus.toLowerCase() == "success") {
+		if(data.response.validationStatus.toLowerCase() == "success") {
 			if (formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				disableSaveNPublishFlag = false;
 			}
-			$scope.computeReliabilityResult = data.response.validityStatus;
+			$scope.computeReliabilityResult = data.response.validationStatus;
 			$('#computeReliabilitySection').show();
 			valueChangedAfterCR = false;
 		} else {
-			$scope.errorsWarnings.push(data.response.validityStatus);
+			$scope.errorsWarnings.push(data.response.validationStatus);
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}
