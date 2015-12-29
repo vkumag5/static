@@ -375,21 +375,28 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.computeReliability = function() {
-		$('#loadingMessage').show();
-		jsonDataForComputeReliability = "";
+		$('#loadingMessage').show();		
+		var jsonDataForComputeReliability = {};
 		if(rightColumnIds.length>0) {
-			jsonDataForComputeReliability = jsonDataForComputeReliability + "{";
-			for(var i=0; i < rightColumnIds.length; i++) {				
-				jsonDataForComputeReliability = jsonDataForComputeReliability + "\"" + rightColumnIds[i] + "\"" + ":" + "\"1\"";
-			if(!(i==rightColumnIds.length-1)) {
-				jsonDataForComputeReliability = jsonDataForComputeReliability + ",";
-				}
+			for(var i=0; i < rightColumnIds.length; i++) {
+				jsonDataForComputeReliability[rightColumnIds[i]] = "1";
 			}
-		jsonDataForComputeReliability = jsonDataForComputeReliability + ",\"program_call\":\"5\"}";
+			jsonDataForComputeReliability["program_call"] = "5";
+			jsonDataForComputeReliability["norm_country"] = "US";
+			jsonDataForComputeReliability["basc3_form"] = "21";
+			jsonDataForComputeReliability["basc3_flex_formtype"] = $scope.whichRadioSelected;
+			jsonDataForComputeReliability["basc3_flex_agegrp"] = $scope.ageGroupCheckboxSelected.toString();
+			jsonDataForComputeReliability["basc3_flex_direction"] = $scope.whichScoringRadioSelected;	
 		}
-		var flexformIdsToSendForValidation = "flexFormItemsIdList=" + jsonDataForComputeReliability;
+
+		var paramsObj = {
+			"flexFormItemsIdList" : JSON.stringify(jsonDataForComputeReliability),
+			"ageGroup" : $scope.ageGroupCheckboxSelected.toString(),
+			"selectedRaterName" : selectedRaterName
+		};
+		var params = $.param(paramsObj);
 		var computeReliabilityServiceURL = "sendFlexFormItemsForValidation.seam";
-		callComputeValidationService($scope, $http, computeReliabilityServiceURL, flexformIdsToSendForValidation);
+		callComputeValidationService($scope, $http, computeReliabilityServiceURL, params);
 	}
 	
 	$scope.toggleFormNameFlag = function() {
