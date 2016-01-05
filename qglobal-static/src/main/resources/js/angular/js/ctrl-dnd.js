@@ -558,9 +558,11 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	formStatus = data.formStatus;
 	$scope.whichRadioSelected = data.selectedRater;
 	$scope.whichScoringRadioSelected = (data.scoringValue);
-	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;	
-	reliabilityVariablesJSON["reliability"] = JSON.parse(data.alphaVariables).reliability;			
-	reliabilityVariablesJSON["sasResponse"] = JSON.parse(data.alphaVariables).sasResponse;
+	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
+	if(data.alphaVariables) {
+		reliabilityVariablesJSON["reliability"] = JSON.parse(data.alphaVariables).reliability;			
+		reliabilityVariablesJSON["sasResponse"] = JSON.parse(data.alphaVariables).sasResponse;
+	}
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
