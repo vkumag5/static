@@ -538,6 +538,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 			disableSaveNPublishFlag = true;
 			disableSaveDraftFlag = true;
 			disableComputeReliabilityFlag = true;
+			$("#computeReliability").attr("disabled", "disabled");
 		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
@@ -560,7 +561,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	$scope.whichScoringRadioSelected = (data.scoringValue);
 	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;	
 	reliabilityVariablesJSON["reliability"] = JSON.parse(data.alphaVariables).reliability;			
-	reliabilityVariablesJSON["flexFormItems"] = JSON.parse(data.alphaVariables).flexFormItems;
+	reliabilityVariablesJSON["sasResponse"] = JSON.parse(data.alphaVariables).sasResponse;
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
@@ -636,7 +637,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 	} else {
 		if(data.response.validationStatus.toLowerCase() == "success") {
 			reliabilityVariablesJSON["reliability"] = data.response.reliability;			
-			reliabilityVariablesJSON["flexFormItems"] = data.response.flexFormItems;			
+			reliabilityVariablesJSON["sasResponse"] = data.response.sasResponse;			
 			if (formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				disableSaveNPublishFlag = false;
 			}
