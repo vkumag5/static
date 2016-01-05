@@ -8,12 +8,13 @@ var rightColumnIds=[];
 var originalJSON = [];
 var tagList = [];
 var favFlag = false;
-var jsonDataForComputeReliability = "";
+var jsonDataForComputeReliability = {};
 var formStatus = "";
 var flexFormRaterAgeGroupHandler = new FlexFormRaterAgeGroupHandler();
 var changeFormName = true;
 var selectedRaterName = "";
 var valueChangedAfterCR = false;
+var reliabilityVariablesJSON = {};
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.prefixFormName = "BASC-3 Custom Flex";
 	$scope.alerts = [];
@@ -137,17 +138,18 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			"target" : $scope.prepareJSONToSave(rightColumnIds),
 			"formName" : $scope.prefixFormName + " " + $scope.formName,
 			"saveOption" : flag,
-			"flexFormItemsIdList" : jsonDataForComputeReliability,
+			"flexFormItemsIdList" : JSON.stringify(jsonDataForComputeReliability),
 			"flexFormItemsFavouritesList" : $scope.prepareJSONToSave(favourites),
 			"selectedRater" : $scope.whichRadioSelected,
 			"selectedAgeGroup" : $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected),
 			"sharableFlag" : $scope.sharableFlag,
-			"scoringRadioValue" : $scope.whichScoringRadioSelected
+			"scoringRadioValue" : $scope.whichScoringRadioSelected,
+			"reliabilityVariablesJSON" : JSON.stringify(reliabilityVariablesJSON)
 		};
 		if($scope.testVar != 0) {		
 			$.extend(paramsObj, { "formId" : $scope.testVar });
 		}
-		var params = $.param(paramsObj);
+		var params = $.param(paramsObj);		
 		var postUrl = "sendJSONDataToSave.seam";
 		
 		callPostService($window, $scope, $http, postUrl, params, flag);		
@@ -376,7 +378,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.computeReliability = function() {
 		$('#loadingMessage').show();		
-		var jsonDataForComputeReliability = {};
 		if(rightColumnIds.length>0) {
 			for(var i=0; i < rightColumnIds.length; i++) {
 				jsonDataForComputeReliability[rightColumnIds[i]] = "1";
@@ -447,6 +448,18 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.setSharableFlagCheckedOnClick = function() {
 		$scope.sharableFlag = !$scope.sharableFlag;
+	};
+	
+	$scope.getAlphaVariable = function(id) {
+		if(reliabilityVariablesJSON.reliability) {
+			if(reliabilityVariablesJSON.reliability[id] != "") {	
+				return reliabilityVariablesJSON.reliability[id];
+			} else {
+				return "-";
+			}
+		} else {
+		  return "-";
+		}		
 	};
 	
 });
@@ -545,11 +558,14 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	formStatus = data.formStatus;
 	$scope.whichRadioSelected = data.selectedRater;
 	$scope.whichScoringRadioSelected = (data.scoringValue);
-	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
+	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;	
+	reliabilityVariablesJSON["reliability"] = JSON.parse(data.alphaVariables).reliability;			
+	reliabilityVariablesJSON["flexFormItems"] = JSON.parse(data.alphaVariables).flexFormItems;
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
 		disableComputeReliabilityFlag = true;
+		$('#computeReliabilitySection').show();
 	}
 	targetItemsOnRight = data.rightItem.items;
 	var testSource = $scope.source;
@@ -611,13 +627,16 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 }).success(function(data) {	
 	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings = [];
+	reliabilityVariablesJSON = {};
 	if(data.error) {
 		$scope.errorsWarnings.push(data.error);
 		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();	
-	} else {		
+	} else {
 		if(data.response.validationStatus.toLowerCase() == "success") {
+			reliabilityVariablesJSON["reliability"] = data.response.reliability;			
+			reliabilityVariablesJSON["flexFormItems"] = data.response.flexFormItems;			
 			if (formStatus == 'Draft' || formStatus == "" || $scope.formOpenModeVar=="true") {
 				disableSaveNPublishFlag = false;
 			}
@@ -629,7 +648,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}
-		$('#loadingMessage').hide();	
+		$('#loadingMessage').hide();		
 	}	
 	
 });
