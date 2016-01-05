@@ -383,8 +383,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				jsonDataForComputeReliability[rightColumnIds[i]] = "1";
 			}
 			jsonDataForComputeReliability["program_call"] = "5";
-			jsonDataForComputeReliability["norm_country"] = "US";
-			jsonDataForComputeReliability["basc3_form"] = "21";
+			jsonDataForComputeReliability["norm_country"] = "US";			
 			jsonDataForComputeReliability["basc3_flex_formtype"] = $scope.whichRadioSelected;
 			jsonDataForComputeReliability["basc3_flex_agegrp"] = $scope.ageGroupCheckboxSelected.toString();
 			jsonDataForComputeReliability["basc3_flex_direction"] = $scope.whichScoringRadioSelected;	
