@@ -15,7 +15,6 @@ var changeFormName = true;
 var selectedRaterName = "";
 var valueChangedAfterCR = false;
 var reliabilityVariablesJSON = {};
-var isStandardFlexForm = false;
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.prefixFormName = "";
 	$scope.prefixCustomFormName = "BASC-3 Custom Flex";
@@ -607,9 +606,8 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
 	if(String.fromCharCode(data.isGlobal) == 'Y') {
-		isStandardFlexForm = true;
 		$scope.prefixFormNameHandler($scope.prefixStandardFormName, $scope.prefixStandardFormName, tempFormName);
-		if((isStandardFlexForm) && ($scope.formOpenModeVar === "true")) {
+		if(($scope.formOpenModeVar === "true")) {
 			$scope.prefixFormNameHandler($scope.prefixCustomFormName, $scope.prefixStandardFormName, data.formName);
 		}
 	} else {
