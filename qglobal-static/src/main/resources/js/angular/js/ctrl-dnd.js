@@ -608,9 +608,9 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	}
 	if(String.fromCharCode(data.isGlobal) == 'Y') {
 		isStandardFlexForm = true;
-		$scope.prefixFormNameHandler($scope.prefixStandardFormName, $scope.prefixStandardFormName, tempFormName);		
+		$scope.prefixFormNameHandler($scope.prefixStandardFormName, $scope.prefixStandardFormName, tempFormName);
 		if((isStandardFlexForm) && ($scope.formOpenModeVar === "true")) {
-			$scope.prefixFormNameHandler($scope.prefixCustomFormName, $scope.prefixStandardFormName, tempFormName);
+			$scope.prefixFormNameHandler($scope.prefixCustomFormName, $scope.prefixStandardFormName, data.formName);
 		}
 	} else {
 		$scope.prefixFormNameHandler($scope.prefixCustomFormName, $scope.prefixCustomFormName, tempFormName);		
