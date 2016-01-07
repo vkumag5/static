@@ -16,7 +16,9 @@ var selectedRaterName = "";
 var valueChangedAfterCR = false;
 var reliabilityVariablesJSON = {};
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
-	$scope.prefixFormName = "BASC-3 Custom Flex";
+	$scope.prefixFormName = "";
+	$scope.prefixCustomFormName = "BASC-3 Custom Flex";
+	$scope.prefixStandardFormName = "BASC-3 Standard Flex";
 	$scope.alerts = [];
 	$scope.model = [];
 	$scope.source = [];
@@ -42,8 +44,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.whichRadioSelected = "";
 	$scope.ageGroupCheckboxSelected = [];
 	$scope.sharableFlag = false;
-	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.
+	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.	
 	$(searchByCategory).attr('placeholder', searchByScalePlaceholder);
+	
 	callGetService($scope, $http, urlForEntireJSON);		
 
 	// watch, use 'true' to also receive updates when values
@@ -461,6 +464,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}		
 	};
 	
+	$scope.prefixFormNameHandler = function(textToPrefix, textToSubstr, tempFormName) {
+		$scope.prefixFormName = textToPrefix;
+		$scope.formName = tempFormName.substr(textToSubstr.length + 1);
+	};
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -493,10 +501,12 @@ function callGetService($scope, $http, urlAssessment) {
 				var studentRater = flexFormRaterAgeGroupHandler.getStudentRater($scope.rater);
 				$scope.whichRadioSelected = studentRater.identifier;
 				selectedRaterName = studentRater.name;
+				$scope.prefixFormName = $scope.prefixCustomFormName;
 				$scope.autoPopulateFormName();	
 				$scope.viewLoading = false;
 				$('#loadingMessage').hide();
 			}
+			
 			if(data.error) {		
 				$scope.errorsWarnings.push(data.error);
 				$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
@@ -562,7 +572,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	if(data.alphaVariables) {
 		reliabilityVariablesJSON["reliability"] = JSON.parse(data.alphaVariables).reliability;			
 		reliabilityVariablesJSON["sasResponse"] = JSON.parse(data.alphaVariables).sasResponse;
-	}
+	}	
 	if (formStatus != 'Draft') {
 		disableSaveNPublishFlag = true;
 		disableSaveDraftFlag = true;
@@ -595,8 +605,14 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		disableComputeReliabilityFlag = false;
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
 	}
-	$scope.formName = tempFormName.substr($scope.prefixFormName.length + 1);
-	
+	if(String.fromCharCode(data.isGlobal) == 'Y') {
+		$scope.prefixFormNameHandler($scope.prefixStandardFormName, $scope.prefixStandardFormName, tempFormName);
+		if(($scope.formOpenModeVar === "true")) {
+			$scope.prefixFormNameHandler($scope.prefixCustomFormName, $scope.prefixStandardFormName, data.formName);
+		}
+	} else {
+		$scope.prefixFormNameHandler($scope.prefixCustomFormName, $scope.prefixCustomFormName, tempFormName);		
+	}	
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
 
