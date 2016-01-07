@@ -384,9 +384,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		if(rightColumnIds.length>0) {
 			for(var i=0; i < rightColumnIds.length; i++) {
 				jsonDataForComputeReliability[rightColumnIds[i]] = "1";
-			}
-			jsonDataForComputeReliability["program_call"] = "5";
-			jsonDataForComputeReliability["norm_country"] = "US";			
+			}					
 			jsonDataForComputeReliability["basc3_flex_formtype"] = $scope.whichRadioSelected;
 			jsonDataForComputeReliability["basc3_flex_agegrp"] = $scope.ageGroupCheckboxSelected.toString();
 			jsonDataForComputeReliability["basc3_flex_direction"] = $scope.whichScoringRadioSelected;	
@@ -604,6 +602,11 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		disableSaveDraftFlag = false;
 		disableComputeReliabilityFlag = false;
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
+		if(formStatus != 'Draft') {
+			disableComputeReliabilityFlag = false;
+			$('#computeReliabilitySection').hide();
+			reliabilityVariablesJSON = {};
+		}
 	}
 	if(String.fromCharCode(data.isGlobal) == 'Y') {
 		$scope.prefixFormNameHandler($scope.prefixStandardFormName, $scope.prefixStandardFormName, tempFormName);
