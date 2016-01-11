@@ -14,7 +14,7 @@ var FlexFormRaterAgeGroupHandler = Class.create({
 	getStudentRater: function(raterList) {
 		for (var i = 0; i < raterList.length; i++) {
 			var raterVal = raterList[i];
-			if (raterVal.name === "Student" || raterVal.name === "student") {
+			if ((raterVal.identifier).toLowerCase() === "s") {
 				return raterVal;
 			}
 		}
