@@ -45,7 +45,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.ageGroupCheckboxSelected = [];
 	$scope.sharableFlag = false;
 	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.	
-	$(searchByCategory).attr('placeholder', searchByScalePlaceholder);
+	$("#searchByCategory").attr('placeholder', searchByScalePlaceholder);
 	
 	callGetService($scope, $http, urlForEntireJSON);		
 
