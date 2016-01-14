@@ -380,7 +380,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.computeReliability = function() {
-		$('#loadingMessage').show();		
+		$('#loadingMessage').show();
+		jsonDataForComputeReliability = {};		
 		if(rightColumnIds.length>0) {
 			for(var i=0; i < rightColumnIds.length; i++) {
 				jsonDataForComputeReliability[rightColumnIds[i]] = "1";
