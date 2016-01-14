@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.pearson.qglobal.platform</groupId>	
 		<artifactId>qglobal-static-content</artifactId>
-		<version>46.0.6-SNAPSHOT</version>
+		<version>46.0.7-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>qglobal-static-deployment-descriptor</artifactId>
