@@ -469,15 +469,15 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	};
 	
 	$scope.isAgeGroupDisabled = function(identifier) {
-		if(identifier.toLowerCase() === ageGroupIdsJson.psId) {
+		if(identifier.toLowerCase() === flexFormRaterAgeGroupHandler.ageGroupIdsJson.psId) {
 			return true;
 		} else {
 			return false;
 		}
 	};
 	
-	$scope.isAgeGroupGreyedOut = function(identifier) {
-		if(identifier.toLowerCase() === ageGroupIdsJson.psId) {
+	$scope.getAgeGroupCssStyle = function(identifier) {
+		if(identifier.toLowerCase() === flexFormRaterAgeGroupHandler.ageGroupIdsJson.psId) {
 			return {"color" : "#A3A3A3"
 			};
 		} else {
@@ -485,11 +485,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 	};
 	
-	$scope.sortAgeGroupByOrder = function(ageGroupJsonArray, ageGroupSortOrder){
+	$scope.sortAgeGroupByOrder = function(ageGroupJsonArray){
 		var sortedAgeGroupJsonArray = [];		
-		for(var i = 0; i<ageGroupSortOrder.length; i++) {
+		for(var i = 0; i<flexFormRaterAgeGroupHandler.ageGroupSortOrder.length; i++) {
 			angular.forEach(ageGroupJsonArray, function(ageGroup){
-				if((ageGroup.identifier).toLowerCase() === ageGroupSortOrder[i]) {
+				if((ageGroup.identifier).toLowerCase() === flexFormRaterAgeGroupHandler.ageGroupSortOrder[i]) {
 					sortedAgeGroupJsonArray.push(ageGroup);
 				}
 			});
@@ -515,7 +515,7 @@ function callGetService($scope, $http, urlAssessment) {
 				originalJSON = angular.copy(flexFormItems.itemSet);
 				tagList = flexFormItems.metaData.tags;
 				// we are sorting the ageGroup json array coming from IBAAS in order of increasing age group values, so that age group can be populated sequentially on UI.
-				$scope.ageGroup = $scope.sortAgeGroupByOrder($scope.ageGroup, ageGroupSortOrder);
+				$scope.ageGroup = $scope.sortAgeGroupByOrder($scope.ageGroup);
 			}
 			
 			if (data.target && data.target.length > 0) {
