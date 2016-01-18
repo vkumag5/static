@@ -358,12 +358,12 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	}
 	
 	$scope.ageGroupBasedOnRaterFilter = function(ageGroupVal) {		
-		var ageGroupIdListBasedOnRater = flexFormRaterAgeGroupHandler.getAgeGroupIdListBasedOnRater(originalJSON, $scope.whichRadioSelected);			
+		var ageGroupIdListBasedOnRater = flexFormRaterAgeGroupHandler.getAgeGroupIdListBasedOnRater(originalJSON, $scope.whichRadioSelected);		
 		if ($.inArray(ageGroupVal.identifier.toLowerCase(), ageGroupIdListBasedOnRater) > -1) {			
 			return ageGroupVal;
 		} else {			
 			return;
-		}
+		}		
 	}
 	
 	$scope.autoPopulateFormName = function() {
@@ -468,6 +468,35 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$scope.formName = tempFormName.substr(textToSubstr.length + 1);
 	};
 	
+	$scope.isAgeGroupDisabled = function(identifier) {
+		if(identifier.toLowerCase() === ageGroupIdsJson.psId) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+	
+	$scope.isAgeGroupGreyedOut = function(identifier) {
+		if(identifier.toLowerCase() === ageGroupIdsJson.psId) {
+			return {"color" : "#A3A3A3"
+			};
+		} else {
+			return;
+		}
+	};
+	
+	$scope.sortAgeGroupByOrder = function(ageGroupJsonArray, ageGroupSortOrder){
+		var sortedAgeGroupJsonArray = [];		
+		for(var i = 0; i<ageGroupSortOrder.length; i++) {
+			angular.forEach(ageGroupJsonArray, function(ageGroup){
+				if((ageGroup.identifier).toLowerCase() === ageGroupSortOrder[i]) {
+					sortedAgeGroupJsonArray.push(ageGroup);
+				}
+			});
+		}		
+		return sortedAgeGroupJsonArray;
+	};
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -485,7 +514,8 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.source = flexFormItems.itemSet;
 				originalJSON = angular.copy(flexFormItems.itemSet);
 				tagList = flexFormItems.metaData.tags;
-					
+				// we are sorting the ageGroup json array coming from IBAAS in order of increasing age group values, so that age group can be populated sequentially on UI.
+				$scope.ageGroup = $scope.sortAgeGroupByOrder($scope.ageGroup, ageGroupSortOrder);
 			}
 			
 			if (data.target && data.target.length > 0) {
