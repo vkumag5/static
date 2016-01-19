@@ -136,7 +136,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.saveOption = function(flag) {
 		sourceList = $scope.source;
-		targetList = $scope.model;
+		targetList = $scope.model;		
 		var paramsObj = {
 			"target" : $scope.prepareJSONToSave(rightColumnIds),
 			"formName" : $scope.prefixFormName + " " + $scope.formName,
@@ -147,7 +147,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			"selectedAgeGroup" : $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected),
 			"sharableFlag" : $scope.sharableFlag,
 			"scoringRadioValue" : $scope.whichScoringRadioSelected,
-			"reliabilityVariablesJSON" : JSON.stringify(reliabilityVariablesJSON)
+			"reliabilityVariablesJSON" : JSON.stringify(reliabilityVariablesJSON),
+			"ageGroup" : $scope.ageGroupCheckboxSelected.toString(),
+			"selectedRaterName" : selectedRaterName
 		};
 		if($scope.testVar != 0) {		
 			$.extend(paramsObj, { "formId" : $scope.testVar });
@@ -155,7 +157,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		var params = $.param(paramsObj);		
 		var postUrl = "sendJSONDataToSave.seam";
 		
-		callPostService($window, $scope, $http, postUrl, params, flag);		
+		callPostService($window, $scope, $http, postUrl, params, flag);
 	}
 	
 	$scope.toggleStarImage = function($event) {
