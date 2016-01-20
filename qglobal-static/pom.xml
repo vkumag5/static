@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.pearson.qglobal.platform</groupId>	
 		<artifactId>qglobal-static-content</artifactId>
-		<version>46.0.9-SNAPSHOT</version>
+		<version>46.0.9</version>
 	</parent>
 	
     <artifactId>qglobal-static</artifactId>
