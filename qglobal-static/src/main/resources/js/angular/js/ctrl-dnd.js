@@ -63,11 +63,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			} else {
 				$("#dragDropMsgDiv").hide();
 			}
-			if($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
-				disableSaveDraftFlag = true;
-			} else {
-				disableSaveDraftFlag = false;
-			}
         }
 		// Watch for model variable and change the valueChangedAfterCR to identify whether
 		// any value is changed after compute reliability.
@@ -400,6 +395,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.isSaveDraftDisabled = function() {
 		if (FlexFormBuilderUtil.isFormNamePresent($scope.formName)) {
 			if (disableSaveDraftFlag) {
+				return true;
+			} else if($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
 				return true;
 			}
 			return false;
