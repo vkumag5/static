@@ -58,20 +58,15 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		if (value) {
 			console.log("Model: " + value.map(function(e){rightColumnIds.push(e.itemId); return e.ageGroup}).join(','));			
 			$scope.questionsOnRight = rightColumnIds.length;
-			 
 			if ($scope.questionsOnRight == 0) {
 				$("#dragDropMsgDiv").show();
-				$("#computeReliability").attr("disabled", "disabled");
 			} else {
 				$("#dragDropMsgDiv").hide();
-				  
-				if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
-					  $("#computeReliability").attr("disabled", "disabled");
-				} else {
-					  if(($scope.whichScoringRadioSelected != "") && (!disableComputeReliabilityFlag)) {
-						$("#computeReliability").removeAttr("disabled");
-					  }
-				}
+			}
+			if($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
+				disableSaveDraftFlag = true;
+			} else {
+				disableSaveDraftFlag = false;
 			}
         }
 		// Watch for model variable and change the valueChangedAfterCR to identify whether
@@ -102,22 +97,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		valueChangedAfterCR = true;
 	},true);
 	
-	$scope.$watch("whichScoringRadioSelected", function(value) {	
-		// Watch for whichScoringRadioSelected variable and change the valueChangedAfterCR to identify whether
-		// any value is changed after compute reliability.
-		if ($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
-					  $("#computeReliability").attr("disabled", "disabled");
-		} else {
-				if((value != "") && (!disableComputeReliabilityFlag)) {
-					  $("#computeReliability").removeAttr("disabled");
-				}
-				else {
-				$("#computeReliability").attr("disabled","disabled");
-				}
-		}
-		
-	},true);
-
 	if ($scope) {
 		$scope.sourceEmpty = function() {
 			if ($scope && $scope.source) {
@@ -442,6 +421,22 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		return true;
 	};
 	
+	$scope.isComputeReliabilityButtonDisabled = function() {
+		if($scope.questionsOnRight < $scope.ngMinItemRestrictCount) {
+			return true;
+		} else {
+			if(disableComputeReliabilityFlag) {
+				return true;
+			} else {
+				if($scope.ageGroupCheckboxSelected.length==0 || $scope.whichScoringRadioSelected == "") {
+					return true;
+				}
+				return false;
+			}
+			return false;
+		}		
+	};
+	
 	$scope.isSharableFlagChecked = function() {
 		if ($scope.sharableFlag == true) {
 			return true;
@@ -578,7 +573,6 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 			disableSaveNPublishFlag = true;
 			disableSaveDraftFlag = true;
 			disableComputeReliabilityFlag = true;
-			$("#computeReliability").attr("disabled", "disabled");
 		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
@@ -635,11 +629,6 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		disableSaveDraftFlag = false;
 		disableComputeReliabilityFlag = false;
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
-		if(formStatus != 'Draft') {
-			disableComputeReliabilityFlag = false;
-			$('#computeReliabilitySection').hide();
-			reliabilityVariablesJSON = {};
-		}
 	}
 	if(String.fromCharCode(data.isGlobal) == 'Y') {
 		$scope.prefixFormNameHandler($scope.prefixStandardFormName, $scope.prefixStandardFormName, tempFormName);
@@ -648,10 +637,9 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		}
 	} else {
 		$scope.prefixFormNameHandler($scope.prefixCustomFormName, $scope.prefixCustomFormName, tempFormName);		
-	}	
+	}
 	$scope.viewLoading = false;
 	$('#loadingMessage').hide();
-
 });	
 }
 
@@ -702,7 +690,7 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 			$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");
 			$('#errorsWarningsMessageDiv').show();			
 		}
-		$('#loadingMessage').hide();		
+		$('#loadingMessage').hide();
 	}	
 	
 });
