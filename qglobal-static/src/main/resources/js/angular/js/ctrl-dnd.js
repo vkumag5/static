@@ -591,6 +591,11 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	$scope.whichRadioSelected = data.selectedRater;
 	$scope.whichScoringRadioSelected = (data.scoringValue);
 	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
+	angular.forEach($scope.rater, function(raterObject) {
+		if(raterObject.identifier === data.selectedRater) {
+			selectedRaterName = raterObject.name;
+		}
+	});
 	if(data.alphaVariables) {
 		reliabilityVariablesJSON["reliability"] = JSON.parse(data.alphaVariables).reliability;			
 		reliabilityVariablesJSON["sasResponse"] = JSON.parse(data.alphaVariables).sasResponse;
