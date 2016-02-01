@@ -86,9 +86,9 @@ app.directive('dndBetweenList', function($parse) {
 
                 // on stop we determine the new index of the
                 // item and store it there
-                //var newIndex = ($(ui.item).index());
-				var itemIdentifierOnLeft = $(ui.item).find("img").attr("id");
-				newIndex = getIndexFromId(toUpdate, itemIdentifierOnLeft);
+                var newIndex = ($(ui.item).index());
+				//var itemIdentifierOnLeft = $(ui.item).find("img").attr("id");
+				//newIndex = getIndexFromId(toUpdate, itemIdentifierOnLeft);
                 var toMove = toUpdate[startIndex];
 
                 // we need to remove him from the configured model
