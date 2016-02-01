@@ -116,7 +116,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			"formName" : $scope.prefixFormName + " " + $scope.formName,
 			"saveOption" : flag,
 			"flexFormItemsIdList" : JSON.stringify(jsonDataForComputeReliability),
-			"flexFormItemsFavouritesList" : $scope.prepareJSONToSave(favourites),
 			"selectedRater" : $scope.whichRadioSelected,
 			"selectedAgeGroup" : $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected),
 			"sharableFlag" : $scope.sharableFlag,
@@ -150,6 +149,13 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 		console.log(favourites);
 		$event.preventDefault();
+		var paramsObj = {
+			"flexFormFavouritesList" : $scope.prepareJSONToSave(favourites)
+		};
+		var params = $.param(paramsObj);
+		var saveFavoritesServiceURL = "sendFlexFormFavoritesForSave.seam";
+		$('#loadingMessage').show();
+		callSaveFavoritesService($scope, $http, saveFavoritesServiceURL, params);
 	}
 	
 	$scope.prepareJSONToSave = function(idArray) {
@@ -591,11 +597,6 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 	$scope.whichRadioSelected = data.selectedRater;
 	$scope.whichScoringRadioSelected = (data.scoringValue);
 	$scope.ageGroupCheckboxSelected = data.rightItem.ageGroup;
-	angular.forEach($scope.rater, function(raterObject) {
-		if(raterObject.identifier === data.selectedRater) {
-			selectedRaterName = raterObject.name;
-		}
-	});
 	if(data.alphaVariables) {
 		reliabilityVariablesJSON["reliability"] = JSON.parse(data.alphaVariables).reliability;			
 		reliabilityVariablesJSON["sasResponse"] = JSON.parse(data.alphaVariables).sasResponse;
@@ -694,6 +695,17 @@ function callComputeValidationService($scope, $http, computeReliabilityServiceUR
 		}
 		$('#loadingMessage').hide();
 	}	
+	
+});
+}
+function callSaveFavoritesService($scope, $http, saveFavoritesServiceURL, params) {
+    $http({
+    method: 'POST',
+    url: saveFavoritesServiceURL,
+    data: params,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}).success(function(data) {	
+		$('#loadingMessage').hide();
 	
 });
 }
