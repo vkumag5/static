@@ -92,6 +92,12 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		valueChangedAfterCR = true;
 	},true);
 	
+	$scope.$watch("whichScoringRadioSelected", function(value) {	
+		// Watch for whichScoringRadioSelected variable and change the valueChangedAfterCR to identify whether
+		// any value is changed after compute reliability.		
+		valueChangedAfterCR = true;
+	},true);
+	
 	if ($scope) {
 		$scope.sourceEmpty = function() {
 			if ($scope && $scope.source) {
@@ -117,7 +123,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			"saveOption" : flag,
 			"flexFormItemsIdList" : JSON.stringify(jsonDataForComputeReliability),
 			"selectedRater" : $scope.whichRadioSelected,
-			"selectedAgeGroup" : $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected),
+			"selectedAgeGroup" : $scope.prepareJSONToSave(flexFormRaterAgeGroupHandler.getAgeGroupIdsBeforeSave($scope.whichRadioSelected, $scope.ageGroupCheckboxSelected)),
 			"sharableFlag" : $scope.sharableFlag,
 			"scoringRadioValue" : $scope.whichScoringRadioSelected,
 			"reliabilityVariablesJSON" : JSON.stringify(reliabilityVariablesJSON),

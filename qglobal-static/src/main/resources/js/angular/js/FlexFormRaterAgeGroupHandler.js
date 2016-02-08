@@ -17,7 +17,7 @@ var FlexFormRaterAgeGroupHandler = Class.create({
 			for(var i = 0; i < ageGroupBasedOnRater.length; i++) {
 				if(ageGroupBasedOnRater[i] === this.ageGroupIdsJson.pId) {
 					ageGroupBasedOnRater[i] = this.ageGroupIdsJson.psId;
-				} else if(ageGroupBasedOnRater[i] === this.ageGroupIdsJson.csId) {
+				} else if(ageGroupBasedOnRater[i] === this.ageGroupIdsJson.cId) {
 					ageGroupBasedOnRater[i] = this.ageGroupIdsJson.csId;
 				}
 			}			
@@ -32,5 +32,20 @@ var FlexFormRaterAgeGroupHandler = Class.create({
 			}
 		}
 		return;
+	},
+	getAgeGroupIdsBeforeSave: function(raterId, ageGroupIdArray) {
+		var ageGroupIdsForSave = [];
+		if(raterId.toLowerCase() === this.selfRaterId) {
+			for(var i = 0; i < ageGroupIdArray.length; i++) {
+				if(ageGroupIdArray[i].toLowerCase() === this.ageGroupIdsJson.psId) {
+					ageGroupIdsForSave.push((this.ageGroupIdsJson.pId).toUpperCase());
+				} else if(ageGroupIdArray[i].toLowerCase() === this.ageGroupIdsJson.csId) {
+					ageGroupIdsForSave.push((this.ageGroupIdsJson.cId).toUpperCase());					
+				}
+			}
+			return ageGroupIdsForSave;
+		} else {
+			return ageGroupIdArray;
+		}
 	}
 });
