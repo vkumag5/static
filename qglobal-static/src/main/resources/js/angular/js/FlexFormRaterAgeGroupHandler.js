@@ -41,6 +41,8 @@ var FlexFormRaterAgeGroupHandler = Class.create({
 					ageGroupIdsForSave.push((this.ageGroupIdsJson.pId).toUpperCase());
 				} else if(ageGroupIdArray[i].toLowerCase() === this.ageGroupIdsJson.csId) {
 					ageGroupIdsForSave.push((this.ageGroupIdsJson.cId).toUpperCase());					
+				} else {
+					ageGroupIdsForSave.push((ageGroupIdArray[i]).toUpperCase());
 				}
 			}
 			return ageGroupIdsForSave;
