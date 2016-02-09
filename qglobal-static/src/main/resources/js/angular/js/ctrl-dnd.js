@@ -31,6 +31,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.testVar = formId;
 	$scope.formName = "";
 	$scope.whichScoringRadioSelected = "";
+	$scope.previousScoringValue = "";
 	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
 	$scope.ngMinItemRestrictCount = minItemRestrictCount;
 	$('#loadingMessage').show();
@@ -43,6 +44,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.formOpenModeVar = formOpenMode;	
 	$scope.whichRadioSelected = "";
 	$scope.ageGroupCheckboxSelected = [];
+	$scope.previousSelectedAgeGroupLength = "";
+	$scope.prevQuestionsOnRight="";
+	$scope.prevRaterValue="";
 	$scope.sharableFlag = false;
 	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.	
 	$("#searchByCategory").attr('placeholder', searchByScalePlaceholder);
@@ -64,6 +68,14 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 				$("#dragDropMsgDiv").hide();
 			}
         }
+		//hide Compute reliability section if model is changed after form is loaded.  
+		if($('#computeReliabilitySection').is(':visible') && (!disableSaveNPublishFlag||$scope.prevQuestionsOnRight!=""))
+		{
+			$('#computeReliabilitySection').hide();
+			$scope.computeReliabilityResult = "";
+		}
+		$scope.prevQuestionsOnRight=$scope.questionsOnRight;
+		
 		// Watch for model variable and change the valueChangedAfterCR to identify whether
 		// any value is changed after compute reliability.
 		valueChangedAfterCR = true;
@@ -84,18 +96,39 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		// Watch for whichRadioSelected variable and change the valueChangedAfterCR to identify whether
 		// any value is changed after compute reliability.
 		valueChangedAfterCR = true;
+		//hide Compute reliability section if whichRadioSelected is changed after form is loaded.  
+		if($('#computeReliabilitySection').is(':visible') && (!disableSaveNPublishFlag||$scope.prevRaterValue!=""))
+		{
+			$('#computeReliabilitySection').hide();
+			$scope.computeReliabilityResult = "";
+		}
+		$scope.prevRaterValue=$scope.whichRadioSelected;
 	},true);
 	
 	$scope.$watch("ageGroupCheckboxSelected", function(value) {	
 		// Watch for ageGroupCheckboxSelected variable and change the valueChangedAfterCR to identify whether
 		// any value is changed after compute reliability.
 		valueChangedAfterCR = true;
+		//hide Compute reliability section if ageGroupCheckboxSelected is changed after form is loaded.  
+		if($('#computeReliabilitySection').is(':visible') && (!disableSaveNPublishFlag||$scope.previousSelectedAgeGroupLength!=0))
+		{
+			$('#computeReliabilitySection').hide();
+			$scope.computeReliabilityResult = "";
+		}
+		$scope.previousSelectedAgeGroupLength=$scope.ageGroupCheckboxSelected.length;
 	},true);
 	
 	$scope.$watch("whichScoringRadioSelected", function(value) {	
 		// Watch for whichScoringRadioSelected variable and change the valueChangedAfterCR to identify whether
 		// any value is changed after compute reliability.		
 		valueChangedAfterCR = true;
+		//hide Compute reliability section if whichScoringRadioSelected is changed after form is loaded.  
+		if($('#computeReliabilitySection').is(':visible') && (!disableSaveNPublishFlag||$scope.previousScoringValue!=""))
+		{
+			$('#computeReliabilitySection').hide();
+			$scope.computeReliabilityResult = "";
+		}
+		$scope.previousScoringValue=$scope.whichScoringRadioSelected;
 	},true);
 	
 	if ($scope) {
@@ -421,8 +454,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			if (disableSaveNPublishFlag) {
 				return true;
 			} else if (valueChangedAfterCR) {
-				$scope.computeReliabilityResult = "";
-				$('#computeReliabilitySection').hide();
+				$scope.computeReliabilityResult = "";				
 				return true;
 			}
 			return false;
