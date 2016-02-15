@@ -15,7 +15,7 @@
 	<scm>
 		<connection>scm:git:ssh://git@bitbucket.pearson.com/qglobal/qglobal-static-content.git</connection>	
 		<developerConnection>scm:git:ssh://git@bitbucket.pearson.com/qglobal/qglobal-static-content.git</developerConnection>
-		<url>https://bitbucket.pearson.com/projects/QGLOBAL/repos/qglobal-static-content/</url>	
+		<url>https://bitbucket.pearson.com/scm/qglobal/qglobal-static-content.git</url>	
 		<tag>qglobal-static-content-46.0.10</tag>
 	</scm>  
 
