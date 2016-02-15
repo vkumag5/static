@@ -13,8 +13,8 @@
 		<url>http://releng.ic.ncs.com/jenkins/job/QGlobal%20Platform%20-%20qglobal-static-content</url>	             
 	</ciManagement>	
 	<scm>
-		<connection>scm:git:ssh://git@bitbucket.pearson.com/qglobal/qglobal-static-content.git</connection>	
-		<developerConnection>scm:git:ssh://git@bitbucket.pearson.com/qglobal/qglobal-static-content.git</developerConnection>
+		<connection>https://bitbucket.pearson.com/scm/qglobal/qglobal-static-content.git</connection>	
+		<developerConnection>https://bitbucket.pearson.com/scm/qglobal/qglobal-static-content.git</developerConnection>
 		<url>https://bitbucket.pearson.com/scm/qglobal/qglobal-static-content.git</url>	
 		<tag>qglobal-static-content-46.0.10</tag>
 	</scm>  
