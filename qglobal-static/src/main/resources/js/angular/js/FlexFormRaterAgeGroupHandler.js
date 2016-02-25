@@ -32,22 +32,5 @@ var FlexFormRaterAgeGroupHandler = Class.create({
 			}
 		}
 		return;
-	},
-	getAgeGroupIdsBeforeSave: function(raterId, ageGroupIdArray) {
-		var ageGroupIdsForSave = [];
-		if(raterId.toLowerCase() === this.selfRaterId) {
-			for(var i = 0; i < ageGroupIdArray.length; i++) {
-				if(ageGroupIdArray[i].toLowerCase() === this.ageGroupIdsJson.psId) {
-					ageGroupIdsForSave.push((this.ageGroupIdsJson.pId).toUpperCase());
-				} else if(ageGroupIdArray[i].toLowerCase() === this.ageGroupIdsJson.csId) {
-					ageGroupIdsForSave.push((this.ageGroupIdsJson.cId).toUpperCase());					
-				} else {
-					ageGroupIdsForSave.push((ageGroupIdArray[i]).toUpperCase());
-				}
-			}
-			return ageGroupIdsForSave;
-		} else {
-			return ageGroupIdArray;
-		}
 	}
 });

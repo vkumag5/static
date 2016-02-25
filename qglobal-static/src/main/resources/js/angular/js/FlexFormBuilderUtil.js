@@ -1,6 +1,6 @@
 function FlexFormBuilderUtil() {
 }
-
+var flexFormRaterAgeGroupHandler = new FlexFormRaterAgeGroupHandler();
 FlexFormBuilderUtil.getFormNameOfCopy = function(existingFormName) {
 	var PATTERN = /^(.*)-copy(?:\((\d+)\))?$/g;
 	var match = existingFormName.match(PATTERN);
@@ -23,10 +23,15 @@ FlexFormBuilderUtil.isFormNamePresent = function(formName) {
 	return false;
 };
 
-FlexFormBuilderUtil.getAgeGroupRelatedName = function(selectedAgeGroupIds, ageGroups) {
+FlexFormBuilderUtil.getAgeGroupRelatedName = function(selectedAgeGroupIds, ageGroups, selectedRater) {
 	var ageGroupNameSection = "";
 	for (var i = 0; i < selectedAgeGroupIds.length; i++) {
 		var id = selectedAgeGroupIds[i];
+		if(selectedRater.toLowerCase() === flexFormRaterAgeGroupHandler.selfRaterId && id.toLowerCase() == flexFormRaterAgeGroupHandler.ageGroupIdsJson.cId){
+			id = (flexFormRaterAgeGroupHandler.ageGroupIdsJson.csId).toUpperCase();
+			} else if(selectedRater.toLowerCase() === flexFormRaterAgeGroupHandler.selfRaterId && id.toLowerCase() == flexFormRaterAgeGroupHandler.ageGroupIdsJson.pId) {
+				id = (flexFormRaterAgeGroupHandler.ageGroupIdsJson.psId).toUpperCase();
+			}
 		if (i > 0) {
 			ageGroupNameSection = ageGroupNameSection + " and ";
 		} else {

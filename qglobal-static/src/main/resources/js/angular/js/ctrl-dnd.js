@@ -156,7 +156,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			"saveOption" : flag,
 			"flexFormItemsIdList" : JSON.stringify(jsonDataForComputeReliability),
 			"selectedRater" : $scope.whichRadioSelected,
-			"selectedAgeGroup" : $scope.prepareJSONToSave(flexFormRaterAgeGroupHandler.getAgeGroupIdsBeforeSave($scope.whichRadioSelected, $scope.ageGroupCheckboxSelected)),
+			"selectedAgeGroup" : $scope.prepareJSONToSave($scope.ageGroupCheckboxSelected),
 			"sharableFlag" : $scope.sharableFlag,
 			"scoringRadioValue" : $scope.whichScoringRadioSelected,
 			"reliabilityVariablesJSON" : JSON.stringify(reliabilityVariablesJSON),
@@ -280,6 +280,13 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	};
 	
 	$scope.whichAgeGroupSelected = function(val){
+		if($scope.whichRadioSelected.toLowerCase() === flexFormRaterAgeGroupHandler.selfRaterId){
+			if(val.toLowerCase() === flexFormRaterAgeGroupHandler.ageGroupIdsJson.psId) {
+				val = (flexFormRaterAgeGroupHandler.ageGroupIdsJson.pId).toUpperCase();
+			} else if(val.toLowerCase() === flexFormRaterAgeGroupHandler.ageGroupIdsJson.csId) {
+				val = (flexFormRaterAgeGroupHandler.ageGroupIdsJson.cId).toUpperCase();
+			}
+		}		
 		if ($.inArray(val, $scope.ageGroupCheckboxSelected)>=0){
 			$scope.ageGroupCheckboxSelected.splice($scope.ageGroupCheckboxSelected.indexOf(val),1);
 		}
@@ -389,7 +396,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.autoPopulateFormName = function() {
 		if(changeFormName) {
-			$scope.formName = selectedRaterName + FlexFormBuilderUtil.getAgeGroupRelatedName($scope.ageGroupCheckboxSelected.sort(), $scope.ageGroup);
+			$scope.formName = selectedRaterName + FlexFormBuilderUtil.getAgeGroupRelatedName($scope.ageGroupCheckboxSelected.sort(), $scope.ageGroup, $scope.whichRadioSelected);
 		}
 	}	
 	
