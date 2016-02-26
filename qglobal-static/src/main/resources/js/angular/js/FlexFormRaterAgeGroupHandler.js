@@ -32,5 +32,15 @@ var FlexFormRaterAgeGroupHandler = Class.create({
 			}
 		}
 		return;
+	},
+	getOriginalAgeGroupIdBasedOnRater: function(ageGroupId, rater) {
+		if (rater.toLowerCase() === this.selfRaterId) {
+			if (ageGroupId.toLowerCase() === this.ageGroupIdsJson.psId) {
+				return (this.ageGroupIdsJson.pId).toUpperCase();
+			} else if (ageGroupId.toLowerCase() === this.ageGroupIdsJson.csId) {
+				return (this.ageGroupIdsJson.cId).toUpperCase();
+			}
+		}
+		return ageGroupId;
 	}
 });

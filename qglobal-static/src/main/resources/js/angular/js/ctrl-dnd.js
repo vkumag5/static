@@ -266,6 +266,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	
 	$scope.isAgeGroupChecked = function(ageGroupId) {
+		ageGroupId = flexFormRaterAgeGroupHandler.getOriginalAgeGroupIdBasedOnRater(ageGroupId, $scope.whichRadioSelected);
 		if ($.inArray(ageGroupId, $scope.ageGroupCheckboxSelected) >= 0) {
 			return true;
 		}	
@@ -280,13 +281,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	};
 	
 	$scope.whichAgeGroupSelected = function(val){
-		if($scope.whichRadioSelected.toLowerCase() === flexFormRaterAgeGroupHandler.selfRaterId){
-			if(val.toLowerCase() === flexFormRaterAgeGroupHandler.ageGroupIdsJson.psId) {
-				val = (flexFormRaterAgeGroupHandler.ageGroupIdsJson.pId).toUpperCase();
-			} else if(val.toLowerCase() === flexFormRaterAgeGroupHandler.ageGroupIdsJson.csId) {
-				val = (flexFormRaterAgeGroupHandler.ageGroupIdsJson.cId).toUpperCase();
-			}
-		}		
+		val = flexFormRaterAgeGroupHandler.getOriginalAgeGroupIdBasedOnRater(val, $scope.whichRadioSelected);
 		if ($.inArray(val, $scope.ageGroupCheckboxSelected)>=0){
 			$scope.ageGroupCheckboxSelected.splice($scope.ageGroupCheckboxSelected.indexOf(val),1);
 		}
