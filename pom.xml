@@ -4,7 +4,7 @@
   
 	<groupId>com.pearson.qglobal.platform</groupId>
 	<artifactId>qglobal-static-content</artifactId>
-	<version>46.0.33</version>
+	<version>46.0.34-SNAPSHOT</version>
 	<packaging>pom</packaging>
     <name>qglobal-static-content</name>
 
@@ -16,7 +16,7 @@
 		<connection>scm:git:ssh://git@bitbucket.pearson.com/qglobal/qglobal-static-content.git</connection>	
 <developerConnection>scm:git:ssh://git@bitbucket.pearson.com/qglobal/qglobal-static-content.git</developerConnection>
 		<url>https://bitbucket.pearson.com/scm/qglobal/qglobal-static-content.git</url>	
-		<tag>qglobal-static-content-46.0.33</tag>
+		<tag>qglobal-static-content-46.0.10</tag>
 	</scm>  
 
 	<modules>
