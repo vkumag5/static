@@ -798,9 +798,11 @@ function setSelectedRadio() {
 								saveColStatetoDb(this.jqGrid('getGridParam', 'colModel'), perm);
                                 saveColumnState.call(this);
                             }
-							
+							if(resultMap!=null&&resultMap!="")
+							{
 							width = getWidthAsPerTheColumn(resultMap);
 							jq$grid.jqGrid('setGridWidth', width , true);
+							}
                         }
                     });
 
