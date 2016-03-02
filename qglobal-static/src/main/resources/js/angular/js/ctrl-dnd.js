@@ -51,9 +51,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.	
 	$("#searchByCategory").attr('placeholder', searchByScalePlaceholder);
 	var ieVersion = getInternetExplorerVersion();
-	if(ieVersion === -1){
-		callGetService($scope, $http, urlForEntireJSON);
-	} else if(ieVersion <= 9){
+	if(ieVersion >= 6 && ieVersion <= 9){
 		var maskHeight = $(document).height();  
 		var maskWidth = $(window).width();			
 		// calculate the values for center alignment
@@ -62,7 +60,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		// assign values to the overlay and dialog box		
 		$('#ie-error-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
 		$('#ie-error-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
-	} 
+	} else {
+		callGetService($scope, $http, urlForEntireJSON);
+	}
 
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
