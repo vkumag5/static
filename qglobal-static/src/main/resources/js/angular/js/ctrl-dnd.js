@@ -546,6 +546,26 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			});
 		}		
 		return sortedAgeGroupJsonArray;
+	};	
+	
+	$scope.checkForUnsavedData = function() {
+		var redirectUrl = "redirectToManageFlexForm.seam";
+		// popup section.
+		var maskHeight = $(document).height();  
+			var maskWidth = $(window).width();			
+			// calculate the values for center alignment
+			var dialogTop =  (maskHeight/3) - ($('#dialog-box').height());  
+			var dialogLeft = (maskWidth/2) - ($('#dialog-box').width()/2);			
+			// assign values to the overlay and dialog box		
+			$('#unsaved-changes-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
+			$('#unsaved-changes-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
+		// popup section ends
+		if(1/*Change detected*/) {
+			alert('You have made some changes');
+		} else {
+			$('#loadingMessage').show();
+			redirectToManageFlexFormPage($window, $scope, $http, redirectUrl);
+		}
 	};
 	
 });
@@ -777,4 +797,16 @@ function getInternetExplorerVersion() {
       rv = parseFloat( RegExp.$1 );
   }
   return rv;
+}
+
+// This ajax call is used to redirect to manageFlexForm.xhtml page.
+function redirectToManageFlexFormPage($window, $scope, $http, redirectToManageFlexForm) {
+    $http({
+    method: 'POST',
+    url: redirectToManageFlexForm,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+}).success(function(data) {
+	$window.location.href = "/qg/manageFlexForms.seam";
+	$('#loadingMessage').hide();
+});
 }
