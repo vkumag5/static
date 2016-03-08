@@ -20,7 +20,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.prefixFormName = "";
 	$scope.prefixCustomFormName = "BASC-3 Custom Flex";
 	$scope.prefixStandardFormName = "BASC-3 Standard Flex";
-	$scope.alerts = [];
 	$scope.model = [];
 	$scope.source = [];
 	$scope.ageGroup = [];
@@ -53,14 +52,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$("#searchByCategory").attr('placeholder', searchByScalePlaceholder);
 	var ieVersion = getInternetExplorerVersion();
 	if(ieVersion >= 6 && ieVersion <= 9){
-		var maskHeight = $(document).height();  
-		var maskWidth = $(window).width();			
-		// calculate the values for center alignment
-		var dialogTop =  (maskHeight/3) - ($('#dialog-box').height());  
-		var dialogLeft = (maskWidth/2) - ($('#dialog-box').width()/2);			
-		// assign values to the overlay and dialog box		
-		$('#ie-error-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
-		$('#ie-error-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
+		// Calls browser incompatibility message pop up.
+		callAngularErrorPopup('ie-error-dialog-overlay', 'ie-error-dialog-box');
 	} else {
 		callGetService($scope, $http, urlForEntireJSON);
 	}
@@ -438,18 +431,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 	$scope.toggleFormNameFlag = function() {
 		changeFormName = false;
-	}
-	$scope.callAngularErrorPopup = function() {
-		var maskHeight = $(document).height();  
-		var maskWidth = $(window).width();			
-		// calculate the values for center alignment
-		var dialogTop =  (maskHeight/3) - ($('#dialog-box').height());  
-		var dialogLeft = (maskWidth/2) - ($('#dialog-box').width()/2);			
-		// assign values to the overlay and dialog box		
-		$('#error-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
-		$('#error-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
-	}
-	
+	}	
 
 	$scope.isSaveDraftDisabled = function() {
 		if (FlexFormBuilderUtil.isFormNamePresent($scope.formName)) {
@@ -552,16 +534,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.checkForUnsavedData = function() {
 		var redirectUrl = "redirectToManageFlexForm.seam";
 		if(checkIfFormValueHasChanged($scope)) {
-		// popup section.
-			var maskHeight = $(document).height();  
-			var maskWidth = $(window).width();			
-			// calculate the values for center alignment
-			var dialogTop =  (maskHeight/3) - ($('#dialog-box').height());  
-			var dialogLeft = (maskWidth/2) - ($('#dialog-box').width()/2);			
-			// assign values to the overlay and dialog box		
-			$('#unsaved-changes-dialog-overlay').css({height:maskHeight, width:maskWidth}).show();
-			$('#unsaved-changes-dialog-box').css({top:dialogTop, left:dialogLeft}).show();
-		// popup section ends
+			// Calls unsaved changes pop up.
+			callAngularErrorPopup('unsaved-changes-dialog-overlay', 'unsaved-changes-dialog-box');		
 		} else {
 			$('#loadingMessage').show();
 			redirectToManageFlexFormPage($window, $scope, $http, redirectUrl);
@@ -632,13 +606,11 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 		$("#errorsWarningsMessageDiv").addClass("errorsWarningsMessageDivError");		
 		$('#errorsWarningsMessageDiv').show();
 		$('#loadingMessage').hide();
-	} else if(data.formExists) {
-		$('#loadingMessage').hide();
-		$scope.callAngularErrorPopup($scope.errorMsgFormNameExists);		
+	} else if(data.formExists) {			
 		$('#errorsWarningsMessageDiv').hide();		
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
-		$scope.callAngularErrorPopup();		
+		callAngularErrorPopup('error-dialog-overlay', 'error-dialog-box');
 	} else {
 		$scope.errorsWarnings.push(data.response.message);
 		$scope.testVar = data.response.formId;
@@ -649,6 +621,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 			disableSaveDraftFlag = true;
 			disableComputeReliabilityFlag = true;
 		}
+		createCopyOfOrignalFormValues($scope);
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
 	}
@@ -786,6 +759,21 @@ function callSaveFavoritesService($scope, $http, saveFavoritesServiceURL, params
 		$('#loadingMessage').hide();
 	
 });
+}
+
+// This is a generic method which takes overlayId and dialogBoxId, and uses them to show
+// different pop ups created for flex form builder page.
+function callAngularErrorPopup(overlayId, dialogBoxId) {
+		// popup section.
+		var maskHeight = $(document).height();  
+		var maskWidth = $(window).width();			
+		// calculate the values for center alignment
+		var dialogTop =  (maskHeight/3) - ($('#dialog-box').height());  
+		var dialogLeft = (maskWidth/2) - ($('#dialog-box').width()/2);			
+		// assign values to the overlay and dialog box		
+		$('#' + overlayId).css({height:maskHeight, width:maskWidth}).show();
+		$('#' + dialogBoxId).css({top:dialogTop, left:dialogLeft}).show();
+		// popup section ends
 }
 
 // Returns the version of Internet Explorer or a -1
