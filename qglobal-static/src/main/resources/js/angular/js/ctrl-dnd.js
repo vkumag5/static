@@ -15,7 +15,7 @@ var changeFormName = true;
 var selectedRaterName = "";
 var valueChangedAfterCR = false;
 var reliabilityVariablesJSON = {};
-var originalRaterId, originalAgeGroupArray = [], originalScoringValue, originalFormName, originalFlexFormItems = [];
+
 ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.prefixFormName = "";
 	$scope.prefixCustomFormName = "BASC-3 Custom Flex";
@@ -529,17 +529,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			});
 		}		
 		return sortedAgeGroupJsonArray;
-	};	
-	
-	$scope.checkForUnsavedData = function() {
-		var redirectUrl = "redirectToManageFlexForm.seam";
-		if(checkIfFormValueHasChanged($scope)) {
-			// Calls unsaved changes pop up.
-			callAngularErrorPopup('unsaved-changes-dialog-overlay', 'unsaved-changes-dialog-box');		
-		} else {
-			$('#loadingMessage').show();
-			redirectToManageFlexFormPage($window, $scope, $http, redirectUrl);
-		}
 	};
 	
 });
@@ -787,51 +776,4 @@ function getInternetExplorerVersion() {
       rv = parseFloat( RegExp.$1 );
   }
   return rv;
-}
-
-// This ajax call is used to redirect to manageFlexForm.xhtml page.
-function redirectToManageFlexFormPage($window, $scope, $http, redirectToManageFlexForm) {
-    $http({
-    method: 'POST',
-    url: redirectToManageFlexForm,
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-}).success(function(data) {
-	$window.location.href = "/qg/manageFlexForms.seam";
-	$('#loadingMessage').hide();
-});
-}
-
-// This method creates a copy of all the flex form values as soon as the form load is complete.
-function createCopyOfOrignalFormValues($scope) {
-	originalRaterId = angular.copy($scope.whichRadioSelected);
-	originalAgeGroupArray = angular.copy($scope.ageGroupCheckboxSelected);
-    originalScoringValue = angular.copy($scope.whichScoringRadioSelected);
-	originalFormName = angular.copy($scope.formName);
-    originalFlexFormItems = angular.copy($scope.model);
-}
-
-// This method checks if user has done any changes on flex builder page.
-function checkIfFormValueHasChanged($scope) {
-	if(originalRaterId != $scope.whichRadioSelected) {
-		return true;
-	} else if(originalScoringValue != $scope.whichScoringRadioSelected) {
-		return true;
-	} else if(originalFormName != $scope.formName) {
-		return true;
-	} else if(originalAgeGroupArray.length != ($scope.ageGroupCheckboxSelected).length) {
-		return true;
-	} else if(originalFlexFormItems.length != ($scope.model).length) {
-		return true;
-	}
-	for(var i = 0; i<originalAgeGroupArray.length; i++) {
-		if(originalAgeGroupArray[i] != $scope.ageGroupCheckboxSelected[i]) {
-			return true;
-		}
-	}
-	for(var i = 0; i<originalFlexFormItems.length; i++) {
-		if(originalFlexFormItems[i].itemId != ($scope.model)[i].itemId) {
-			return true;
-		}
-	}
-	return false;
 }
