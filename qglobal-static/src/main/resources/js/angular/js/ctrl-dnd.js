@@ -48,6 +48,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.prevQuestionsOnRight="";
 	$scope.prevRaterValue="";
 	$scope.sharableFlag = false;
+	$scope.isSavedAndPulishedForm= false;
 	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.	
 	$("#searchByCategory").attr('placeholder', searchByScalePlaceholder);
 	var ieVersion = getInternetExplorerVersion();
@@ -63,7 +64,6 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	} else {
 		callGetService($scope, $http, urlForEntireJSON);
 	}
-
 	// watch, use 'true' to also receive updates when values
 	// change, instead of just the reference
 	//modified to show 'Compute Reliability' button as active when minimum 5 questions will be on right window pane.
@@ -627,6 +627,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 			disableSaveNPublishFlag = true;
 			disableSaveDraftFlag = true;
 			disableComputeReliabilityFlag = true;
+			$scope.isSavedAndPulishedForm= true;
 		}
 		$scope.viewLoading = false;
 		$('#loadingMessage').hide();
@@ -662,6 +663,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		disableSaveDraftFlag = true;
 		disableComputeReliabilityFlag = true;
 		$('#computeReliabilitySection').show();
+		$scope.isSavedAndPulishedForm= true;
 	}
 	targetItemsOnRight = data.rightItem.items;
 	var testSource = $scope.source;
