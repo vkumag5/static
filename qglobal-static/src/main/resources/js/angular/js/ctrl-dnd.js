@@ -447,7 +447,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 
 	$scope.isSaveNPublishDisabled = function() {
 		if (FlexFormBuilderUtil.isFormNamePresent($scope.formName)) {
-			if (disableSaveNPublishFlag) {
+			if (disableSaveNPublishFlag) {				
 				return true;
 			} else if (valueChangedAfterCR) {
 				$scope.computeReliabilityResult = "";				
@@ -531,6 +531,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		return sortedAgeGroupJsonArray;
 	};
 	
+	$scope.disableDragAndDrop = function() {
+		$('#targetList').sortable( "disable" );
+		$('#sourceList').sortable( "disable" );
+	};
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -610,6 +615,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 			disableSaveDraftFlag = true;
 			disableComputeReliabilityFlag = true;
 			$scope.isSavedAndPulishedForm= true;
+			$scope.disableDragAndDrop();
 		}
 		createCopyOfOrignalFormValues($scope);
 		$scope.viewLoading = false;
@@ -647,6 +653,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		disableComputeReliabilityFlag = true;
 		$('#computeReliabilitySection').show();
 		$scope.isSavedAndPulishedForm= true;
+		$scope.disableDragAndDrop();
 	}
 	targetItemsOnRight = data.rightItem.items;
 	var testSource = $scope.source;
