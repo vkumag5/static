@@ -70,7 +70,6 @@ app.directive('dndBetweenList', function($parse) {
         // use jquery to make the element sortable (dnd). This is called
         // when the element is rendered
         $(element[0]).sortable({
-			scroll:false,
             items:'li',
             start:function (event, ui) {
                 // on start we define where the item is dragged from
