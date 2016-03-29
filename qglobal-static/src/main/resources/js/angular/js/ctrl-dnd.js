@@ -48,7 +48,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.prevQuestionsOnRight="";
 	$scope.prevRaterValue="";
 	$scope.sharableFlag = false;
-	$scope.isSavedAndPulishedForm= false;
+	$scope.isSavedAndPulishedForm = false;
 	disableComputeReliabilityFlag = false; //flag added to disable compute reliability button.	
 	$("#searchByCategory").attr('placeholder', searchByScalePlaceholder);
 	var ieVersion = getInternetExplorerVersion();
@@ -536,6 +536,11 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		$('#sourceList').sortable( "disable" );
 	};
 	
+	$scope.enableDragAndDrop = function() {
+		$('#targetList').sortable( "enable" );
+		$('#sourceList').sortable( "enable" );
+	};
+	
 });
 
 function callGetService($scope, $http, urlAssessment) {
@@ -614,7 +619,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 			disableSaveNPublishFlag = true;
 			disableSaveDraftFlag = true;
 			disableComputeReliabilityFlag = true;
-			$scope.isSavedAndPulishedForm= true;
+			$scope.isSavedAndPulishedForm = true;
 			$scope.disableDragAndDrop();
 		}
 		createCopyOfOrignalFormValues($scope);
@@ -652,7 +657,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		disableSaveDraftFlag = true;
 		disableComputeReliabilityFlag = true;
 		$('#computeReliabilitySection').show();
-		$scope.isSavedAndPulishedForm= true;
+		$scope.isSavedAndPulishedForm = true;
 		$scope.disableDragAndDrop();
 	}
 	targetItemsOnRight = data.rightItem.items;
@@ -680,6 +685,8 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
 		disableSaveDraftFlag = false;
 		disableComputeReliabilityFlag = false;
 		tempFormName = FlexFormBuilderUtil.getFormNameOfCopy(data.formName);
+		$scope.isSavedAndPulishedForm = false;
+		$scope.enableDragAndDrop();
 	}
 	if(String.fromCharCode(data.isGlobal) == 'Y') {
 		$scope.prefixFormNameHandler($scope.prefixStandardFormName, $scope.prefixStandardFormName, tempFormName);
