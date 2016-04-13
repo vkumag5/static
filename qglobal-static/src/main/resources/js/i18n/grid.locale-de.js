@@ -2,7 +2,7 @@
 /**
  * jqGrid German Translation
  * Version 1.0.0 (developed for jQuery Grid 3.3.1)
- * Olaf Klöppel opensource@blue-hit.de
+ * Olaf Kl\u00f6ppel opensource@blue-hit.de
  * http://blue-hit.de/ 
  *
  * Updated for jqGrid 3.8
@@ -22,79 +22,79 @@ $.jgrid = $.jgrid || {};
 $.extend($.jgrid,{
 	defaults : {
 		recordtext: "Zeige {0} - {1} von {2}",
-	    emptyrecords: "Keine Datensätze vorhanden",
-		loadtext: "Lädt...",
+	    emptyrecords: "Keine Datens\u00e4tze vorhanden",
+		loadtext: "L\u00e4dt...",
 		pgtext : "Seite {0} von {1}"
 	},
 	search : {
 		caption: "Suche...",
 		Find: "Suchen",
-		Reset: "Zurücksetzen",
-	    odata : ['gleich', 'ungleich', 'kleiner', 'kleiner gleich','größer','größer gleich', 'beginnt mit','beginnt nicht mit','ist in','ist nicht in','endet mit','endet nicht mit','enthält','enthält nicht'],
+		Reset: "Zur\u00fccksetzen",
+	    odata : ['gleich', 'ungleich', 'kleiner', 'kleiner gleich','gr\u00f6\u00dfer','gr\u00f6\u00dfer gleich', 'beginnt mit','beginnt nicht mit','ist in','ist nicht in','endet mit','endet nicht mit','enth\u00e4lt','enth\u00e4lt nicht'],
 	    groupOps: [	{ op: "AND", text: "alle" },	{ op: "OR",  text: "mindestens eine" }	],
-		matchText: " erfülle",
+		matchText: " erf\u00fclle",
 		rulesText: " Bedingung(en)"
 	},
 	edit : {
-		addCaption: "Datensatz hinzufügen",
+		addCaption: "Datensatz hinzuf\u00fcgen",
 		editCaption: "Datensatz bearbeiten",
 		bSubmit: "Speichern",
 		bCancel: "Abbrechen",
-		bClose: "Schließen",
-		saveData: "Daten wurden geändert! Änderungen speichern?",
+		bClose: "Schlie\u00dfen",
+		saveData: "Daten wurden ge\u00e4ndert! \u00c4nderungen speichern?",
 		bYes : "ja",
 		bNo : "nein",
 		bExit : "abbrechen",
 		msg: {
 		    required:"Feld ist erforderlich",
 		    number: "Bitte geben Sie eine Zahl ein",
-		    minValue:"Wert muss größer oder gleich sein, als ",
+		    minValue:"Wert muss gr\u00f6\u00dfer oder gleich sein, als ",
 		    maxValue:"Wert muss kleiner oder gleich sein, als ",
-		    email: "ist keine gültige E-Mail-Adresse",
+		    email: "ist keine g\u00fcltige E-Mail-Adresse",
 		    integer: "Bitte geben Sie eine Ganzzahl ein",
-			date: "Bitte geben Sie ein gültiges Datum ein",
-			url: "ist keine gültige URL. Präfix muss eingegeben werden ('http://' oder 'https://')",
+			date: "Bitte geben Sie ein g\u00fcltiges Datum ein",
+			url: "ist keine g\u00fcltige URL. Pr\u00e4fix muss eingegeben werden ('http://' oder 'https://')",
 			nodefined : " ist nicht definiert!",
-			novalue : " Rückgabewert ist erforderlich!",
-			customarray : "Benutzerdefinierte Funktion sollte ein Array zurückgeben!",
-			customfcheck : "Benutzerdefinierte Funktion sollte im Falle der benutzerdefinierten Überprüfung vorhanden sein!"
+			novalue : " R\u00fcckgabewert ist erforderlich!",
+			customarray : "Benutzerdefinierte Funktion sollte ein Array zur\u00fcckgeben!",
+			customfcheck : "Benutzerdefinierte Funktion sollte im Falle der benutzerdefinierten \u00dcberpr\u00fcfung vorhanden sein!"
 		}
 	},
 	view : {
 	    caption: "Datensatz anzeigen",
-	    bClose: "Schließen"
+	    bClose: "Schlie\u00dfen"
 	},
 	del : {
-		caption: "Löschen",
-		msg: "Ausgewählte Datensätze löschen?",
-		bSubmit: "Löschen",
+		caption: "L\u00f6schen",
+		msg: "Ausgew\u00e4hlte Datens\u00e4tze l\u00f6schen?",
+		bSubmit: "L\u00f6schen",
 		bCancel: "Abbrechen"
 	},
 	nav : {
 		edittext: " ",
-	    edittitle: "Ausgewählte Zeile editieren",
+	    edittitle: "Ausgew\u00e4hlte Zeile editieren",
 		addtext:" ",
-	    addtitle: "Neue Zeile einfügen",
+	    addtitle: "Neue Zeile einf\u00fcgen",
 	    deltext: " ",
-	    deltitle: "Ausgewählte Zeile löschen",
+	    deltitle: "Ausgew\u00e4hlte Zeile l\u00f6schen",
 	    searchtext: " ",
 	    searchtitle: "Datensatz suchen",
 	    refreshtext: "",
 	    refreshtitle: "Tabelle neu laden",
 	    alertcap: "Warnung",
-	    alerttext: "Bitte Zeile auswählen",
+	    alerttext: "Bitte Zeile ausw\u00e4hlen",
 		viewtext: "",
-		viewtitle: "Ausgewählte Zeile anzeigen"
+		viewtitle: "Ausgew\u00e4hlte Zeile anzeigen"
 	},
 	col : {
-		caption: "Spalten auswählen",
+		caption: "Spalten ausw\u00e4hlen",
 		bSubmit: "Speichern",
 		bCancel: "Abbrechen"	
 	},
 	errors : {
 		errcap : "Fehler",
 		nourl : "Keine URL angegeben",
-		norecords: "Keine Datensätze zu bearbeiten",
+		norecords: "Keine Datens\u00e4tze zu bearbeiten",
 		model : "colNames und colModel sind unterschiedlich lang!"
 	},
 	formatter : {
@@ -108,7 +108,7 @@ $.extend($.jgrid,{
 			],
 			monthNames: [
 				"Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez",
-				"Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"
+				"Januar", "Februar", "M\u00e4rz", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"
 			],
 			AmPm : ["","","",""],
 			S: function (j) {return '.';}, // one can also use 'er' instead of '.' but one have to use additional word like 'der' or 'den' before
