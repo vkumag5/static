@@ -21,6 +21,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.prefixCustomFormName = "BASC-3 Custom Flex";
 	$scope.prefixStandardFormName = "BASC-3 Standard Flex";
 	$scope.model = [];
+	$scope.tagList = tagList;
 	$scope.source = [];
 	$scope.ageGroup = [];
 	$scope.rater = [];
@@ -34,6 +35,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.previousScoringValue = "";
 	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
 	$scope.ngMinItemRestrictCount = minItemRestrictCount;
+	$scope.savedFormName = defaultTitleForPage;
 	$('#loadingMessage').show();
 	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings=[];
@@ -135,6 +137,10 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 		}
 		$scope.previousScoringValue=$scope.whichScoringRadioSelected;
 	},true);
+	
+	$scope.getItems = function() {
+    return $scope.tagList;
+}
 	
 	if ($scope) {
 		$scope.sourceEmpty = function() {
@@ -557,7 +563,15 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.rater = flexFormItems.metaData.category;				
 				$scope.source = flexFormItems.itemSet;
 				originalJSON = angular.copy(flexFormItems.itemSet);
-				tagList = flexFormItems.metaData.tags;
+				for (var i = 0; i < ($scope.source).length; i++) {      
+					if(($scope.source)[i].tags){
+						for (var j = 0; j < (($scope.source)[i].tags).length; j++) {
+							if ($scope.tagList.indexOf((($scope.source)[i].tags)[j]) == -1) {
+								$scope.tagList.push((($scope.source)[i].tags)[j]);
+							}
+						}
+					}
+				}
 				// we are sorting the ageGroup json array coming from IBAAS in order of increasing age group values, so that age group can be populated sequentially on UI.
 				$scope.ageGroup = $scope.sortAgeGroupByOrder($scope.ageGroup);
 			}
@@ -636,6 +650,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
     data: params,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(data) {
+	$scope.savedFormName = data.formName;
 	var rightItems = [];
 	var leftItems = [];
 	var targetItemsOnRight = [];
@@ -718,6 +733,23 @@ ctrl.filter('startsWithLetter', function () {
     return filtered;
   };
 });
+
+ctrl.directive('autoComplete', function($timeout) {
+    return function(scope, myElement, myAttrs) {
+            myElement.autocomplete({
+                source: scope.getItems(),
+                select: function() {
+                    $timeout(function() {
+                      myElement.trigger('input');
+                    }, 0);
+                }
+            });
+    };
+});
+
+
+
+
 
 function callComputeValidationService($scope, $http, computeReliabilityServiceURL, flexformIdsToSendForValidation) {
     $http({
