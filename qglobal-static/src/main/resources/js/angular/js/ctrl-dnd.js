@@ -34,6 +34,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	$scope.previousScoringValue = "";
 	$scope.ngMaxItemRestrictCount = maxItemRestrictCount;
 	$scope.ngMinItemRestrictCount = minItemRestrictCount;
+	$scope.savedFormName = defaultTitleForPage;
 	$('#loadingMessage').show();
 	$('#errorsWarningsMessageDiv').hide();
 	$scope.errorsWarnings=[];
@@ -636,6 +637,7 @@ function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
     data: params,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 }).success(function(data) {
+	$scope.savedFormName = data.formName;
 	var rightItems = [];
 	var leftItems = [];
 	var targetItemsOnRight = [];
