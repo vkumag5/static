@@ -738,12 +738,25 @@ ctrl.directive('autoComplete', function($timeout) {
     return function(scope, myElement, myAttrs) {
             myElement.autocomplete({
                 source: scope.getItems(),
+				response: function(event, ui) {
+					if (ui.content.length === 0) {
+						ui.content.push({label:"No items for this spelling.", value:""});
+					} 
+				},
                 select: function() {
                     $timeout(function() {
                       myElement.trigger('input');
                     }, 0);
-                }
-            });
+                },
+				
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+        //Add the .ui-state-disabled class if value is empty
+        if(item.value ==''){
+            return $('<li class="ui-state-disabled">'+item.label+'</li>').appendTo(ul);
+        }else{
+            return $( "<li>" ).text( item.label ).appendTo( ul );
+        }
+    };
     };
 });
 
