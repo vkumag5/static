@@ -740,7 +740,7 @@ ctrl.directive('autoComplete', function($timeout) {
                 source: scope.getItems(),
 				response: function(event, ui) {
 					if (ui.content.length === 0) {
-						ui.content.push({label:"No items for this spelling.", value:""});
+						ui.content.push({label:noRecordsFound, value:""});
 					} 
 				},
                 select: function() {
