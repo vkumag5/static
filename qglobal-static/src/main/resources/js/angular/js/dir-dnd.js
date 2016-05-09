@@ -112,6 +112,33 @@ app.directive('dndBetweenList', function($parse) {
     }
 });
 
+app.directive('autoComplete', function($timeout) {
+    return function(scope, myElement, myAttrs) {
+            myElement.autocomplete({
+                source: scope.getItems(),
+				response: function(event, ui) {
+					if (ui.content.length === 0) {
+						ui.content.push({label:"No items for this spelling.", value:""});
+					} 
+				},
+                select: function(event, ui) {
+					scope.letter = ui.item.label;
+                    $timeout(function() {
+                      scope.letter = ui.item.label;  
+                    }, 0);
+                },
+				
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+        //Add the .ui-state-disabled class if value is empty
+        if(item.value ==''){
+            return $('<li class="ui-state-disabled">'+item.label+'</li>').appendTo(ul);
+        }else{
+            return $( "<li>" ).text( item.label ).appendTo( ul );
+        }
+    };
+    };
+});
+
 function getIndexFromId(toUpdate, identifier) {
 	for(var i = 0; i < toUpdate.length; i++) {
 		if(toUpdate[i].itemId == identifier) {

@@ -139,8 +139,8 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	},true);
 	
 	$scope.getItems = function() {
-    return $scope.tagList;
-}
+		return $scope.tagList;
+	}
 	
 	if ($scope) {
 		$scope.sourceEmpty = function() {
@@ -228,7 +228,9 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 			}
 		}
 		return status;
-	}	
+	}
+
+	
 	
 	$scope.returnTagNames = function(tagsList) {
 		if(tagsList){
@@ -549,6 +551,7 @@ ctrl.controller('dndCtrl', function($window, $scope, $http) {
 	
 });
 
+
 function callGetService($scope, $http, urlAssessment) {
     $http.get(urlAssessment).success(function(data) {
 			//alert(JSON.stringify(data).replace(/\\/g,""));
@@ -576,6 +579,8 @@ function callGetService($scope, $http, urlAssessment) {
 				$scope.ageGroup = $scope.sortAgeGroupByOrder($scope.ageGroup);
 			}
 			
+			
+			
 			if (data.target && data.target.length > 0) {
 				//$scope.model = data.target;
 			}
@@ -601,7 +606,7 @@ function callGetService($scope, $http, urlAssessment) {
 				$('#loadingMessage').hide();	
 			}
 			createCopyOfOrignalFormValues($scope);
-        });		
+        });	
 }
 
 function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag) {
@@ -642,6 +647,7 @@ function callPostService($window, $scope, $http, postUrl, params, saveOptionFlag
 	}
 	});
 }
+
 
 function callGetForSavedForm($scope, $http, urlForEntireJSON, params) {
     $http({
@@ -733,36 +739,6 @@ ctrl.filter('startsWithLetter', function () {
     return filtered;
   };
 });
-
-ctrl.directive('autoComplete', function($timeout) {
-    return function(scope, myElement, myAttrs) {
-            myElement.autocomplete({
-                source: scope.getItems(),
-				response: function(event, ui) {
-					if (ui.content.length === 0) {
-						ui.content.push({label:noRecordsFound, value:""});
-					} 
-				},
-                select: function() {
-                    $timeout(function() {
-                      myElement.trigger('input');
-                    }, 0);
-                },
-				
-            }).data("ui-autocomplete")._renderItem = function (ul, item) {
-        //Add the .ui-state-disabled class if value is empty
-        if(item.value ==''){
-            return $('<li class="ui-state-disabled">'+item.label+'</li>').appendTo(ul);
-        }else{
-            return $( "<li>" ).text( item.label ).appendTo( ul );
-        }
-    };
-    };
-});
-
-
-
-
 
 function callComputeValidationService($scope, $http, computeReliabilityServiceURL, flexformIdsToSendForValidation) {
     $http({
