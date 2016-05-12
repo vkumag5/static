@@ -274,6 +274,7 @@ tr.ui-search-toolbar select {margin: 1px 0px 0px 0px}
 #accountInventoryView #refresh_list_top{display:none;}
 #accountInventoryView td#refresh_list{display:none;}
 #editExamineeForm  #examineeGrid .ui-jqgrid {margin-left: auto; margin-right: auto;position: relative;width: 1020px !important;}
+#importAssessmentRecordLog .ui-jqgrid tr.ui-row-ltr td {cursor:pointer;}
 
 #importExaminee .ui-jqgrid .ui-jqgrid-htable th{height: 28px/9 !important;height: 28px !important;padding: 0 2px;}
 #importExaminee .ui-th-column, .ui-jqgrid .ui-jqgrid-htable th.ui-th-column{ border-bottom: 0 none;
