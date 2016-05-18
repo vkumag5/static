@@ -26,6 +26,7 @@ function triggerTimer(timeDuration) {
 		showTimerSection();
 	} else if(timeDuration === -1) {
 		//your account is permanently locked.
+		disableLoginFields();
 	}
 }
 
