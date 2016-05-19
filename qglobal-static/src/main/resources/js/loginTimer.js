@@ -25,7 +25,7 @@ function triggerTimer(timeDuration) {
 		disableLoginFields();	
 		showTimerSection();
 	} else if(timeDuration === -1) {
-		//your account is permanently locked.
+		// account is permanently locked.
 		disableLoginFields();
 	}
 }
@@ -40,14 +40,14 @@ function showTimerSection() {
 	jQuery('#lockedAccountMsgSection').show();
 }
 
-// enables the UI fields for login on login page.
+// enables UI fields for login on login page.
 function enableLoginFields() {
 	document.getElementById("login:uname").disabled = false;
 	document.getElementById("login:pword").disabled = false;
 	document.getElementById("login:signInButton").disabled = false;
 }
 
-// enables the UI fields for login on login page.
+// disables UI fields for login on login page.
 function disableLoginFields() {
 	document.getElementById("login:uname").disabled = true;
 	document.getElementById("login:pword").disabled = true;
