@@ -4,8 +4,6 @@ function startTimerForLockedAccount(totalTime, minSection, secSection) {
     var handler = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
-        minutes = minutes;
-        seconds = seconds;
         minSection.text(minutes);
         secSection.text(":" + seconds);
         if (--timer < 0) {
