@@ -4,6 +4,7 @@ function startTimerForLockedAccount(totalTime, minSection, secSection) {
     var handler = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
+		seconds = (seconds < 10 ? '0' : '') + seconds;
         minSection.text(minutes);
         secSection.text(":" + seconds);
         if (--timer < 0) {
@@ -23,7 +24,7 @@ function triggerTimer(timeDuration) {
 		disableLoginFields();	
 		showTimerSection();
 	} else if(timeDuration === -1) {
-		// account is permanently locked.
+		// user's account is permanently locked.
 		disableLoginFields();
 	}
 }
@@ -38,14 +39,14 @@ function showTimerSection() {
 	jQuery('#lockedAccountMsgSection').show();
 }
 
-// enables UI fields for login on login page.
+// enables the UI fields for login on login page.
 function enableLoginFields() {
 	document.getElementById("login:uname").disabled = false;
 	document.getElementById("login:pword").disabled = false;
 	document.getElementById("login:signInButton").disabled = false;
 }
 
-// disables UI fields for login on login page.
+// enables the UI fields for login on login page.
 function disableLoginFields() {
 	document.getElementById("login:uname").disabled = true;
 	document.getElementById("login:pword").disabled = true;
