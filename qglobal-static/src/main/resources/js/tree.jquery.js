@@ -298,7 +298,7 @@ limitations under the License.
 
   })(SimpleWidget);
 
-  this.Tree = {};
+  this.jqTree = {};
 
   $ = this.jQuery;
 
@@ -327,7 +327,7 @@ limitations under the License.
 
   Position.strings = ['before', 'after', 'inside', 'none'];
 
-  this.Tree.Position = Position;
+  this.jqTree.Position = Position;
 
   Node = (function() {
     function Node(o, is_root, node_class) {
@@ -752,7 +752,7 @@ limitations under the License.
 
   })();
 
-  this.Tree.Node = Node;
+  this.jqTree.Node = Node;
 
   /*
   Copyright 2013 Marco Braak
@@ -1784,9 +1784,9 @@ limitations under the License.
     }
   };
 
-  this.Tree.indexOf = indexOf;
+  this.jqTree.indexOf = indexOf;
 
-  this.Tree._indexOf = _indexOf;
+  this.jqTree._indexOf = _indexOf;
 
   if (!((this.JSON != null) && (this.JSON.stringify != null) && typeof this.JSON.stringify === 'function')) {
     json_escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
